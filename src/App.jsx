@@ -1,12 +1,13 @@
-import Login from "./components/Login";
+import { RoutesD } from "./routes/RoutesD";
+import { ToastContainer } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
     <>
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-    <Login/>
+    <RoutesD/>
+    <ToastContainer />
     </>
   )
 }
