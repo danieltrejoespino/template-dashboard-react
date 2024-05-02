@@ -2,6 +2,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { Login  } from "../components/Login";
+import { Home  } from "../components/Home";
 import { Navbar  } from "../components/Navbar";
 
 export const RoutesD = () =>{
@@ -9,11 +10,7 @@ export const RoutesD = () =>{
     <BrowserRouter>      
         <Navbar/>
       <Routes>
-        
-          <Route path="/" element={<h1>Home</h1>} />
-        
-
-        
+          <Route path="/" element={<Home/> } />
           <Route path="/login" element={<Login />} />
         
 
