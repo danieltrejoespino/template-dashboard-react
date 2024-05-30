@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import {useAuth} from '../context/AuthContext'
 
 import { toast } from 'react-toastify';
 
 
 export const Login = () => {
+  const { login } = useAuth();
+
   const navigate = useNavigate()
   const [credentials, setCredentials] = useState({
     email: "",
@@ -17,6 +20,7 @@ export const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    login();
     toast.success("Inicio de sesion exitoso!");
     navigate('/')
     // console.log(credentials);

@@ -1,20 +1,26 @@
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Login } from '../components/Login';
+import { Home } from '../components/Home';
+import { AuthProvider } from '../context/AuthContext';
+import ProtectedRoute from './ProtectedRoute';
 
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-
-import { Login  } from "../components/Login";
-import { Home  } from "../components/Home";
-import { Navbar  } from "../components/Navbar";
-
-export const RoutesD = () =>{
-  return <>
-    <BrowserRouter>      
-        <Navbar/>
-      <Routes>
-          <Route path="/" element={<Home/> } />
+export const RoutesD = () => {
+  return (
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
           <Route path="/login" element={<Login />} />
-        
-
-      </Routes>
-    </BrowserRouter>
-  </>
-}
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
+  );
+};
