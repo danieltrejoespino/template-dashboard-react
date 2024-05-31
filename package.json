@@ -13,6 +13,8 @@
     "@headlessui/react": "^1.7.19",
     "@heroicons/react": "^2.1.3",
     "@tailwindcss/forms": "^0.5.7",
+    "ag-grid-react": "^31.3.2",
+    "axios": "^1.7.2",
     "highcharts": "^11.4.3",
     "highcharts-react-official": "^3.2.1",
     "react": "^18.2.0",
@@ -37,5 +39,6 @@
   "main": "vite.config.js",
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "proxy": "https://172.20.2.57:3009"
 }

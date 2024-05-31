@@ -4,7 +4,7 @@ export const Home = () => {
   return (
     <div>
       <Header />
-      <AssistanceReport/>
+      {/* <AssistanceReport/> */}
       <p>This is the home page content.</p>
     </div>
   );
