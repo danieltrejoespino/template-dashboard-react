@@ -6,9 +6,9 @@ import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the grid
  
-
+import dataFalse from '../../utilities/data'
 export const CajaAhorro = () => {
-  // const [data, setData] = useState(null);
+  
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -53,12 +53,13 @@ export const CajaAhorro = () => {
 
     }
 
-    fetchData();
-
+    // fetchData(); esto se comenta por que no tengo acceso a la data
+    
+    setRowData(dataFalse.cajaAhorro)
 
   }, []);
-  if (loading) return <div>Cargando...</div>;
-  if (error) return <div>Error: {error.message}</div>;  
+  // if (loading) return <div>Cargando...</div>;  esto se comenta por que no tengo acceso a la data
+  // if (error) return <div>Error: {error.message}</div>;   esto se comenta por que no tengo acceso a la data
   return (
     <>
       <Header />
