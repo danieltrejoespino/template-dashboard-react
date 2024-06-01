@@ -2,7 +2,8 @@
 
 export const ImageRender = (props) => {
   const handleClick = () => {
-    alert(`Imagen de ${props.value} clickeada!`);
+    // alert(`Imagen de ${props.value} clickeada!`);
+    console.log(props.value)
   };
   return (
     <img

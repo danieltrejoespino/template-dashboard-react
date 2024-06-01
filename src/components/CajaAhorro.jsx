@@ -2,10 +2,11 @@ import "../App.css";
 import { Header } from "./Header";
 import axios from "axios";
 import { useEffect, useState } from "react";
-// import ChartCajaAhorro from "./ChartCajaAhorro";
+import ChartCajaAhorro from "./ChartCajaAhorro";
 import { AgGridReact } from "ag-grid-react"; 
 import "ag-grid-community/styles/ag-grid.css"; 
 import "ag-grid-community/styles/ag-theme-quartz.css"; 
+import { toast } from 'react-toastify';
 
 import {ImageRender} from './ImageRender'
 
@@ -50,18 +51,47 @@ export const CajaAhorro = () => {
       flex: 1,
       valueFormatter: (p) => (p.value ? "$ " + p.value.toLocaleString() : ""),
     },
-    // { headerName: "FOTO", field: "USUARIO_ID", valueGetter: params => params.data.USUARIO_ID },
-    // { field: "make", filter: true },
-    // { field: "AHORRO_TOTAL", filter: true, floatingFilter: true },
     { 
       headerName: "FOTO", 
       field: "USUARIO_ID", 
       cellRenderer: ImageRender
     },
-  ];
-  const pagination = true;
-  const paginationPageSize = 10;
-  const paginationPageSizeSelector = [10,20, 100, 500, 1000];
+    
+  ]; 
+
+  const copyToClipboard = (text) => {
+    navigator.clipboard.writeText(text)
+      .then(() => {
+        toast.success("Nomina copiada al portapapeles!");
+
+      })
+      .catch((err) => {
+        console.error('Error al copiar al portapapeles: ', err);
+        toast.success("Error al copiar al portapapeles!");
+
+      });
+  }
+
+
+
+  const gridOptions = {
+    rowData: rowData,
+    columnDefs: columnDefs,
+    pagination : true,
+    paginationPageSize : 10,
+    paginationPageSizeSelector : [10,20, 100, 500, 1000],
+    domLayout : 'autoHeight',
+    rowSelection: 'single',
+    onSelectionChanged: function(event) {
+      const selectedRow = event.api.getSelectedRows()[0]; // Obtiene la fila seleccionada
+      if (selectedRow) {
+        const nomina = selectedRow.USUARIO_ID; // Obtiene el valor del campo 'name'
+        // console.log(nomina); // Muestra el valor del campo 'name' en la consola
+        copyToClipboard(nomina)
+      }
+    }
+  }
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -123,7 +153,7 @@ export const CajaAhorro = () => {
             AND c2.rn = 1
             LEFT JOIN c1 ON c3.usuario_id = c1.usuario_id
             JOIN asistencia.usuarios u ON u.id_usuario = c3.usuario_id
-            WHERE u.status_id = 1  
+            WHERE u.status_id = 1  and rownum <51
             GROUP BY
             c3.usuario_id, u.nombre  || ' '   || u.apellido_paterno || ' ' || u.apellido_materno, c1.cantidad,  c2.cantidad, c3.cantidad
             ORDER BY 6 DESC `,
@@ -158,7 +188,7 @@ export const CajaAhorro = () => {
 
       <div className="text-center">
             <h1 className="mb-10 mt-2 text-4xl font-bold tracking-tight text-gray-900 ">
-              Top caja de ahorro
+              Caja de ahorro
             </h1>            
             {/* <div className="mt-10 flex items-center justify-center gap-x-6"></div> */}
           </div>
@@ -167,16 +197,11 @@ export const CajaAhorro = () => {
         className={"ag-theme-quartz-dark"}
         style={{ width: "100%", height: "100%" }}
       >
-        <AgGridReact
-          rowData={rowData}
-          columnDefs={columnDefs}
-          domLayout="autoHeight"
-          pagination={pagination}
-          paginationPageSize={paginationPageSize}
-          paginationPageSizeSelector={paginationPageSizeSelector}
+        <AgGridReact          
+          gridOptions={gridOptions}
         />
       </div>
-      {/* <ChartCajaAhorro data={rowData} /> */}
+      <ChartCajaAhorro data={rowData} />
     </>
   );
 };

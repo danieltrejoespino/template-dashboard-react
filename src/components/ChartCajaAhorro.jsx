@@ -1,74 +1,69 @@
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
+import Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
 
 const ChartCajaAhorro = ({ data }) => {
+  
+  const sortedData = data.sort((a, b) => b.AHORRO_TOTAL - a.AHORRO_TOTAL);
+  const top5Data = sortedData.slice(0, 10);
+
+  // const categories = top5Data.map(item => item.NOMBRE);
+  const seriesData = top5Data.map(item => item.AHORRO_TOTAL);
+
+  const formatLabel = function() {
+    const index = this.pos; // Índice de la etiqueta actual
+    const user = top5Data[index]; // Datos del usuario correspondiente a esta etiqueta
+    return ` <p>${user.NOMBRE} - ${index+1}</p>
+    `;
+  };
+  const formatTooltip = function() {
+    return `<b>${this.series.name}</b><br/>${this.x}: ${this.y}<br/>${this.point.category}`;
+  };
+
+
   const options = {
     chart: {
-      type: 'column'
+      type: 'column' // Especifica el tipo de gráfico como 'column'
     },
     title: {
-      text: 'TOP CAJA DE AHORRO'
+      text: 'Top 10'
     },
     xAxis: {
-      categories: data.map(d => d.NOMBRE),
-      title: {
-        text: 'Usuarios'
+      labels: {
+        formatter: formatLabel // Utiliza la función formatLabel para formatear las etiquetas del eje X
       }
     },
     yAxis: {
-      min: 0,
       title: {
-        text: 'Valores'
-      },
-      stackLabels: {
-        enabled: true,
-        style: {
-          fontWeight: 'bold',
-          color: (Highcharts.defaultOptions.title.style && Highcharts.defaultOptions.title.style.color) || 'gray'
-        }
+        text: 'Ahorro'
       }
-    },
-    legend: {
-      align: 'right',
-      x: -30,
-      verticalAlign: 'top',
-      y: 25,
-      floating: true,
-      backgroundColor:
-        Highcharts.defaultOptions.legend.backgroundColor || 'white',
-      borderColor: '#CCC',
-      borderWidth: 1,
-      shadow: false
-    },
-    tooltip: {
-      headerFormat: '<b>{point.x}</b><br/>',
-      pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
     },
     plotOptions: {
       column: {
         stacking: 'normal',
         dataLabels: {
-          enabled: true
+          enabled: true,
+          formatter: function() {
+            return `$${this.y}`;
+          }
         }
       }
     },
-    series: [
-      {
-        name: 'Hasta Corte',
-        data: data.map(d => parseInt(d.HASTA_CORTE, 10))
-      },
-      {
-        name: 'Ahorro S Q',
-        data: data.map(d => parseInt(d.AHORRO_S_Q, 10))
-      },
-      {
-        name: 'Ahorro Total',
-        data: data.map(d => parseInt(d.AHORRO_TOTAL, 10))
-      }
-    ]
+    // tooltip: {
+    //   formatter: formatTooltip
+    // },
+    series: [{
+      name: 'Top ahorro',
+      data: seriesData // Datos del gráfico
+    }],
+    
   };
-
-  return <HighchartsReact highcharts={Highcharts} options={options} />;
+  return (
+    <>
+      <div>
+        <HighchartsReact highcharts={Highcharts} options={options} />
+      </div>
+    </>
+  );
 };
 
 export default ChartCajaAhorro;
