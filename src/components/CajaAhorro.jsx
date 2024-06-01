@@ -3,28 +3,11 @@ import { Header } from "./Header";
 import axios from "axios";
 import { useEffect, useState } from "react";
 // import ChartCajaAhorro from "./ChartCajaAhorro";
-import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
-import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
-import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the grid
+import { AgGridReact } from "ag-grid-react"; 
+import "ag-grid-community/styles/ag-grid.css"; 
+import "ag-grid-community/styles/ag-theme-quartz.css"; 
 
-// import dataFalse from "../../utilities/data";
- 
-const ImageCellRenderer = (props) => {
-  const handleClick = () => {
-    alert(`Imagen de ${props.value} clickeada!`);
-
-  }; 
-  return (
-    <img
-      src={`http://172.20.1.79/fotos/Fotos/${props.value}.jpg`}
-      alt="Foto"
-      style={{ width: '50px', height: '50px', borderRadius: '10px'  }}
-      onClick={handleClick}
-      className="imagenRedondeada"
-      // border-radius: 10px
-    />
-  );
-};
+import {ImageRender} from './ImageRender'
 
 
 export const CajaAhorro = () => {
@@ -73,7 +56,7 @@ export const CajaAhorro = () => {
     { 
       headerName: "FOTO", 
       field: "USUARIO_ID", 
-      cellRenderer: ImageCellRenderer
+      cellRenderer: ImageRender
     },
   ];
   const pagination = true;
@@ -197,5 +180,4 @@ export const CajaAhorro = () => {
     </>
   );
 };
-
-// export default AssistanceReport;
+ 
