@@ -29,6 +29,8 @@ const ChartCajaAhorro = ({ data }) => {
     },
     xAxis: {
       labels: {
+        rotation: -90,
+        align: 'right',
         formatter: formatLabel // Utiliza la función formatLabel para formatear las etiquetas del eje X
       }
     },

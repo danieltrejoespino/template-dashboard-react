@@ -9,7 +9,8 @@ import "ag-grid-community/styles/ag-theme-quartz.css";
 import { toast } from 'react-toastify';
 
 import {ImageRender} from './ImageRender'
-
+import Page404 from './Page404'
+import ProgressSpinner from './ProgressSpinner'
 
 export const CajaAhorro = () => {
   const [loading, setLoading] = useState(true);
@@ -153,7 +154,7 @@ export const CajaAhorro = () => {
             AND c2.rn = 1
             LEFT JOIN c1 ON c3.usuario_id = c1.usuario_id
             JOIN asistencia.usuarios u ON u.id_usuario = c3.usuario_id
-            WHERE u.status_id = 1  and rownum <51
+            WHERE u.status_id = 1   
             GROUP BY
             c3.usuario_id, u.nombre  || ' '   || u.apellido_paterno || ' ' || u.apellido_materno, c1.cantidad,  c2.cantidad, c3.cantidad
             ORDER BY 6 DESC `,
@@ -182,8 +183,8 @@ export const CajaAhorro = () => {
   }, []);
 
   
-  if (loading) return <div>Cargando...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+  if (loading) return (<ProgressSpinner/>);
+  if (error) return (<Page404 message={error.message}  />)
   return (
     <>
       <Header />
