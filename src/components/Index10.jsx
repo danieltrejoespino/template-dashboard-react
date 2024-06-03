@@ -8,6 +8,7 @@ import "ag-grid-community/styles/ag-theme-quartz.css";
 // import TextField from "@mui/material/TextField";
 import {ImageRender} from './ImageRender'
 import Page404 from './Page404'
+import ProgressSpinner from './ProgressSpinner'
 
 export const Index10 = () => {
   const [rowData, setRowData] = useState([]);
@@ -143,7 +144,7 @@ const MainContent = ({
   paginationPageSize,
   paginationPageSizeSelector,
 }) => {
-  if (loading) return <div>Cargando...</div>;
+  if (loading) return (<ProgressSpinner/>);
   if (error) return (<Page404 message={error.message}  />)
   
 
