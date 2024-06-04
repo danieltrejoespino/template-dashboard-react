@@ -33,6 +33,7 @@ export const Encriptar = () => {
   const [inputDecode, setInputDecode] = useState(0)
 
   const handleInputChange =(e) => {
+    console.log(e.target.value)
     setInputValue(e.target.value)
   }
   const handleSubmit = () => {

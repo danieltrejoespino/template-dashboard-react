@@ -9,6 +9,8 @@ import "ag-grid-community/styles/ag-theme-quartz.css";
 import {ImageRender} from './ImageRender'
 import Page404 from './Page404'
 import ProgressSpinner from './ProgressSpinner'
+ 
+
 
 export const Index10 = () => {
   const [rowData, setRowData] = useState([]);
@@ -23,6 +25,7 @@ export const Index10 = () => {
       flex: 1,
       filter: true,
       floatingFilter: true,
+      editable: true
     },
     {
       headerName: "NOMBRE",
@@ -119,6 +122,12 @@ export const Index10 = () => {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+
+
+
+
+
 
   return (
     <>
