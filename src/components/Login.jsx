@@ -20,9 +20,16 @@ export const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    login();
-    toast.success("Inicio de sesion exitoso!");
-    navigate('/')
+
+    if (credentials.email == 'dani@gmail.com' & credentials.password == '1234') {
+      login();
+      toast.success("Inicio de sesion exitoso!");
+      navigate('/')  
+    }else{
+      toast.success("Credenciales incorrectas!");
+
+    }
+    
     // console.log(credentials);
   }
 

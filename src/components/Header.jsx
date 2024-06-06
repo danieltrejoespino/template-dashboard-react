@@ -10,6 +10,7 @@ const navigation = [
   { name: "Ahorro", to: "/cajaAhorro", current: false, icon: CurrencyDollarIcon },
   { name: "Index10", to: "/index10", current: false, icon: CurrencyDollarIcon },
   { name: "Encriptar", to: "/encriptar", current: false, icon: CurrencyDollarIcon },
+  { name: "TestQuery", to: "/testQuery", current: false, icon: CurrencyDollarIcon },
   // { name: 'Login', to: '/login', current: false },
 ];
 
