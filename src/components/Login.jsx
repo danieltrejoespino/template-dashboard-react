@@ -21,7 +21,7 @@ export const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    if (credentials.email == 'dani@gmail.com' & credentials.password == '1234') {
+    if (credentials.email == 'prueba' & credentials.password == '1234') {
       login();
       toast.success("Inicio de sesion exitoso!");
       navigate('/')  
@@ -51,7 +51,7 @@ export const Login = () => {
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                Correo
+                Usuario
               </label>
               <div className="mt-2">
                 <input
@@ -59,7 +59,7 @@ export const Login = () => {
                   value={credentials.email}
                   id="email"
                   name="email"
-                  type="email"
+                  type="text"
                   autoComplete="email"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
