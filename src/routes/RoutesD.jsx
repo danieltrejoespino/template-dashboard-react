@@ -4,7 +4,7 @@ import { Home } from "../components/Home";
 import { CajaAhorro } from "../components/CajaAhorro";
 import { Index10 } from "../components/Index10";
 import { AuthProvider } from "../context/AuthContext";
-import { Encriptar } from "../components/Encriptar";
+import { Utilidades } from "../components/Utilidades";
 import ProtectedRoute from "./ProtectedRoute";
 import { TestQuery } from "../components/TestQuery";
 
@@ -14,7 +14,7 @@ export const RoutesD = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/encriptar" element={<Encriptar />} />
+          <Route path="/utilidades" element={<Utilidades/>} />
           <Route
             path="/"
             element={

@@ -6,18 +6,18 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 // import Button from "@mui/material/Button";
 // import TextField from "@mui/material/TextField";
-import {ImageRender} from './ImageRender'
+
 import Page404 from './Page404'
 import ProgressSpinner from './ProgressSpinner'
- 
+import ModalMui from "./ModalMui";
+
+
 
 
 export const Index10 = () => {
   const [rowData, setRowData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-
- 
   const columnDefs = [
     {
       headerName: "CLAVE",
@@ -183,3 +183,27 @@ const MainContent = ({
   );
 };
 
+
+const ImageRender = (props) => {
+
+  const [open, setOpen] = useState(false);
+  const [idUser, setidUser] = useState('');
+  const handleOpen = () => {
+    setidUser(props.value)
+    setOpen(true)
+  };
+  const handleClose = () => setOpen(false);
+
+  return <>
+    <img
+      src={`http://172.20.1.79/fotos/Fotos/${props.value}.jpg`}
+      alt="Foto"
+      style={{ width: "40px", height: "40px", borderRadius: "10px" }}
+      onClick={handleOpen}
+      className="imagenRedondeada"
+      // border-radius: 10px
+    />
+    <ModalMui open={open} handleClose={handleClose} identificador={idUser} />
+
+    </>
+};

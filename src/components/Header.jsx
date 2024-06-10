@@ -4,13 +4,13 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
-import { HomeIcon, CurrencyDollarIcon } from "@heroicons/react/24/solid";
+import { HomeIcon, CurrencyDollarIcon,UserIcon,WrenchScrewdriverIcon,CircleStackIcon } from "@heroicons/react/24/solid";
 const navigation = [
   { name: "Inicio", to: "/", current: true, icon: HomeIcon },
   { name: "Ahorro", to: "/cajaAhorro", current: false, icon: CurrencyDollarIcon },
-  { name: "Index10", to: "/index10", current: false, icon: CurrencyDollarIcon },
-  { name: "Encriptar", to: "/encriptar", current: false, icon: CurrencyDollarIcon },
-  { name: "TestQuery", to: "/testQuery", current: false, icon: CurrencyDollarIcon },
+  { name: "Index10", to: "/index10", current: false, icon: UserIcon },
+  { name: "Utilidades", to: "/utilidades", current: false, icon: WrenchScrewdriverIcon },
+  { name: "TestQuery", to: "/testQuery", current: false, icon: CircleStackIcon },
   // { name: 'Login', to: '/login', current: false },
 ];
 
@@ -40,33 +40,32 @@ export const Header = () => {
                   </Disclosure.Button>
                 </div>
                 <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                  <div className="flex flex-shrink-0 items-center">
-                    <img
-                      className="h-8 w-auto"
-                      src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                      alt="Your Company"
-                    />
-                  </div>
-                  <div className="hidden sm:ml-6 sm:block">
-                    <div className="flex space-x-4">
-                      {navigation.map((item) => (
-                        <Link
-                          key={item.name}
-                          to={item.to}
-                          className={classNames(                            
-                            item.current ? "bg-gray-900 text-white" : "text-gray-300 hover:bg-gray-700 hover:text-white", "rounded-md px-3 py-2 text-sm font-medium"
-                          )}
-                          aria-current={item.current ? "page" : undefined}
-                        >
-                          {item.icon && (
-                            <item.icon className="size-4 text-blue-500" />
-                          )}
-                          {item.name}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                </div>
+  <div className="flex flex-shrink-0 items-center">
+    <img
+      className="h-8 w-auto"
+      src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+      alt="Your Company"
+    />
+  </div>
+  <div className="hidden sm:ml-6 sm:block">
+    <div className="flex space-x-4">
+      {navigation.map((item) => (
+        <Link
+          key={item.name}
+          to={item.to}
+          className={classNames(
+            item.current ? "bg-gray-900 text-white" : "text-gray-300 hover:bg-gray-700 hover:text-white", 
+            "rounded-md px-3 py-2 text-sm font-medium flex items-center"
+          )}
+          aria-current={item.current ? "page" : undefined}
+        >
+          {item.icon && (<item.icon className="size-4 text-blue-500 mr-2" /> )}
+          {item.name}
+        </Link>
+      ))}
+    </div>
+  </div>
+</div>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                   <button
                     type="button"
