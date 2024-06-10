@@ -86,7 +86,7 @@ export const Utilidades = () => {
 };
 
 const ContarCaracteres = () => {
-  const [words, setWords] = useState("");
+  const [words, setWords] = useState(0);
   const [cursorPosition, setCursorPosition] = useState(0);
 
   const handleWords = (e) => {
@@ -123,9 +123,12 @@ const ContarCaracteres = () => {
           label="Texto a contar"
           placeholder="Texto"
           multiline
+          color="secondary"
+          focused
           variant="standard"
         />
-        <p> Total de palabras: {words}  --------  Posición del cursor: {cursorPosition}</p>        
+        <p> Total de palabras: {words} </p>
+        <p> Posición del cursor: {cursorPosition}</p>
       </Box>
     </>
   );
