@@ -86,12 +86,18 @@ export const Utilidades = () => {
 };
 
 const ContarCaracteres = () => {
-  const [ words, setWords ] = useState('')
+  const [words, setWords] = useState("");
+  const [cursorPosition, setCursorPosition] = useState(0);
 
-  const handleWords =(e)=> {
-    let count = e.target.value
-    setWords(count.length);    
-  }
+  const handleWords = (e) => {
+    let count = e.target.value;
+    setWords(count.length);
+  };
+
+  const handleCursorPosition = (event) => {
+    const position = event.target.selectionStart;
+    setCursorPosition(position);
+  };
 
   return (
     <>
@@ -111,13 +117,15 @@ const ContarCaracteres = () => {
       >
         <TextField
           onChange={handleWords}
+          onClick={handleCursorPosition}
+          onKeyUp={handleCursorPosition}
           id="standard-textarea"
           label="Texto a contar"
           placeholder="Texto"
           multiline
           variant="standard"
         />
-        <p> Total de palabras: {words}</p>
+        <p> Total de palabras: {words}  --------  Posición del cursor: {cursorPosition}</p>        
       </Box>
     </>
   );

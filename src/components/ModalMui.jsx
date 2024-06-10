@@ -1,6 +1,4 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 
@@ -28,14 +26,10 @@ export default function ModalMui({ open, handleClose, identificador }) {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Nomina : {identificador}
+            TEXT
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <img
-              src={`http://172.20.1.79/fotos/Fotos/${identificador}.jpg`}
-              alt="Foto"
-              style={{ width: "600px", borderRadius: "10px" }}
-            />
+            body text
           </Typography>
         </Box>
       </Modal>

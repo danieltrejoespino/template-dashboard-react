@@ -4,13 +4,14 @@ import { useEffect, useState, useCallback } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
-// import Button from "@mui/material/Button";
-// import TextField from "@mui/material/TextField";
+
 
 import Page404 from './Page404'
 import ProgressSpinner from './ProgressSpinner'
-import ModalMui from "./ModalMui";
 
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
 
 
 
@@ -207,3 +208,44 @@ const ImageRender = (props) => {
 
     </>
 };
+
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
+
+
+function ModalMui({ open, handleClose, identificador }) {
+  return (
+    <div>
+      {/* <Button onClick={handleOpen}>Open modal</Button> */}
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Nomina : {identificador}
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <img
+              src={`http://172.20.1.79/fotos/Fotos/${identificador}.jpg`}
+              alt="Foto"
+              style={{ width: "600px", borderRadius: "10px" }}
+            />
+          </Typography>
+        </Box>
+      </Modal>
+    </div>
+  );
+}
