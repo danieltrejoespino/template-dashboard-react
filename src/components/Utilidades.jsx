@@ -30,12 +30,10 @@ export const Utilidades = () => {
   const [inputCode, setInputCode] = useState(0);
   const [inputDecode, setInputDecode] = useState(0);
 
-  const handleInputChange = (e) => {
-    console.log(e.target.value);
+  const handleInputChange = (e) => {    
     setInputValue(e.target.value);
   };
-  const handleSubmit = () => {
-    // console.log(`Input Value: ${inputValue}`);
+  const handleSubmit = () => {    
     setInputCode(encodeBase64(inputValue));
     setInputDecode(decodeBase64(inputValue));
 
@@ -113,3 +111,13 @@ const ContarCaracteres = () => {
     </>
   );
 };
+
+
+      {/* <Header />
+      <p>This is the home page content.</p>
+
+      <a href='https://172.20.1.97:3009/api-serv/testApi' target="_blank" >
+      Prueba
+      </a>
+
+      <p>fuser -k -n tcp 8080</p> */}

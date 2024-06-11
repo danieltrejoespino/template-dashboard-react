@@ -132,7 +132,6 @@ export const Index10 = () => {
 
   return (
     <>
-      <Header /> {/* Este componente no se volverá a renderizar */}
       <MainContent
         rowData={rowData}
         loading={loading}
