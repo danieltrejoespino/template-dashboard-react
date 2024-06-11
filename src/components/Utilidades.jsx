@@ -1,9 +1,9 @@
-import { Header } from "./Header";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
+// import Box from "@mui/material/Box";
+// import TextField from "@mui/material/TextField";
+// import Button from "@mui/material/Button";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { Typography, Box, TextField, Button } from '@mui/material';
 
 const copyToClipboard = (text) => {
   navigator.clipboard
@@ -43,44 +43,29 @@ export const Utilidades = () => {
   };
   return (
     <>
-      <Header />
+      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+        <Typography variant="h4" gutterBottom>
+          Encriptar / desencriptar
+        </Typography>
 
-      <div className="lg:flex lg:items-center lg:justify-between mb-8 mt-2">
-        <div className="min-w-0 flex-1">
-          <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
-            Encriptar / desencriptar
-          </h2>
-        </div>
-      </div>
+        <Box sx={{ marginBottom: 2 }}>
+          <TextField
+            onChange={handleInputChange}
+            value={inputValue}
+            label="Texto"
+            variant="standard"
+          />
+          <Button variant="outlined" color="success" onClick={handleSubmit}>
+            Generar
+          </Button>
+        </Box>
 
-      <Box
-        component="form"
-        sx={{ "& > :not(style)": { m: 1, width: "25ch" } }}
-        noValidate
-        autoComplete="off"
-      >
-        <TextField
-          onChange={handleInputChange}
-          value={inputValue}
-          label="Texto"
-          variant="standard"
-        />
-        <Button variant="outlined" color="success" onClick={handleSubmit}>
-          Generar
-        </Button>
-      </Box>
-
-      <Box
-        component="form"
-        sx={{ "& > :not(style)": { m: 1, width: "25ch" } }}
-        noValidate
-        autoComplete="off"
-      >
-        <TextField value={inputCode} label="Encode" variant="standard" />
-        <TextField value={inputDecode} label="Decode" variant="standard" />
-      </Box>
-
+        <Box sx={{ marginBottom: 2 }}>
+          <TextField value={inputCode} label="Encode" variant="standard" />
+          <TextField value={inputDecode} label="Decode" variant="standard" />
+        </Box>
       <ContarCaracteres />
+      </Box>
     </>
   );
 };
@@ -101,35 +86,30 @@ const ContarCaracteres = () => {
 
   return (
     <>
-      <div className="lg:flex lg:items-center lg:justify-between mb-8 mt-5">
-        <div className="min-w-0 flex-1">
-          <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
-            Contar caracteres
-          </h2>
-        </div>
-      </div>
-
-      <Box
-        component="form"
-        sx={{ "& > :not(style)": { m: 1, width: "100ch" } }}
-        noValidate
-        autoComplete="off"
-      >
-        <TextField
-          onChange={handleWords}
-          onClick={handleCursorPosition}
-          onKeyUp={handleCursorPosition}
-          id="standard-textarea"
-          label="Texto a contar"
-          placeholder="Texto"
-          multiline
-          color="secondary"
-          focused
-          variant="standard"
-        />
-        <p> Total de palabras: {words} </p>
-        <p> Posición del cursor: {cursorPosition}</p>
-      </Box>
+        <Typography variant="h4" gutterBottom>
+          Contar caracteres
+        </Typography>
+        <Box
+          component="form"
+          sx={{ "& > :not(style)": { marginBottom: 1, width: "100ch" } }}
+          noValidate
+          autoComplete="off"
+        >
+          <TextField
+            onChange={handleWords}
+            onClick={handleCursorPosition}
+            onKeyUp={handleCursorPosition}
+            id="standard-textarea"
+            label="Texto a contar"
+            placeholder="Texto"
+            multiline
+            color="secondary"
+            focused
+            variant="standard"
+          />
+          <p> Total de palabras: {words} </p>
+          <p> Posición del cursor: {cursorPosition}</p>
+        </Box>      
     </>
   );
 };
