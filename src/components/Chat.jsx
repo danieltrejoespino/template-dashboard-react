@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import socketIOClient from 'socket.io-client';
 
 const ENDPOINT = "http://localhost:4000";
@@ -7,38 +7,49 @@ const ENDPOINT = "http://localhost:4000";
 export const Chat = () => {
   const [message, setMessage] = useState('')
   const [messages, setMessages] = useState([])
+  const socketRef = useRef();
 
-  const socket = socketIOClient(ENDPOINT)
 
-  useEffect(() => {
-    socket.on('message', (message) => {
-      setMessages(prevMessages => [...prevMessages, message]);
-    })
-    return () => socket.disconnect();
-  }, [socket])
 
-  const handleMessage = () => {
+  // useEffect(() => {
+  //   socketRef.current = socketIOClient(ENDPOINT);
+
+  //   socketRef.current.on('message', (message) => {
+  //     setMessages(prevMessages => [...prevMessages, message]);
+  //   });
+
+  //   return () => {
+  //     socketRef.current.disconnect();
+  //   }
+  // }, [])
+
+  const handleMessage = (e) => {
+    console.log(e.target.value);
+    setMessage(e.target.value);
+  };
+
+
+  const sendMessage = () => {
     if (message) {
-      socket.emit('message', message)
-      setMessage('')
+      socketRef.current.emit('message', message);
+      setMessage("");
     }
-
-  }
+  };
 
   return <>
     <h1>Chat App</h1>
     <div>
-      { messages.map((msg,index) =>(
+      {messages.map((msg, index) => (
         <div key={index}> {msg}</div>
-      )) }
+      ))}
     </div>
 
     <input
-      type='text'
+      type="text"
       value={message}
-      onChange={(e) => setMessage(e.target.value)}
-      onKeyPress={(e) => e.key === 'Enter' && handleMessage()}
+      onChange={handleMessage}
     />
+    <button onClick={sendMessage}>Send</button>
 
   </>
 }
