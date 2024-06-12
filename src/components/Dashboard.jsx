@@ -22,6 +22,7 @@ import { CajaAhorro } from "./CajaAhorro";
 import { Index10 } from "./Index10";
 import { Utilidades } from "./Utilidades";
 import { TestQuery } from "./TestQuery";
+import { Chat } from "./Chat";
 
 import { secondaryListItems } from "./listItems";
 import {
@@ -30,7 +31,9 @@ import {
   UserIcon,
   WrenchScrewdriverIcon,
   CircleStackIcon,
-  ArrowLeftEndOnRectangleIcon,
+  ChatBubbleBottomCenterTextIcon
+
+
 } from "@heroicons/react/24/solid";
 
 import ListItemButton from "@mui/material/ListItemButton";
@@ -110,6 +113,12 @@ export default function Dashboard() {
       component: TestQuery,
       current: false,
       icon: CircleStackIcon,
+    },    
+    {
+      name: "Chat",
+      component: Chat,
+      current: false,
+      icon: ChatBubbleBottomCenterTextIcon,
     },
   ];
 
