@@ -1,12 +1,15 @@
-import { useState } from "react";
+import {useContext, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import {useAuth} from '../context/AuthContext'
+import { UserContext } from './UserContext';
 
 import { toast } from 'react-toastify';
 
 
-export const Login = () => {
+export const Login = () => {  
   const { login } = useAuth();
+  const { setUser } = useContext(UserContext);
+
 
   const navigate = useNavigate()
   const [credentials, setCredentials] = useState({
@@ -20,16 +23,15 @@ export const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-
-    if (credentials.email == 'prueba' & credentials.password == '1234') {
+    
       login();
+
+      setUser({
+        name: credentials.email
+      });
+
       toast.success("Inicio de sesion exitoso!");
       navigate('/')  
-    }else{
-      toast.success("Credenciales incorrectas!");
-
-    }
-    
     // console.log(credentials);
   }
 

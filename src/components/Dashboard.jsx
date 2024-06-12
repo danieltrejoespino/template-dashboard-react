@@ -1,5 +1,6 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState,useContext } from "react";
+import { UserContext } from './UserContext';
 
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -92,6 +93,7 @@ const defaultTheme = createTheme();
 export default function Dashboard() {
   const [open, setOpen] = useState(true);
   const [selectedElement, setSelectedElement] = useState(null);
+  const { user } = useContext(UserContext);
 
   const navigation = [
     { name: "Inicio", component: "CajaAhorro", current: false, icon: HomeIcon },
@@ -170,7 +172,7 @@ export default function Dashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dashboard
+              Bienvenido {user.name}
             </Typography>
 
             <IconButton color="inherit">

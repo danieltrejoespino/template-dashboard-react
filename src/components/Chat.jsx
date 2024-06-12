@@ -1,10 +1,14 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 import socketIOClient from 'socket.io-client';
+import { UserContext } from './UserContext';
 
 const ENDPOINT = "http://localhost:4000";
 
 
 export const Chat = () => {
+  const { user } = useContext(UserContext);
+
+
   const [message, setMessage] = useState('')
   const [messages, setMessages] = useState([])
   const socketRef = useRef();
@@ -37,6 +41,7 @@ export const Chat = () => {
   };
 
   return <>
+      <p>Name: {user.name}</p>
     <h1>Chat App</h1>
     <div>
       {messages.map((msg, index) => (
