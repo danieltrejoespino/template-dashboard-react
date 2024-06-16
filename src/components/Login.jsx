@@ -41,9 +41,9 @@ export const Login = () => {
         toast.success("Inicio de sesion exitoso!");
         
         setUser({
-          idUser: response.data.idUser,
-          idperfil: response.data.id_perfil,
-          nameUser: response.data.nameUser,
+          idUser: response.data.ID_USER,
+          idperfil: response.data.ID_PERFIL,
+          nameUser: response.data.NAME_USER,
         });
 
         login();

@@ -63,7 +63,8 @@ export const Chat = () => {
   };
 
 
-  const sendMessage = () => {
+  const sendMessage = (e) => {
+    e.preventDefault()
     if (message) {
       let data = {
         userid: user.idUser,
@@ -101,6 +102,7 @@ export const Chat = () => {
           <Item>xs=8</Item>
         </Grid>
         <Grid xs={9}>
+        <form onSubmit={sendMessage}>        
           <Item>
             <TextField
               label="Mensaje"
@@ -108,13 +110,11 @@ export const Chat = () => {
               value={message}
               onChange={handleMessage}
             />
-
-
-            <Button color="secondary" onClick={sendMessage}>
-              Secondary
-              <HomeIcon color="secondary" sx={{ fontSize: 30 }} />
+            <Button type="submit" color="secondary">              
+              <HomeIcon color="secondary" sx={{ fontSize: 20 }} />
             </Button>
           </Item>
+          </form>
         </Grid>
       </Grid>
     </Box>

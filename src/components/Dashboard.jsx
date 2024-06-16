@@ -1,6 +1,7 @@
 import * as React from "react";
-import { useState,useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { UserContext } from './UserContext';
+import axios from "axios";
 
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -94,41 +95,51 @@ export default function Dashboard() {
   const [open, setOpen] = useState(true);
   const [selectedElement, setSelectedElement] = useState(null);
   const { user } = useContext(UserContext);
+  const [menu, setMenu] = useState([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const url = 'http://localhost:4000/menu'
+        const params = {
+          id_user: user.idUser,
+          id_perfil: user.idperfil
+        }
+        const response = await axios.post(url, params, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        console.log(response.data);
+        setMenu(response.data)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchData();
+
+  }, [])
+
 
   const navigation = [
-    { name: "Inicio", component: "CajaAhorro", current: false, icon: HomeIcon },
-    {
-      name: "Caja de ahorro",
-      component: CajaAhorro,
-      current: false,
-      icon: CurrencyDollarIcon,
-    },
-    { name: "Index10", component: Index10, current: false, icon: UserIcon },
-    {
-      name: "Utilidades",
-      component: Utilidades,
-      current: false,
-      icon: WrenchScrewdriverIcon,
-    },
-    {
-      name: "TestQuery",
-      component: TestQuery,
-      current: false,
-      icon: CircleStackIcon,
-    },    
-    {
-      name: "Chat",
-      component: Chat,
-      current: false,
-      icon: ChatBubbleBottomCenterTextIcon,
-    },
+    { name: "Inicio", component: "INICIO", current: true, icon: HomeIcon },
+    { name: "Caja ahorro", component: CajaAhorro, current: false, icon: CurrencyDollarIcon},
+    { name: "Index10", component: Index10, current: false, icon: UserIcon }, 
+    { name: "Utilidades", component: Utilidades, current: false, icon: WrenchScrewdriverIcon},
+    { name: "TestQuery", component: TestQuery, current: false, icon: CircleStackIcon },    
+    { name: "Chat", component: Chat, current: false, icon: ChatBubbleBottomCenterTextIcon },
   ];
 
+
   const renderSelectedComponent = () => {
-    const selectedItem = navigation.find(
-      (item) => item.name === selectedElement
-    );
+    const selectedItem = navigation.find((item) => item.name === selectedElement);
     return selectedItem ? <selectedItem.component /> : null;
+  };
+  const renderIconComponent = (iconName) => {
+    console.log(iconName);
+    const selectedItem = navigation.find((item) => item.name == iconName);
+    return selectedItem ? <selectedItem.icon className="size-4 text-blue-500 mr-2" /> : null;
   };
 
   const handleElementClick = (element) => {
@@ -138,6 +149,9 @@ export default function Dashboard() {
       setSelectedElement((prev) => (prev === element ? null : element));
     }
   };
+
+
+
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -182,8 +196,8 @@ export default function Dashboard() {
             </IconButton>
 
 
-            <IconButton color="inherit">              
-                <LetterAvatars/>
+            <IconButton color="inherit">
+              <LetterAvatars />
             </IconButton>
 
           </Toolbar>
@@ -204,7 +218,7 @@ export default function Dashboard() {
           <Divider />
           <List component="nav">
             <React.Fragment>
-              {navigation.map((item, index) => (
+              {/* {navigation.map((item, index) => (
                 <ListItemButton
                   key={index}
                   onClick={() => handleElementClick(item.name)}
@@ -216,16 +230,29 @@ export default function Dashboard() {
                   </ListItemIcon>
                   <ListItemText primary={item.name} />
                 </ListItemButton>
-              ))}
+              ))} */}
             </React.Fragment>
             <Divider sx={{ my: 1 }} />
-            {secondaryListItems}
+            {/* {secondaryListItems} */}
+            {menu.map((item) => (
+              <ListItemButton
+                key={item.ID_MENU}
+                onClick={() => handleElementClick(item.NAME_MENU)}
+              >
+                <ListItemIcon>
+                  {/* {item.ICON_MENU && ( <item.ICON_MENU className="size-4 text-blue-500 mr-2" /> )} */}
+                  {renderIconComponent(item.NAME_MENU)}
+
+                </ListItemIcon>
+                <ListItemText primary={item.NAME_MENU} />
+              </ListItemButton>
+
+            ))}
+
+
+
+
           </List>
-
- 
-
-
-          
 
         </Drawer>
         <Box
