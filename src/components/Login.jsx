@@ -1,12 +1,14 @@
-import {useContext, useState } from "react";
+import { useContext, useState } from "react";
+import axios from "axios";
+
 import { useNavigate } from 'react-router-dom';
-import {useAuth} from '../context/AuthContext'
+import { useAuth } from '../context/AuthContext'
 import { UserContext } from './UserContext';
 
 import { toast } from 'react-toastify';
 
 
-export const Login = () => {  
+export const Login = () => {
   const { login } = useAuth();
   const { setUser } = useContext(UserContext);
 
@@ -17,22 +19,49 @@ export const Login = () => {
     password: ""
   })
 
-  const handleCredentials = (e) => {    
-    setCredentials({...credentials, [e.target.name]:e.target.value})
+  const handleCredentials = (e) => {
+    setCredentials({ ...credentials, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    
-      login();
+    const url = 'http://localhost:4000/login'
+    const params = {
+      name: credentials.email,
+      pass: credentials.password
+    }
+    try {
+      const response = await axios.post(url, params, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      // console.log( response.data.idUser);
+      if (response.status == 200) {
+        toast.success("Inicio de sesion exitoso!");
+        
+        setUser({
+          idUser: response.data.idUser,
+          idperfil: response.data.id_perfil,
+          nameUser: response.data.nameUser,
+        });
 
-      setUser({
-        name: credentials.email
-      });
+        login();
+        navigate('/')  
 
-      toast.success("Inicio de sesion exitoso!");
-      navigate('/')  
-    // console.log(credentials);
+      } else {
+        toast.error("Inicio de sesion fallido!");
+      }
+
+    } catch (error) {
+      // console.log(error);
+      if (error.response.status == 404) {
+        toast.error("Inicio de sesión fallido! Usuario o contraseña incorrectos.");
+      } else {
+        toast.error("Inicio de sesión fallido!"); // Mensaje genérico para otros errores
+      }
+
+    }
   }
 
   return (
