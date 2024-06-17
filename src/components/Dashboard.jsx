@@ -19,29 +19,28 @@ import Grid from "@mui/material/Grid";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-
-import { CajaAhorro } from "./CajaAhorro";
-import { Index10 } from "./Index10";
-import { Utilidades } from "./Utilidades";
-import { TestQuery } from "./TestQuery";
-import { Chat } from "./Chat";
-
-import { secondaryListItems } from "./listItems";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import LetterAvatars from "./LetterAvatars";
 import {
   HomeIcon,
   CurrencyDollarIcon,
   UserIcon,
   WrenchScrewdriverIcon,
   CircleStackIcon,
-  ChatBubbleBottomCenterTextIcon
-
-
+  ChatBubbleBottomCenterTextIcon,
+  PhoneIcon
 } from "@heroicons/react/24/solid";
 
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import LetterAvatars from "./LetterAvatars";
+
+import { CajaAhorro } from "./CajaAhorro";
+import { Index10 } from "./Index10";
+import { Utilidades } from "./Utilidades";
+import { TestQuery } from "./TestQuery";
+import { Chat } from "./Chat";
+import { PhoneExtensions } from "./PhoneExtensions";
+
 const drawerWidth = 200;
 
 const AppBar = styled(MuiAppBar, {
@@ -100,7 +99,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const url = 'http://localhost:4000/menu'
+        const url = 'http://localhost:4000/getMenu'
         const params = {
           id_user: user.idUser,
           id_perfil: user.idperfil
@@ -123,12 +122,13 @@ export default function Dashboard() {
 
 
   const navigation = [
-    { name: "Inicio", component: "INICIO", current: true, icon: HomeIcon },
-    { name: "Caja ahorro", component: CajaAhorro, current: false, icon: CurrencyDollarIcon},
-    { name: "Index10", component: Index10, current: false, icon: UserIcon }, 
-    { name: "Utilidades", component: Utilidades, current: false, icon: WrenchScrewdriverIcon},
-    { name: "TestQuery", component: TestQuery, current: false, icon: CircleStackIcon },    
-    { name: "Chat", component: Chat, current: false, icon: ChatBubbleBottomCenterTextIcon },
+    { name: "Inicio", component: "INICIO", icon: HomeIcon },
+    { name: "Caja ahorro", component: CajaAhorro, icon: CurrencyDollarIcon},
+    { name: "Index10", component: Index10, icon: UserIcon }, 
+    { name: "Utilidades", component: Utilidades, icon: WrenchScrewdriverIcon},
+    { name: "TestQuery", component: TestQuery, icon: CircleStackIcon },    
+    { name: "Chat", component: Chat, icon: ChatBubbleBottomCenterTextIcon },
+    { name: "Extensiones", component: PhoneExtensions, icon: PhoneIcon },
   ];
 
 
