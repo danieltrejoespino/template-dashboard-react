@@ -27,7 +27,7 @@ export const AssistanceReport = () => {
       query: `SELECT 1 AS TOP, 577242 USUARIO_ID, 'S' NOMBRE, '77' HASTA_CORTE, '88' AHORRO_S_Q, '11' AHORRO_TOTAL FROM DUAL    `,
               campaign: '0'
     };
-    axios.post('https://localhost:3009/api-serv/testOraQuery',params,{
+    axios.post('https://172.20.2.57:3009/api-serv/testOraQuery',params,{
       headers: {
         'Content-Type': 'application/json'
       }

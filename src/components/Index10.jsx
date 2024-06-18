@@ -94,7 +94,6 @@ export const Index10 = () => {
   const fetchData = useCallback(async () => {
     setLoading(true);
     const url = "https://172.20.1.97:3009/api-serv/testOraProcedure";
-    // const url = "https://localhost:3009/api-serv/testOraProcedure";
     const params = {
       campaign: "1",
       nameProcedure: "SPS_INFO",

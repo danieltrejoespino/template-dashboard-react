@@ -6,7 +6,9 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useState } from "react";
 import axios from "axios";
 import Alert from "@mui/material/Alert";
-import CheckIcon from '@mui/icons-material/Check';
+// import CheckIcon from '@mui/icons-material/Check';
+import SendIcon from "@mui/icons-material/Send";
+import Button from "@mui/material/Button";
 
 export const ReEtiquetado = () => {
   const getCurrentDate = () => {
@@ -29,7 +31,8 @@ export const ReEtiquetado = () => {
   });
   const [rsptaDuplicados, setRsptaDuplicados] = useState("");
   const [showExt, setShowExt] = useState(false);
-
+  const [showExt2, setShowExt2] = useState(false);
+  const [rsptaReEtiquetado, setEsptaReEtiquetado] = useState([]);
 
   const handleDate = (e) => {
     const { name, value } = e.target;
@@ -58,12 +61,11 @@ export const ReEtiquetado = () => {
         if (rspta.data[0].duplicados == 1) {
           setRsptaDuplicados("Existen duplicados en este rango de fechas");
           setTimeout(() => {
-            setShowExt(true);            
+            setShowExt(true);
             setTimeout(() => {
               setShowExt(false);
-            }, 8000);  
-          }, 1000)
-
+            }, 8000);
+          }, 1000);
         } else {
           setRsptaDuplicados("Sin duplicados en este rango de fechas");
         }
@@ -74,6 +76,37 @@ export const ReEtiquetado = () => {
 
     duplicado();
   };
+
+
+const handleEtiquetado = () => {
+  const rspta = async () => {
+    try {
+      const fechas = {
+        fechaInicio: formValues.date1,
+        fechaFin: formValues.date2,
+      };
+      const url = "http://172.20.1.89:3000/api/reEtiquetado";
+      const rspta = await axios.post(url, fechas, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      // console.log(rspta.data);
+      setEsptaReEtiquetado(rspta.data)
+      setShowExt2(true)
+      
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
+
+  rspta()
+
+}
+ 
+
+
 
   return (
     <>
@@ -115,14 +148,34 @@ export const ReEtiquetado = () => {
             </IconButton>
           </Grid>
           <Grid xs={12}>
-          {showExt && (
-            <Alert variant="filled" severity="warning">
-              {rsptaDuplicados}
-            </Alert>
+            {showExt && (
+              <Alert variant="filled" severity="warning">
+                {rsptaDuplicados}
+              </Alert>
+            )}
+          </Grid>
+
+          <Grid xs={4}>
+            <Button
+            variant="outlined"
+            color="warning"
+            onClick={handleEtiquetado}
+            >
+              Comenzar re-etiquetado
+              <SendIcon sx={{ fontSize: 30 }} />
+            </Button>
+          </Grid>
+          <Grid xs={12}>
+            {showExt2 && (
+              <Alert variant="filled" severity="success">
+                {JSON.stringify(rsptaReEtiquetado)}
+              </Alert>
             )}
           </Grid>
         </Grid>
       </Box>
+
+      
     </>
   );
 };
