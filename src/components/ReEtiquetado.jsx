@@ -11,18 +11,35 @@ import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
 
 export const ReEtiquetado = () => {
+
+
+
   const getCurrentDate = () => {
     const today = new Date();
     const year = today.getFullYear();
     let month = today.getMonth() + 1;
     let day = today.getDate();
 
-    // Asegurarse de que el mes y el día tengan dos dígitos
     month = month < 10 ? `0${month}` : month;
     day = day < 10 ? `0${day}` : day;
 
     return `${year}-${month}-${day}`;
   };
+
+  function restarUnMes(fecha) {
+    let nuevaFecha = new Date(fecha);
+    nuevaFecha.setMonth(nuevaFecha.getMonth() - 1);
+    const year = nuevaFecha.getFullYear();
+    let month = nuevaFecha.getMonth() + 1; 
+    let day = nuevaFecha.getDate();
+    if (month < 10) {
+      month = `0${month}`;
+    }
+    if (day < 10) {
+      day = `0${day}`;
+    }
+    return `${year}-${month}-${day}`;
+  }
 
   // const [date1, setDate1] = useState(getCurrentDate());
   const [formValues, setFormValues] = useState({
@@ -77,36 +94,31 @@ export const ReEtiquetado = () => {
     duplicado();
   };
 
+  const handleEtiquetado = () => {
 
-const handleEtiquetado = () => {
-  const rspta = async () => {
-    try {
-      const fechas = {
-        fechaInicio: formValues.date1,
-        fechaFin: formValues.date2,
-      };
-      const url = "http://172.20.1.89:3000/api/reEtiquetado";
-      const rspta = await axios.post(url, fechas, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      // console.log(rspta.data);
-      setEsptaReEtiquetado(rspta.data)
-      setShowExt2(true)
-      
-    } catch (error) {
-      console.log(error)
-    }
+    const rspta = async () => {
+      let fechaConUnMesMenos = restarUnMes(formValues.date1);
+      try {
+        const fechas = {
+          fechaInicio: fechaConUnMesMenos,
+          fechaFin: formValues.date2,
+        };
+        const url = "http://172.20.1.89:3000/api/reEtiquetado";
+        const rspta = await axios.post(url, fechas, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        // console.log(rspta.data);
+        setEsptaReEtiquetado(rspta.data);
+        setShowExt2(true);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-  }
-
-  rspta()
-
-}
- 
-
-
+    rspta()
+  };
 
   return (
     <>
@@ -129,7 +141,7 @@ const handleEtiquetado = () => {
             <TextField
               name="date2"
               type="date"
-              value={formValues.date1}
+              value={formValues.date2}
               onChange={handleDate}
               label="Fecha fin"
               variant="standard"
@@ -157,9 +169,9 @@ const handleEtiquetado = () => {
 
           <Grid xs={4}>
             <Button
-            variant="outlined"
-            color="warning"
-            onClick={handleEtiquetado}
+              variant="outlined"
+              color="warning"
+              onClick={handleEtiquetado}
             >
               Comenzar re-etiquetado
               <SendIcon sx={{ fontSize: 30 }} />
@@ -174,8 +186,6 @@ const handleEtiquetado = () => {
           </Grid>
         </Grid>
       </Box>
-
-      
     </>
   );
 };
