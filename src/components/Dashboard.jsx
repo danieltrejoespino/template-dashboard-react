@@ -30,7 +30,9 @@ import {
   WrenchScrewdriverIcon,
   CircleStackIcon,
   ChatBubbleBottomCenterTextIcon,
-  PhoneIcon
+  QueueListIcon,
+  PhoneXMarkIcon
+
 } from "@heroicons/react/24/solid";
 
 
@@ -40,6 +42,7 @@ import { Utilidades } from "./Utilidades";
 import { TestQuery } from "./TestQuery";
 import { Chat } from "./Chat";
 import { PhoneExtensions } from "./PhoneExtensions";
+import { ReEtiquetado } from "./ReEtiquetado";
 
 const drawerWidth = 200;
 
@@ -99,7 +102,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const url = 'http://localhost:4000/getMenu'
+        const url = 'https://172.20.2.57:4000/getMenu'
         const params = {
           id_user: user.idUser,
           id_perfil: user.idperfil
@@ -128,7 +131,8 @@ export default function Dashboard() {
     { name: "Utilidades", component: Utilidades, icon: WrenchScrewdriverIcon},
     { name: "TestQuery", component: TestQuery, icon: CircleStackIcon },    
     { name: "Chat", component: Chat, icon: ChatBubbleBottomCenterTextIcon },
-    { name: "Extensiones", component: PhoneExtensions, icon: PhoneIcon },
+    { name: "Extensiones", component: PhoneExtensions, icon: QueueListIcon },
+    { name: "Re etiquetado", component: ReEtiquetado, icon: PhoneXMarkIcon },
   ];
 
 
@@ -186,7 +190,7 @@ export default function Dashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Bienvenido {user.nameUser}
+              Hola {user.nameUser}
             </Typography>
 
             <IconButton color="inherit">
@@ -218,19 +222,6 @@ export default function Dashboard() {
           <Divider />
           <List component="nav">
             <React.Fragment>
-              {/* {navigation.map((item, index) => (
-                <ListItemButton
-                  key={index}
-                  onClick={() => handleElementClick(item.name)}
-                >
-                  <ListItemIcon>
-                    {item.icon && (
-                      <item.icon className="size-4 text-blue-500 mr-2" />
-                    )}
-                  </ListItemIcon>
-                  <ListItemText primary={item.name} />
-                </ListItemButton>
-              ))} */}
             </React.Fragment>
             <Divider sx={{ my: 1 }} />
             {/* {secondaryListItems} */}
@@ -248,8 +239,6 @@ export default function Dashboard() {
               </ListItemButton>
 
             ))}
-
-
 
 
           </List>

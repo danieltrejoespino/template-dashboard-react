@@ -6,10 +6,12 @@ import "ag-grid-community/styles/ag-theme-quartz.css";
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2';
 
+import { toast } from 'react-toastify';
 import IconButton from '@mui/material/IconButton';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import TextField from '@mui/material/TextField';
 import SendIcon from '@mui/icons-material/Send';
+
 // import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 // const dmButton = (props) => {
@@ -51,7 +53,7 @@ export const PhoneExtensions = () => {
   useEffect(() => {
     const getExt = async () => {
       try {
-        const url = 'http://localhost:4000/getPhoneExtensions';
+        const url = 'https://172.20.2.57:4000/getPhoneExtensions';
         const rspta = await axios.get(url, {
           headers: {
             "Content-Type": "application/json",
@@ -80,22 +82,27 @@ export const PhoneExtensions = () => {
   const handleSubmit = () => {
      const addExt = async () => {
       try {
-        const url = 'http://localhost:4000/addPhoneExt';
+        const url = 'https://172.20.2.57:4000/addPhoneExt';
         const rspta = await axios.post(url,formValues, {
           headers: {
             "Content-Type": "application/json",
           },
         });
-        console.log(rspta.data);
+        console.log(rspta.data.rspta);
         //!Falta mostrar alerta cuando se agrego con exito
+        if ( rspta.data.rspta == 'success') {
+          setShowExt(false)
+          setFormValues({
+            owner: '',
+            area: '',
+            ext: ''
+          });
+          setRefreshData(prev => !prev);
         
-        setShowExt(false)
-        setFormValues({
-          owner: '',
-          area: '',
-          ext: ''
-        });
-        setRefreshData(prev => !prev);
+          toast.success("Extension guardada exitosamente!");
+          
+        }  
+        
 
 
 
