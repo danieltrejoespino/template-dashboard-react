@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState, useContext, useEffect } from "react";
-import { UserContext } from './UserContext';
+import { UserContext } from '../context/UserContext';
 import axios from "axios";
 
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
@@ -102,7 +102,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const url = 'https://172.20.2.57:4000/getMenu'
+        const url = 'https://localhost:4000/getMenu'
         const params = {
           id_user: user.idUser,
           id_perfil: user.idperfil

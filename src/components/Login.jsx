@@ -3,7 +3,7 @@ import axios from "axios";
 
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext'
-import { UserContext } from './UserContext';
+import { UserContext } from '../context/UserContext';
 
 import { toast } from 'react-toastify';
 
@@ -20,12 +20,14 @@ export const Login = () => {
   })
 
   const handleCredentials = (e) => {
+
     setCredentials({ ...credentials, [e.target.name]: e.target.value })
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const url = 'https://172.20.2.57:4000/login'
+
+    const url = 'https://localhost:4000/login'
     const params = {
       name: credentials.email,
       pass: credentials.password
@@ -40,13 +42,14 @@ export const Login = () => {
       if (response.status == 200) {
         toast.success("Inicio de sesion exitoso!");
         
+        const { ID_USER, ID_PERFIL, NAME_USER, TOKEN } = response.data;
         setUser({
-          idUser: response.data.ID_USER,
-          idperfil: response.data.ID_PERFIL,
-          nameUser: response.data.NAME_USER,
+          idUser: ID_USER,
+          idperfil: ID_PERFIL,
+          nameUser: NAME_USER
         });
-
-        login();
+        
+        login(TOKEN);
         navigate('/')  
 
       } else {

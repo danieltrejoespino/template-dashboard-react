@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useContext } from 'react';
 import socketIOClient from 'socket.io-client';
-import { UserContext } from './UserContext';
+import { UserContext } from '../context/UserContext';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -13,7 +13,7 @@ import TextField from '@mui/material/TextField';
 
 
 
-const ENDPOINT = "https://172.20.2.57:4000";
+const ENDPOINT = "https://localhost:4000";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
