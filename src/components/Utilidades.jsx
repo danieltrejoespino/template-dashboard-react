@@ -63,6 +63,9 @@ export const Utilidades = () => {
           <TextField value={inputDecode} label="Decode" variant="standard" />
         </Box>
       <ContarCaracteres />
+      <Typography variant="h4" gutterBottom>
+          Pass: puerta dsa: 1 ok 0206 ok
+        </Typography>
       </Box>
     </>
   );

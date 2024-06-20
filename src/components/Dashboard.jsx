@@ -102,12 +102,12 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const url = 'https://localhost:4000/getMenu'
+        const url = 'https://172.20.2.57:4000/getMenu'
         const params = {
           id_user: user.id,
           id_perfil: user.profile
         }
-        console.log(params);
+        // console.log(params);
         const response = await axios.post(url, params, {
           headers: {
             "Content-Type": "application/json",
@@ -142,7 +142,7 @@ export default function Dashboard() {
     return selectedItem ? <selectedItem.component /> : null;
   };
   const renderIconComponent = (iconName) => {
-    console.log(iconName);
+    // console.log(iconName);
     const selectedItem = navigation.find((item) => item.name == iconName);
     return selectedItem ? <selectedItem.icon className="size-4 text-blue-500 mr-2" /> : null;
   };
