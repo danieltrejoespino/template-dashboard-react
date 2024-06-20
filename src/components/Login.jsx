@@ -14,7 +14,7 @@ import useAuth from '../hooks/useAuth';
 
 export const Login = () => {
   const { login } = useAuth();
-  const { setUser } = useContext(UserContext);
+  const { setUserInfo } = useContext(UserContext);
 
 
   const navigate = useNavigate()
@@ -47,11 +47,7 @@ export const Login = () => {
         toast.success("Inicio de sesion exitoso!");
         
         const { ID_USER, ID_PERFIL, NAME_USER, TOKEN } = response.data;
-        setUser({
-          idUser: ID_USER,
-          idperfil: ID_PERFIL,
-          nameUser: NAME_USER
-        });
+        setUserInfo(NAME_USER,ID_USER,ID_PERFIL);
         
         login(TOKEN);
         navigate('/')  

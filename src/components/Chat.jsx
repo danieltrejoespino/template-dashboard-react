@@ -67,8 +67,8 @@ export const Chat = () => {
     e.preventDefault()
     if (message) {
       let data = {
-        userid: user.idUser,
-        userName: user.nameUser,
+        userid: user.id,
+        userName: user.name,
         msg: message
       }
       socketRef.current.emit('message', data);

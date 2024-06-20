@@ -1,10 +1,12 @@
 // import * as React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import { deepOrange } from "@mui/material/colors";
 import { Link } from "react-router-dom";
 import useAuth from '../hooks/useAuth';
+
+import { UserContext } from '../context/UserContext';
 
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -17,6 +19,7 @@ import {
 export default function LetterAvatars() {
   const [anchorEl, setAnchorEl] = useState(null);
   const { logout } = useAuth();
+  const {clearUserInfo} = useContext(UserContext)
 
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -25,6 +28,11 @@ export default function LetterAvatars() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleOut = () => {
+    logout();
+    clearUserInfo();
+  }
 
   return (
     <>
@@ -47,7 +55,7 @@ export default function LetterAvatars() {
         <UserIcon className="size-4 mr-2" />
         Perfil
         </MenuItem>
-        <MenuItem component={Link} to="/login" onClick={logout}>
+        <MenuItem component={Link} to="/login" onClick={handleOut}>
           <ArrowLeftEndOnRectangleIcon className="size-4  mr-2" />
           Salir
         </MenuItem>

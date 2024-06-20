@@ -104,15 +104,16 @@ export default function Dashboard() {
       try {
         const url = 'https://localhost:4000/getMenu'
         const params = {
-          id_user: 1,
-          id_perfil: 0
+          id_user: user.id,
+          id_perfil: user.profile
         }
+        console.log(params);
         const response = await axios.post(url, params, {
           headers: {
             "Content-Type": "application/json",
           },
         })
-        console.log(response.data);
+        // console.log(response.data);
         setMenu(response.data)
       } catch (error) {
         console.log(error);
@@ -190,7 +191,7 @@ export default function Dashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              {/* Hola {user.nameUser} */}
+              Hola {user.name}
             </Typography>
 
             <IconButton color="inherit">
