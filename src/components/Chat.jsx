@@ -48,6 +48,12 @@ export const Chat = () => {
   useEffect(() => {
     socketRef.current = socketIOClient(ENDPOINT);
 
+
+    socketRef.current.on('previousMessages', (previousMessages) => {
+      // console.log(previousMessages)
+      setMessages(previousMessages);
+    });
+
     socketRef.current.on('message', (message) => {
       setMessages(prevMessages => [...prevMessages, message]);
     });
@@ -59,7 +65,7 @@ export const Chat = () => {
 
   const handleMessage = (e) => {
     setMessage(e.target.value);
-    console.log(messages);
+    // console.log(messages);
   };
 
 
@@ -67,9 +73,9 @@ export const Chat = () => {
     e.preventDefault()
     if (message) {
       let data = {
-        userid: user.id,
-        userName: user.name,
-        msg: message
+        USERID: user.id,
+        NAME_USER: user.name,
+        MSG: message
       }
       socketRef.current.emit('message', data);
       setMessage("");
@@ -87,7 +93,7 @@ export const Chat = () => {
             xs=9
             {messages.map((msg, index) => (
               <div key={index}>
-                <p>{msg.userName} : {msg.msg}</p>
+                <p>{msg.NAME_USER} : {msg.MSG}</p>
               </div>
             ))}
           </Item>
