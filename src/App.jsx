@@ -8,6 +8,7 @@ import { AuthProvider } from './context/AuthContext';
 import {Login} from './components/Login';
 import {Home} from './components/Home';
 import ProtectedRoute from './routes/ProtectedRoute';
+import { UserProvider } from "./context/UserContext";
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
     <>
       <ToastContainer />
       <AuthProvider>
+      <UserProvider>
         <Router>
           <Routes>
             <Route path="/" element={<Navigate to="/dashboard" />} />
@@ -29,6 +31,7 @@ function App() {
             />
           </Routes>
         </Router>
+        </UserProvider>
       </AuthProvider>
 
     </>
