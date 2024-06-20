@@ -4,7 +4,7 @@ import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import { deepOrange } from "@mui/material/colors";
 import { Link } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import useAuth from '../hooks/useAuth';
 
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";

@@ -2,10 +2,14 @@ import { useContext, useState } from "react";
 import axios from "axios";
 
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext'
+// import { useAuth } from '../context/AuthContext'
 import { UserContext } from '../context/UserContext';
 
 import { toast } from 'react-toastify';
+
+import useAuth from '../hooks/useAuth';
+
+
 
 
 export const Login = () => {
@@ -27,7 +31,7 @@ export const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const url = 'https://172.20.2.57:4000/login'
+    const url = 'https://localhost:4000/login'
     const params = {
       name: credentials.email,
       pass: credentials.password

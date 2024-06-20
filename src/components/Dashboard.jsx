@@ -102,10 +102,10 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const url = 'https://172.20.2.57:4000/getMenu'
+        const url = 'https://localhost:4000/getMenu'
         const params = {
-          id_user: user.idUser,
-          id_perfil: user.idperfil
+          id_user: 1,
+          id_perfil: 0
         }
         const response = await axios.post(url, params, {
           headers: {
@@ -190,7 +190,7 @@ export default function Dashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Hola {user.nameUser}
+              {/* Hola {user.nameUser} */}
             </Typography>
 
             <IconButton color="inherit">

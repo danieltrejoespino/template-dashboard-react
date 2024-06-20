@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+// import { useAuth } from "../context/AuthContext";
 
 import { HomeIcon, CurrencyDollarIcon,UserIcon,WrenchScrewdriverIcon,CircleStackIcon } from "@heroicons/react/24/solid";
 const navigation = [
@@ -18,7 +18,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 export const Header = () => {
-  const { logout } = useAuth();
+  // const { logout } = useAuth();
 
   return (
     <>
@@ -133,7 +133,7 @@ export const Header = () => {
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
                               )}
-                              onClick={logout}
+                              // onClick={logout}
                             >
                               Salir
                             </Link>

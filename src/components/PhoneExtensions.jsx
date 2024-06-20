@@ -53,7 +53,7 @@ export const PhoneExtensions = () => {
   useEffect(() => {
     const getExt = async () => {
       try {
-        const url = 'https://172.20.2.57:4000/getPhoneExtensions';
+        const url = 'https://localhost:4000/getPhoneExtensions';
         const rspta = await axios.get(url, {
           headers: {
             "Content-Type": "application/json",
@@ -82,7 +82,7 @@ export const PhoneExtensions = () => {
   const handleSubmit = () => {
      const addExt = async () => {
       try {
-        const url = 'https://172.20.2.57:4000/addPhoneExt';
+        const url = 'https://localhost:4000/addPhoneExt';
         const rspta = await axios.post(url,formValues, {
           headers: {
             "Content-Type": "application/json",
