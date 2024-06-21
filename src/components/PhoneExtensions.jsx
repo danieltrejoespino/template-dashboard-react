@@ -12,22 +12,8 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import TextField from '@mui/material/TextField';
 import SendIcon from '@mui/icons-material/Send';
 
-// import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
-// const dmButton = (props) => {
-//   console.log(props.value);
-
-//   return <>
-//     <IconButton
-//     color="error"
-//     aria-label="delete"
-//     // onClick={handleSubmit}
-//   >
-//     <DeleteForeverIcon sx={{ fontSize: 30 }} />
-//   </IconButton>
-//   </>
-
-// }
 
 
 
@@ -42,18 +28,33 @@ export const PhoneExtensions = () => {
   const [refreshData, setRefreshData] = useState(false);
 
 
+
+
+  const dmButton = (props) => { 
+    return <>
+      <IconButton
+      color="error"
+      aria-label="delete"
+      onClick={() => handleDelete(props.value)}
+    >
+      <DeleteForeverIcon sx={{ fontSize: 30 }} />
+    </IconButton>
+    </>
+  
+  }
+
   const columnDefs = [
     { headerName: "Propietario", field: "OWNER_EXT", flex: 1, filter: true, floatingFilter: true, },
     { headerName: "Area", field: "AREA_EXT", flex: 1, filter: true, floatingFilter: true, },
     { headerName: "Extension", field: "NAME_EXT", flex: 1, filter: true, floatingFilter: true, },
-    // { headerName: "Acciones", field: "ID_EXT", cellRenderer: dmButton }
+    { headerName: "Acciones", field: "ID_EXT", cellRenderer: dmButton }
 
   ];
 
   useEffect(() => {
     const getExt = async () => {
       try {
-        const url = 'https://172.20.2.57:4000/getPhoneExtensions';
+        const url = 'https://localhost:4000/getPhoneExtensions';
         const rspta = await axios.get(url, {
           headers: {
             "Content-Type": "application/json",
@@ -82,7 +83,7 @@ export const PhoneExtensions = () => {
   const handleSubmit = () => {
      const addExt = async () => {
       try {
-        const url = 'https://172.20.2.57:4000/addPhoneExt';
+        const url = 'https://localhost:4000/addPhoneExt';
         const rspta = await axios.post(url,formValues, {
           headers: {
             "Content-Type": "application/json",
@@ -113,6 +114,38 @@ export const PhoneExtensions = () => {
     addExt();    
   };
 
+  
+
+  const handleDelete = (value) => {
+    const deleteExt = async () => {
+        try {
+          const params = {
+            idExt: value
+          }
+          const url='https://localhost:4000/deletePhoneExtensions'
+          const rspta = await axios.delete(url,{
+            headers: {
+              "Content-Type": "application/json",
+            },
+            data: params
+          });
+          
+          if (rspta.data.rspta == 'success') {
+            toast.success("Extension eliminada con exito!");
+            setRefreshData(prev => !prev);
+
+          } else {
+            toast.error("Error al eliminar la extension!");
+
+          }
+
+        } catch (error) {
+          console.log(error);          
+        }
+    }
+    
+    deleteExt()
+  }
   
 
 

@@ -1,22 +1,15 @@
-import { useContext, useState } from "react";
+import {  useState } from "react";
 import axios from "axios";
 
 import { useNavigate } from 'react-router-dom';
 // import { useAuth } from '../context/AuthContext'
-import { UserContext } from '../context/UserContext';
+
 
 import { toast } from 'react-toastify';
 
-import useAuth from '../hooks/useAuth';
-
-import { Link } from 'react-router-dom';
 
 
-
-export const Login = () => {
-  const { login } = useAuth();
-  const { setUserInfo } = useContext(UserContext);
-
+export const ResetUser = () => {
 
   const navigate = useNavigate()
   const [credentials, setCredentials] = useState({
@@ -31,30 +24,27 @@ export const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-
-    const url = 'https://localhost:4000/login'
+  
+    const url = 'https://localhost:4000/resetlogin'
     const params = {
       name: credentials.email,
       pass: credentials.password
     }
     try {
-      const response = await axios.post(url, params, {
+      const response = await axios.put(url, params, {
         headers: {
           "Content-Type": "application/json",
-        },
+        }
       })
       // console.log( response.data.idUser);
       if (response.status == 200) {
-        toast.success("Inicio de sesion exitoso!");
-
-        const { ID_USER, ID_PERFIL, NAME_USER, TOKEN } = response.data;
-        setUserInfo(NAME_USER, ID_USER, ID_PERFIL);
-
-        login(TOKEN);
-        navigate('/')
+        toast.success("Contrasena actualizada con exito!");
+        setTimeout(() => {
+          navigate('/login')          
+        }, 3000);
 
       } else {
-        toast.error("Inicio de sesion fallido!");
+        toast.error("Error al actualizar la contrasena!");
       }
 
     } catch (error) {
@@ -78,7 +68,7 @@ export const Login = () => {
             alt="Your Company"
           />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Inicia sesión
+            Restaurar sesión
           </h2>
         </div>
 
@@ -98,7 +88,7 @@ export const Login = () => {
                   autoComplete="email"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  placeholder="Ingresa correo electronico"
+                  placeholder="Ingresa tu usuario"
                 />
               </div>
             </div>
@@ -108,11 +98,6 @@ export const Login = () => {
                 <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
                   Contraseña
                 </label>
-                <div className="text-sm">
-                   
-                  <Link to="/resetUser" className="font-semibold text-indigo-600 hover:text-indigo-500">Olvidaste tu contraseña?</Link>
- 
-                </div>
               </div>
               <div className="mt-2">
                 <input
@@ -123,18 +108,19 @@ export const Login = () => {
                   type="password"
                   autoComplete="current-password"
                   required
-                  placeholder="Ingresa contraseña"
+                  placeholder="Ingresa nueva contraseña"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
+
 
             <div>
               <button
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Entrar
+                Restaurar
               </button>
             </div>
           </form>

@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import {Login} from './components/Login';
+import {ResetUser} from './components/ResetUser';
 import {Home} from './components/Home';
 import ProtectedRoute from './routes/ProtectedRoute';
 import { UserProvider } from "./context/UserContext";
@@ -21,6 +22,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Navigate to="/dashboard" />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/resetUser" element={<ResetUser />} />
             <Route
               path="/dashboard"
               element={
