@@ -1,6 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef,useContext } from "react";
 import axios from "axios";
 import { AgGridReact } from "ag-grid-react";
+import { UserContext } from '../context/UserContext';
+
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 import Box from "@mui/material/Box";
@@ -11,7 +13,6 @@ import IconButton from "@mui/material/IconButton";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import TextField from "@mui/material/TextField";
 import SendIcon from "@mui/icons-material/Send";
-
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 export const PhoneExtensions = () => {
@@ -22,26 +23,8 @@ export const PhoneExtensions = () => {
     area: "",
     ext: "",
   });
-  const [refreshData, setRefreshData] = useState(false);
 
-  const [quickFilterText, setQuickFilterText] = useState("");
-  const gridRef = useRef(null);
-
-  const dmButton = (props) => {
-    return (
-      <>
-        <IconButton
-          color="error"
-          aria-label="delete"
-          onClick={() => handleDelete(props.value)}
-        >
-          <DeleteForeverIcon sx={{ fontSize: 30 }} />
-        </IconButton>
-      </>
-    );
-  };
-
-  const columnDefs = [
+  const initialColumnDefs = [
     {
       headerName: "Propietario",
       field: "OWNER_EXT",
@@ -63,10 +46,47 @@ export const PhoneExtensions = () => {
       filter: true,
       floatingFilter: true,
     },
-    { headerName: "Acciones", field: "ID_EXT", cellRenderer: dmButton },
   ];
 
+
+
+  const [refreshData, setRefreshData] = useState(false);
+
+  const [quickFilterText, setQuickFilterText] = useState("");
+  const gridRef = useRef(null);
+  const { user } = useContext(UserContext);
+
+  const [columnDefs, setColumnDefs] = useState([...initialColumnDefs]);
+
+
+  const dmButton = (props) => {
+    return (
+      <>
+        <IconButton
+          color="error"
+          aria-label="delete"
+          onClick={() => handleDelete(props.value)}
+        >
+          <DeleteForeverIcon sx={{ fontSize: 30 }} />
+        </IconButton>
+      </>
+    );
+  };
+
+
   useEffect(() => {
+    // Verifica el perfil del usuario y agrega la columna 'Acciones' si es necesario
+    if (user.profile === '1') {
+      const accionColumna = { headerName: "Acciones", field: "ID_EXT", cellRenderer: dmButton };
+      setColumnDefs(prevDefs => [...prevDefs, accionColumna]);
+    }else {
+      // const accionColumna = { headerName: "Acciones", field: "ID_EXT", cellRenderer: dmButton };
+      // setColumnDefs(prevDefs => [...prevDefs, accionColumna]);
+    }
+  }, [user.profile]); 
+
+  useEffect(() => {
+
     const getExt = async () => {
       try {
         const url = "https://172.20.2.57:4000/getPhoneExtensions";
