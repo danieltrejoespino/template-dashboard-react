@@ -32,7 +32,7 @@ export const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const url = 'https://localhost:4000/login'
+    const url = 'https://172.20.2.57:4000/login'
     const params = {
       name: credentials.email,
       pass: credentials.password
@@ -86,7 +86,7 @@ export const Login = () => {
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                Usuario
+                Usuario o nomina
               </label>
               <div className="mt-2">
                 <input
@@ -98,7 +98,7 @@ export const Login = () => {
                   autoComplete="email"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  placeholder="Ingresa correo electronico"
+                  placeholder="Ingresa credenciales"
                 />
               </div>
             </div>

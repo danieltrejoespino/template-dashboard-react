@@ -25,7 +25,7 @@ export const ResetUser = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
   
-    const url = 'https://localhost:4000/resetlogin'
+    const url = 'https://172.20.2.57:4000/resetlogin'
     const params = {
       name: credentials.email,
       pass: credentials.password
@@ -38,13 +38,13 @@ export const ResetUser = () => {
       })
       // console.log( response.data.idUser);
       if (response.status == 200) {
-        toast.success("Contrasena actualizada con exito!");
+        toast.success("Contraseña actualizada con exito!");
         setTimeout(() => {
           navigate('/login')          
-        }, 3000);
+        }, 2000);
 
       } else {
-        toast.error("Error al actualizar la contrasena!");
+        toast.error("Error al actualizar la Contraseña!");
       }
 
     } catch (error) {
@@ -76,7 +76,7 @@ export const ResetUser = () => {
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                Usuario
+                Nomina
               </label>
               <div className="mt-2">
                 <input
@@ -96,7 +96,7 @@ export const ResetUser = () => {
             <div>
               <div className="flex items-center justify-between">
                 <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                  Contraseña
+                  Nueva Contraseña
                 </label>
               </div>
               <div className="mt-2">
