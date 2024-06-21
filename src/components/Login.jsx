@@ -47,8 +47,8 @@ export const Login = () => {
       if (response.status == 200) {
         toast.success("Inicio de sesion exitoso!");
 
-        const { ID_USER, ID_PERFIL, NAME_USER, TOKEN } = response.data;
-        setUserInfo(NAME_USER, ID_USER, ID_PERFIL);
+        const { ID_USER, ID_PERFIL, NAME_USER, TOKEN, APODO} = response.data;
+        setUserInfo(NAME_USER, ID_USER, ID_PERFIL,APODO);
 
         login(TOKEN);
         navigate('/')

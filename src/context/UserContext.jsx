@@ -8,28 +8,32 @@ const UserProvider = ({ children }) => {
     name: localStorage.getItem('userName') || '',
     id: localStorage.getItem('userId') || '',
     profile: localStorage.getItem('profile') || '',
+    apodo: localStorage.getItem('apodo') || '',
   });
 
-  const setUserInfo = (name, id, profile) => {
+  const setUserInfo = (name, id, profile,apodo) => {
     localStorage.setItem('userName', name);
     localStorage.setItem('userId', id);
     localStorage.setItem('profile', profile);
-    setUser({ name, id,profile });
+    localStorage.setItem('apodo', apodo);
+    setUser({ name, id,profile,apodo });
   };
 
   const clearUserInfo = () => {
     localStorage.removeItem('userName');
     localStorage.removeItem('userId');
     localStorage.removeItem('profile');
-    setUser({ name: '', id: '', profile: '' });
+    localStorage.removeItem('apodo');
+    setUser({ name: '', id: '', profile: '',apodo: '' });
 };
 
   useEffect(() => {
     const storedName = localStorage.getItem('userName');
     const storedId = localStorage.getItem('userId');
     const storedProfile = localStorage.getItem('profile');
+    const storedApodo = localStorage.getItem('apodo');
     if (storedName && storedId && storedProfile) {
-      setUser({ name: storedName, id: storedId,profile: storedProfile });
+      setUser({ name: storedName, id: storedId,profile: storedProfile,apodo:storedApodo });
     }
   }, []);
 

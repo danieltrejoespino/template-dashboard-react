@@ -191,7 +191,7 @@ export default function Dashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Hola {user.name}
+              Hola {user.apodo}
             </Typography>
 
             <IconButton color="inherit">
