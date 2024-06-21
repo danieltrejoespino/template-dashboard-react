@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import SvgIcon from '@mui/material/SvgIcon';
 import TextField from '@mui/material/TextField';
-
+import Avatar from '@mui/material/Avatar';
 
 
 const ENDPOINT = "https://172.20.2.57:4000";
@@ -89,11 +89,16 @@ export const Chat = () => {
           <Item>xs=8</Item>
         </Grid>
         <Grid xs={9}>
+        
           <Item>
             xs=9
             {messages.map((msg, index) => (
               <div key={index}>
-                <p>{msg.NAME_USER} : {msg.MSG}</p>
+                <p> 
+                  <Avatar alt="Remy Sharp" src={`https://robohash.org/${msg.NAME_USER}.png`} /> 
+                    {msg.NAME_USER}  : {msg.MSG} 
+                </p>
+                 
               </div>
             ))}
           </Item>
