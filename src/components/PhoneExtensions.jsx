@@ -241,7 +241,6 @@ export const PhoneExtensions = () => {
                 pagination={true}
                 paginationPageSize={20}
                 domLayout="autoHeight"
-                rowSelection="single"
                 quickFilterText={quickFilterText}
               />
             </div>
