@@ -25,7 +25,7 @@ export const ResetUser = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
   
-    const url = 'https://172.20.2.57:4000/resetlogin'
+    const url = 'https://localhost:4000/resetlogin'
     const params = {
       name: credentials.email,
       pass: credentials.password

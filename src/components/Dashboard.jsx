@@ -22,20 +22,13 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import Collapse from '@mui/material/Collapse';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import { HomeIcon, CurrencyDollarIcon, UserIcon, WrenchScrewdriverIcon, CircleStackIcon, ChatBubbleBottomCenterTextIcon, QueueListIcon, PhoneXMarkIcon, ClipboardDocumentListIcon, Cog6ToothIcon } from "@heroicons/react/24/solid";
+
+
 import LetterAvatars from "./LetterAvatars";
-import {
-  HomeIcon,
-  CurrencyDollarIcon,
-  UserIcon,
-  WrenchScrewdriverIcon,
-  CircleStackIcon,
-  ChatBubbleBottomCenterTextIcon,
-  QueueListIcon,
-  PhoneXMarkIcon
-
-} from "@heroicons/react/24/solid";
-
-
 import { CajaAhorro } from "./CajaAhorro";
 import { Index10 } from "./Index10";
 import { Utilidades } from "./Utilidades";
@@ -44,7 +37,7 @@ import { Chat } from "./Chat";
 import { PhoneExtensions } from "./PhoneExtensions";
 import { ReEtiquetado } from "./ReEtiquetado";
 
-const drawerWidth = 200;
+const drawerWidth = 250;
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -90,7 +83,6 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-// TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function Dashboard() {
@@ -99,10 +91,27 @@ export default function Dashboard() {
   const { user } = useContext(UserContext);
   const [menu, setMenu] = useState([])
 
+  const [openStates, setOpenStates] = useState({});
+
+  const navigation = [
+    { name: "Reportes", icon: ClipboardDocumentListIcon },
+    { name: "Procesos", icon: Cog6ToothIcon },
+
+    { name: "Caja ahorro", component: CajaAhorro, icon: CurrencyDollarIcon },
+    { name: "Index10", component: Index10, icon: UserIcon },
+    { name: "Utilidades", component: Utilidades, icon: WrenchScrewdriverIcon },
+    { name: "TestQuery", component: TestQuery, icon: CircleStackIcon },
+    { name: "Chat", component: Chat, icon: ChatBubbleBottomCenterTextIcon },
+    { name: "Extensiones", component: PhoneExtensions, icon: QueueListIcon },
+    { name: "Re etiquetado", component: ReEtiquetado, icon: PhoneXMarkIcon },
+  ];
+
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const url = 'https://172.20.2.57:4000/getMenu'
+        const url = 'https://localhost:4000/getMenu'
         const params = {
           id_user: user.id,
           id_perfil: user.profile
@@ -124,17 +133,17 @@ export default function Dashboard() {
 
   }, [])
 
+  const groupedMenuItems = menu.reduce((acc, item) => {
+    const { ID_TIPO_MENU, NAME_TIPO } = item;
+    if (!acc[ID_TIPO_MENU]) {
+      acc[ID_TIPO_MENU] = { NAME_TIPO, items: [] };
+    }
+    acc[ID_TIPO_MENU].items.push(item);
+    return acc;
+  }, {});
 
-  const navigation = [
-    { name: "Inicio", component: "INICIO", icon: HomeIcon },
-    { name: "Caja ahorro", component: CajaAhorro, icon: CurrencyDollarIcon},
-    { name: "Index10", component: Index10, icon: UserIcon }, 
-    { name: "Utilidades", component: Utilidades, icon: WrenchScrewdriverIcon},
-    { name: "TestQuery", component: TestQuery, icon: CircleStackIcon },    
-    { name: "Chat", component: Chat, icon: ChatBubbleBottomCenterTextIcon },
-    { name: "Extensiones", component: PhoneExtensions, icon: QueueListIcon },
-    { name: "Re etiquetado", component: ReEtiquetado, icon: PhoneXMarkIcon },
-  ];
+
+
 
 
   const renderSelectedComponent = () => {
@@ -142,10 +151,19 @@ export default function Dashboard() {
     return selectedItem ? <selectedItem.component /> : null;
   };
   const renderIconComponent = (iconName) => {
-    // console.log(iconName);
     const selectedItem = navigation.find((item) => item.name == iconName);
     return selectedItem ? <selectedItem.icon className="size-4 text-blue-500 mr-2" /> : null;
   };
+
+
+  const handleClick = (tipoMenu) => {
+    setOpenStates((prevState) => ({
+      ...prevState,
+      [tipoMenu]: !prevState[tipoMenu]
+    }));
+  };
+
+
 
   const handleElementClick = (element) => {
     if (element == "Inicio") {
@@ -167,10 +185,7 @@ export default function Dashboard() {
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <AppBar position="absolute" open={open}>
-          <Toolbar
-            sx={{
-              pr: "24px", // keep right padding when drawer closed
-            }}
+          <Toolbar sx={{ pr: "24px" }}
           >
             <IconButton
               edge="start"
@@ -221,26 +236,45 @@ export default function Dashboard() {
             </IconButton>
           </Toolbar>
           <Divider />
-          <List component="nav">
-            <React.Fragment>
-            </React.Fragment>
-            <Divider sx={{ my: 1 }} />
-            {/* {secondaryListItems} */}
-            {menu.map((item) => (
-              <ListItemButton
-                key={item.ID_MENU}
-                onClick={() => handleElementClick(item.NAME_MENU)}
-              >
-                <ListItemIcon>
-                  {/* {item.ICON_MENU && ( <item.ICON_MENU className="size-4 text-blue-500 mr-2" /> )} */}
-                  {renderIconComponent(item.NAME_MENU)}
 
-                </ListItemIcon>
-                <ListItemText primary={item.NAME_MENU} />
-              </ListItemButton>
+          <List component="nav" >
+            <ListItemButton
+              key={9999}
+              onClick={() => handleElementClick('Inicio')}
+            >
+              <ListItemIcon>
+                <HomeIcon className="size-4 text-blue-500 mr-2" />
+              </ListItemIcon>
+              <ListItemText primary="Inicio" />
+            </ListItemButton>
 
+            {Object.entries(groupedMenuItems).map(([ID_TIPO_MENU, { NAME_TIPO, items }]) => (
+              <>
+                <ListItemButton key={`${items}-${ID_TIPO_MENU}`} onClick={() => handleClick(ID_TIPO_MENU)}>
+                  <ListItemIcon>
+                    {renderIconComponent(NAME_TIPO)}
+                  </ListItemIcon>
+                  <ListItemText primary={NAME_TIPO} />
+                  {openStates[ID_TIPO_MENU] ? <ExpandLess /> : <ExpandMore />}
+                </ListItemButton>
+                <Collapse in={openStates[ID_TIPO_MENU]} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+                    {items.map(({ ID_MENU, NAME_MENU }) => {
+                      return (
+                        <ListItemButton key={`${ID_MENU}-${ID_TIPO_MENU}`} sx={{ pl: 4 }}
+                          onClick={() => handleElementClick(NAME_MENU)}
+                        >
+                          <ListItemIcon>
+                            {renderIconComponent(NAME_MENU)}
+                          </ListItemIcon>
+                          <ListItemText primary={NAME_MENU} />
+                        </ListItemButton>
+                      );
+                    })}
+                  </List>
+                </Collapse>
+              </>
             ))}
-
 
           </List>
 
@@ -268,3 +302,4 @@ export default function Dashboard() {
     </ThemeProvider>
   );
 }
+

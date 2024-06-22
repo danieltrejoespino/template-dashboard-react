@@ -59,37 +59,37 @@ export const PhoneExtensions = () => {
   const [columnDefs, setColumnDefs] = useState([...initialColumnDefs]);
 
 
-  const dmButton = (props) => {
-    return (
-      <>
-        <IconButton
-          color="error"
-          aria-label="delete"
-          onClick={() => handleDelete(props.value)}
-        >
-          <DeleteForeverIcon sx={{ fontSize: 30 }} />
-        </IconButton>
-      </>
-    );
-  };
+  // const dmButton = (props) => {
+  //   return (
+  //     <>
+  //       <IconButton
+  //         color="error"
+  //         aria-label="delete"
+  //         onClick={() => handleDelete(props.value)}
+  //       >
+  //         <DeleteForeverIcon sx={{ fontSize: 30 }} />
+  //       </IconButton>
+  //     </>
+  //   );
+  // };
 
 
-  useEffect(() => {
-    // Verifica el perfil del usuario y agrega la columna 'Acciones' si es necesario
-    if (user.profile === '1') {
-      const accionColumna = { headerName: "Acciones", field: "ID_EXT", cellRenderer: dmButton };
-      setColumnDefs(prevDefs => [...prevDefs, accionColumna]);
-    }else {
-      // const accionColumna = { headerName: "Acciones", field: "ID_EXT", cellRenderer: dmButton };
-      // setColumnDefs(prevDefs => [...prevDefs, accionColumna]);
-    }
-  }, [user.profile]); 
+  // useEffect(() => {
+  //   // Verifica el perfil del usuario y agrega la columna 'Acciones' si es necesario
+  //   if (user.profile === '1') {
+  //     const accionColumna = { headerName: "Acciones", field: "ID_EXT", cellRenderer: dmButton };
+  //     setColumnDefs(prevDefs => [...prevDefs, accionColumna]);
+  //   }else {
+  //     // const accionColumna = { headerName: "Acciones", field: "ID_EXT", cellRenderer: dmButton };
+  //     // setColumnDefs(prevDefs => [...prevDefs, accionColumna]);
+  //   }
+  // }, [user.profile]); 
 
   useEffect(() => {
 
     const getExt = async () => {
       try {
-        const url = "https://172.20.2.57:4000/getPhoneExtensions";
+        const url = "https://localhost:4000/getPhoneExtensions";
         const rspta = await axios.get(url, {
           headers: {
             "Content-Type": "application/json",
@@ -118,7 +118,7 @@ export const PhoneExtensions = () => {
   const handleSubmit = () => {
     const addExt = async () => {
       try {
-        const url = "https://172.20.2.57:4000/addPhoneExt";
+        const url = "https://localhost:4000/addPhoneExt";
         const rspta = await axios.post(url, formValues, {
           headers: {
             "Content-Type": "application/json",
@@ -147,7 +147,7 @@ export const PhoneExtensions = () => {
         const params = {
           idExt: value,
         };
-        const url = "https://172.20.2.57:4000/deletePhoneExtensions";
+        const url = "https://localhost:4000/deletePhoneExtensions";
         const rspta = await axios.delete(url, {
           headers: {
             "Content-Type": "application/json",
