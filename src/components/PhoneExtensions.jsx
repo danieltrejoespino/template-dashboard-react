@@ -59,37 +59,11 @@ export const PhoneExtensions = () => {
   const [columnDefs, setColumnDefs] = useState([...initialColumnDefs]);
 
 
-  // const dmButton = (props) => {
-  //   return (
-  //     <>
-  //       <IconButton
-  //         color="error"
-  //         aria-label="delete"
-  //         onClick={() => handleDelete(props.value)}
-  //       >
-  //         <DeleteForeverIcon sx={{ fontSize: 30 }} />
-  //       </IconButton>
-  //     </>
-  //   );
-  // };
-
-
-  // useEffect(() => {
-  //   // Verifica el perfil del usuario y agrega la columna 'Acciones' si es necesario
-  //   if (user.profile === '1') {
-  //     const accionColumna = { headerName: "Acciones", field: "ID_EXT", cellRenderer: dmButton };
-  //     setColumnDefs(prevDefs => [...prevDefs, accionColumna]);
-  //   }else {
-  //     // const accionColumna = { headerName: "Acciones", field: "ID_EXT", cellRenderer: dmButton };
-  //     // setColumnDefs(prevDefs => [...prevDefs, accionColumna]);
-  //   }
-  // }, [user.profile]); 
-
   useEffect(() => {
 
     const getExt = async () => {
       try {
-        const url = "https://localhost:4000/getPhoneExtensions";
+        const url = "https://172.20.2.57:4000/getPhoneExtensions";
         const rspta = await axios.get(url, {
           headers: {
             "Content-Type": "application/json",
@@ -115,129 +89,13 @@ export const PhoneExtensions = () => {
     }));
   };
 
-  const handleSubmit = () => {
-    const addExt = async () => {
-      try {
-        const url = "https://localhost:4000/addPhoneExt";
-        const rspta = await axios.post(url, formValues, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        if (rspta.data.rspta == "success") {
-          setShowExt(false);
-          setFormValues({
-            owner: "",
-            area: "",
-            ext: "",
-          });
-          setRefreshData((prev) => !prev);
-          toast.success("Extension guardada exitosamente!");
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    addExt();
-  };
-
-  const handleDelete = (value) => {
-    const deleteExt = async () => {
-      try {
-        const params = {
-          idExt: value,
-        };
-        const url = "https://localhost:4000/deletePhoneExtensions";
-        const rspta = await axios.delete(url, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          data: params,
-        });
-
-        if (rspta.data.rspta == "success") {
-          toast.success("Extension eliminada con exito!");
-          setRefreshData((prev) => !prev);
-        } else {
-          toast.error("Error al eliminar la extension!");
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    deleteExt();
-  };
-
+  
   const handleQuickFilterChange = (event) => {
     setQuickFilterText(event.target.value);
   };
 
   return (
     <>
-      <Box component="section" sx={{ p: 2, width: "100%" }}>
-        <Grid container spacing={2}>
-          <Grid xs={4}>
-            <IconButton
-              color="success"
-              aria-label="add"
-              onClick={handleOpenNewExt}
-            >
-              <AddCircleIcon sx={{ fontSize: 30 }} /> Nueva extension
-            </IconButton>
-          </Grid>
-          <Grid container xs={4}>
-            {showExt && (
-              <Grid container spacing={2}>
-                <Grid xs={3}>
-                  <TextField
-                    name="owner"
-                    value={formValues.owner}
-                    onChange={handleInputChange}
-                    label="Propietario"
-                    variant="standard"
-                    fullWidth
-                  />
-                </Grid>
-                <Grid xs={3}>
-                  <TextField
-                    name="area"
-                    value={formValues.area}
-                    onChange={handleInputChange}
-                    label="Area"
-                    variant="standard"
-                    fullWidth
-                  />
-                </Grid>
-                <Grid xs={3}>
-                  <TextField
-                    name="ext"
-                    value={formValues.ext}
-                    onChange={handleInputChange}
-                    label="Extension"
-                    variant="standard"
-                    fullWidth
-                  />
-                </Grid>
-                <Grid xs={3}>
-                  <IconButton
-                    type="submit"
-                    color="success"
-                    aria-label="add"
-                    onClick={handleSubmit}
-                  >
-                    Enviar
-                    <SendIcon sx={{ fontSize: 20 }} />
-                  </IconButton>
-                </Grid>
-              </Grid>
-            )}
-
-            <Grid xs={4}></Grid>
-          </Grid>
-        </Grid>
-      </Box>
-
       <Box component="section" sx={{ p: 2, width: "100%" }}>
         <Grid container spacing={2}>
           <Grid xs={12}>

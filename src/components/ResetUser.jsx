@@ -1,72 +1,68 @@
-import {  useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 // import { useAuth } from '../context/AuthContext'
 
-
-import { toast } from 'react-toastify';
-
-
+import { toast } from "react-toastify";
 
 export const ResetUser = () => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
     email: "",
-    password: ""
-  })
+    password: "",
+  });
 
   const handleCredentials = (e) => {
-
-    setCredentials({ ...credentials, [e.target.name]: e.target.value })
-  }
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-  
-    const url = 'https://localhost:4000/resetlogin'
+    e.preventDefault();
+
+    const url = "https://172.20.2.57:4000/resetlogin";
     const params = {
       name: credentials.email,
-      pass: credentials.password
-    }
+      pass: credentials.password,
+    };
     try {
       const response = await axios.put(url, params, {
         headers: {
           "Content-Type": "application/json",
-        }
-      })
+        },
+      });
       // console.log( response.data.idUser);
       if (response.status == 200) {
         toast.success("Contraseña actualizada con exito!");
         setTimeout(() => {
-          navigate('/login')          
+          navigate("/login");
         }, 2000);
-
       } else {
         toast.error("Error al actualizar la Contraseña!");
       }
-
     } catch (error) {
       // console.log(error);
       if (error.response.status == 404) {
-        toast.error("Inicio de sesión fallido! Usuario o contraseña incorrectos.");
+        toast.error(
+          "Inicio de sesión fallido! Usuario o contraseña incorrectos."
+        );
       } else {
         toast.error("Inicio de sesión fallido!"); // Mensaje genérico para otros errores
       }
-
     }
-  }
+  };
 
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
-            className="mx-auto h-10 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            alt="Your Company"
-          />
+          <a href="https://172.20.2.57:4000/" target="_blank">
+            <img
+              className="mx-auto h-10 w-auto"
+              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+              alt="Your Company"
+            />
+          </a>
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Restaurar sesión
           </h2>
@@ -75,7 +71,10 @@ export const ResetUser = () => {
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
                 Nomina
               </label>
               <div className="mt-2">
@@ -95,7 +94,10 @@ export const ResetUser = () => {
 
             <div>
               <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
                   Nueva Contraseña
                 </label>
               </div>
@@ -114,7 +116,6 @@ export const ResetUser = () => {
               </div>
             </div>
 
-
             <div>
               <button
                 type="submit"
@@ -124,9 +125,8 @@ export const ResetUser = () => {
               </button>
             </div>
           </form>
-
         </div>
       </div>
     </>
-  )
-}
+  );
+};

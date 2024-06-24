@@ -26,9 +26,9 @@ export default function ModalUser({ open, handleClose }) {
   const { user } = useContext(UserContext);
 
   const [formValues, setFormValues] = useState({
-    name: "",
-    pass: "",
-    nickname: "",
+    name: user.name,
+    pass: '',
+    nickname: user.apodo,
   });
 
   return (
@@ -64,7 +64,7 @@ export default function ModalUser({ open, handleClose }) {
             fullWidth
             value={formValues.pass}
             name="pass"
-            label="Contrasenia"
+            label="Nueva contrase&ntilde;a"
             variant="standard"
 
           />

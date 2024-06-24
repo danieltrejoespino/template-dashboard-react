@@ -36,6 +36,7 @@ import { TestQuery } from "./TestQuery";
 import { Chat } from "./Chat";
 import { PhoneExtensions } from "./PhoneExtensions";
 import { ReEtiquetado } from "./ReEtiquetado";
+import { AdminPhoneExtensions } from "./AdminPhoneExtensions";
 
 const drawerWidth = 250;
 
@@ -104,6 +105,7 @@ export default function Dashboard() {
     { name: "Chat", component: Chat, icon: ChatBubbleBottomCenterTextIcon },
     { name: "Extensiones", component: PhoneExtensions, icon: QueueListIcon },
     { name: "Re etiquetado", component: ReEtiquetado, icon: PhoneXMarkIcon },
+    { name: "Adm Extensiones", component: AdminPhoneExtensions, icon: QueueListIcon },
   ];
 
 
@@ -111,7 +113,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const url = 'https://localhost:4000/getMenu'
+        const url = 'https://172.20.2.57:4000/getMenu'
         const params = {
           id_user: user.id,
           id_perfil: user.profile
