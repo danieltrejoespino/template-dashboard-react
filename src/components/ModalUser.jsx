@@ -1,10 +1,11 @@
 import { useState, useContext } from "react";
 
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
+import Grid from "@mui/material/Unstable_Grid2";
+import { toast } from "react-toastify";
 
 import { UserContext } from "../context/UserContext";
 
@@ -23,13 +24,29 @@ const style = {
 };
 
 export default function ModalUser({ open, handleClose }) {
-  const { user } = useContext(UserContext);
+  const { user,setUserInfo } = useContext(UserContext);
 
   const [formValues, setFormValues] = useState({
     name: user.name,
     pass: '',
     nickname: user.apodo,
   });
+
+  const handleInputChange = (e) => {
+    const {name,value} = e.target
+    setFormValues((prevValues)=>({
+      ...prevValues,
+      [name] : value
+    }))
+
+  }
+  const handleSubmit =() => {
+    let idU =user.id
+    console.log(idU);
+    setUserInfo(formValues.name, user.id, user.profile,formValues.nickname);
+    toast.success("Datos actualizados con exito!");
+
+  }
 
   return (
     <div>
@@ -39,43 +56,67 @@ export default function ModalUser({ open, handleClose }) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Hola {user.apodo} aqui puedes modificar tu usuario
-          </Typography>
+        <Box sx={style} component="section">
+          <Grid container spacing={2}>
+            <Grid xs={12}>
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                Hola {user.apodo} aqui puedes modificar tu usuario
+              </Typography>
+            </Grid>
 
-          <TextField
-            fullWidth
-            value={formValues.name}
-            name="name"
-            label="Nombre"
-            variant="standard"
+            <Grid xs={4}>
+              <TextField
+                fullWidth
+                value={formValues.name}
+                onChange={handleInputChange}
+                name="name"
+                label="Nombre"
+                variant="standard"
 
-          />
-          <TextField
-            fullWidth
-            value={formValues.nickname}
-            name="nickname"
-            label="Apodo"
-            variant="standard"
+              />
+            </Grid>
+            <Grid xs={4}>
+              <TextField
+                fullWidth
+                value={formValues.nickname}
+                onChange={handleInputChange}
+                name="nickname"
+                label="Apodo"
+                variant="standard"
 
-          />
-          <TextField
-            fullWidth
-            value={formValues.pass}
-            name="pass"
-            label="Nueva contrase&ntilde;a"
-            variant="standard"
+              />
+            </Grid>
+            <Grid xs={4}>
+              <TextField
+                fullWidth
+                value={formValues.pass}
+                onChange={handleInputChange}
+                name="pass"
+                label="Nueva contrase&ntilde;a"
+                variant="standard"
 
-          />
-          <IconButton
-            type="submit"
-            color="success"
-            aria-label="add"
-          >
-            Guardar
-            <SaveIcon sx={{ fontSize: 20 }} />
-          </IconButton>
+              />
+            </Grid>
+            <Grid xs={12}>
+              <IconButton
+                type="submit"
+                color="success"
+                aria-label="add"
+                onClick={handleSubmit}
+              >
+                Actualizar
+                <SaveIcon sx={{ fontSize: 20 }} />
+              </IconButton>
+
+            </Grid>
+
+          </Grid>
+
+
+
+
+
+
 
 
 

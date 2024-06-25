@@ -113,7 +113,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const url = 'https://172.20.2.57:4000/getMenu'
+        const url = 'https://localhost:4000/getMenu'
         const params = {
           id_user: user.id,
           id_perfil: user.profile
