@@ -5,8 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
-import {Login} from './components/Login';
-import {ResetUser} from './components/ResetUser';
+import {Login} from './components/Login/Login';
+import {ResetUser} from './components/Login/ResetUser';
 import {Home} from './components/Home';
 import ProtectedRoute from './routes/ProtectedRoute';
 import { UserProvider } from "./context/UserContext";
