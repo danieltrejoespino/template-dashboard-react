@@ -1,4 +1,4 @@
-import "../App.css";
+import "../../App.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import ChartCajaAhorro from "./ChartCajaAhorro";
@@ -8,9 +8,9 @@ import "ag-grid-community/styles/ag-theme-quartz.css";
 import { toast } from "react-toastify";
 import { Typography, Box } from "@mui/material";
 
-import { ImageRender } from "./ImageRender";
-import Page404 from "./Page404";
-import ProgressSpinner from "./ProgressSpinner";
+import { ImageRender } from "../ImageRender";
+import Page404 from "../Page404";
+import ProgressSpinner from "../ProgressSpinner";
 
 export const CajaAhorro = () => {
   const [loading, setLoading] = useState(true);

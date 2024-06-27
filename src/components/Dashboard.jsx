@@ -29,15 +29,15 @@ import { HomeIcon, CurrencyDollarIcon, UserIcon, WrenchScrewdriverIcon, CircleSt
 
 
 import LetterAvatars from "./LetterAvatars";
-import { CajaAhorro } from "./CajaAhorro";
+import { CajaAhorro } from "./Reports/CajaAhorro";
 import { Index10 } from "./Index10";
-import { Utilidades } from "./Utilidades";
-import { TestQuery } from "./TestQuery";
+import { Utilidades } from "./Processes/Utilidades";
+import { TestQuery } from "./Processes/TestQuery";
 import { Chat } from "./Chat";
-import { PhoneExtensions } from "./PhoneExtensions";
-import { ReEtiquetado } from "./ReEtiquetado";
-import { AdminPhoneExtensions } from "./AdminPhoneExtensions";
-import { Clima } from "./Clima";
+import { PhoneExtensions } from "./Reports/PhoneExtensions";
+import { ReEtiquetado } from "./Processes/ReEtiquetado";
+import { AdminPhoneExtensions } from "./Processes/AdminPhoneExtensions";
+import { Clima } from "./Reports/Clima";
 
 const drawerWidth = 250;
 
