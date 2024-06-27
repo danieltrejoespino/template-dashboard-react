@@ -25,7 +25,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import { HomeIcon, CurrencyDollarIcon, UserIcon, WrenchScrewdriverIcon, CircleStackIcon, ChatBubbleBottomCenterTextIcon, QueueListIcon, PhoneXMarkIcon, ClipboardDocumentListIcon, Cog6ToothIcon } from "@heroicons/react/24/solid";
+import { HomeIcon, CurrencyDollarIcon, UserIcon, WrenchScrewdriverIcon, CircleStackIcon, ChatBubbleBottomCenterTextIcon, QueueListIcon, PhoneXMarkIcon, ClipboardDocumentListIcon, Cog6ToothIcon,CloudIcon } from "@heroicons/react/24/solid";
 
 
 import LetterAvatars from "./LetterAvatars";
@@ -37,6 +37,7 @@ import { Chat } from "./Chat";
 import { PhoneExtensions } from "./PhoneExtensions";
 import { ReEtiquetado } from "./ReEtiquetado";
 import { AdminPhoneExtensions } from "./AdminPhoneExtensions";
+import { Clima } from "./Clima";
 
 const drawerWidth = 250;
 
@@ -106,6 +107,7 @@ export default function Dashboard() {
     { name: "Extensiones", component: PhoneExtensions, icon: QueueListIcon },
     { name: "Re etiquetado", component: ReEtiquetado, icon: PhoneXMarkIcon },
     { name: "Adm Extensiones", component: AdminPhoneExtensions, icon: QueueListIcon },
+    { name: "Clima", component: Clima, icon: CloudIcon },
   ];
 
 

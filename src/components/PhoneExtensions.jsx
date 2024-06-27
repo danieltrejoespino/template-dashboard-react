@@ -27,21 +27,21 @@ export const PhoneExtensions = () => {
   const initialColumnDefs = [
     {
       headerName: "Propietario",
-      field: "OWNER_EXT",
+      field: "NOMBRE_MOSTRAR",
       flex: 1,
       filter: true,
       floatingFilter: true,
     },
     {
       headerName: "Area",
-      field: "AREA_EXT",
+      field: "AREA",
       flex: 1,
       filter: true,
       floatingFilter: true,
     },
     {
       headerName: "Extension",
-      field: "NAME_EXT",
+      field: "EXTENSION",
       flex: 1,
       filter: true,
       floatingFilter: true,

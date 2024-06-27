@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef,useContext } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import axios from "axios";
 import { AgGridReact } from "ag-grid-react";
 import { UserContext } from '../context/UserContext';
@@ -41,27 +41,119 @@ export const AdminPhoneExtensions = () => {
 
   const initialColumnDefs = [
     {
-      headerName: "Propietario",
-      field: "OWNER_EXT",
+      headerName: "NOMBRE_MOSTRAR",
+      field: "NOMBRE_MOSTRAR",
       flex: 1,
-      filter: true,
-      floatingFilter: true,
+
     },
     {
-      headerName: "Area",
-      field: "AREA_EXT",
+      headerName: "EXTENSION",
+      field: "EXTENSION",
       flex: 1,
-      filter: true,
-      floatingFilter: true,
+
     },
     {
-      headerName: "Extension",
-      field: "NAME_EXT",
+      headerName: "ASIGNADO",
+      field: "ASIGNADO",
       flex: 1,
-      filter: true,
-      floatingFilter: true,
+
     },
-    { headerName: "Acciones", field: "ID_EXT", cellRenderer: dmButton }
+    {
+      headerName: "WORK_EXT",
+      field: "WORK_EXT",
+      flex: 1,
+
+    },
+    {
+      headerName: "IP",
+      field: "IP",
+      flex: 1,
+
+    },
+    {
+      headerName: "UID_LDAP",
+      field: "UID_LDAP",
+      flex: 1,
+
+    },
+    {
+      headerName: "NOMBRE_USUARIO",
+      field: "NOMBRE_USUARIO",
+      flex: 1,
+
+    },
+    {
+      headerName: "TIPO",
+      field: "TIPO",
+      flex: 1,
+
+    },
+    {
+      headerName: "AREA",
+      field: "AREA",
+      flex: 1,
+
+    },
+    {
+      headerName: "MARCA",
+      field: "MARCA",
+      flex: 1,
+
+    },
+    {
+      headerName: "MODELO",
+      field: "MODELO",
+      flex: 1,
+
+    },
+    {
+      headerName: "MAC",
+      field: "MAC",
+      flex: 1,
+
+    },
+    {
+      headerName: "SERIE",
+      field: "SERIE",
+      flex: 1,
+
+    },
+    {
+      headerName: "LDAP",
+      field: "LDAP",
+      flex: 1,
+
+    },
+    {
+      headerName: "FIRMWARE",
+      field: "FIRMWARE",
+      flex: 1,
+
+    },
+    {
+      headerName: "ESTATUS",
+      field: "ESTATUS",
+      flex: 1,
+
+    },
+    {
+      headerName: "PASSWORD_EXT",
+      field: "PASSWORD_EXT",
+      flex: 1,
+
+    },
+    {
+      headerName: "COMENTARIOS",
+      field: "COMENTARIOS",
+      flex: 1,
+
+    },
+
+
+
+
+
+    // { headerName: "Acciones", field: "ID_EXT", cellRenderer: dmButton }
   ];
 
 
@@ -246,7 +338,7 @@ export const AdminPhoneExtensions = () => {
         <Grid container spacing={2}>
           <Grid xs={12}>
             <TextField
-              sx={{ mb:2,  width: "20%" }}
+              sx={{ mb: 2, width: "20%" }}
               type="text"
               value={quickFilterText}
               onChange={handleQuickFilterChange}
