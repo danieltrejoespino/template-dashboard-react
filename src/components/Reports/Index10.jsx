@@ -5,8 +5,8 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 
 
-import Page404 from './Page404'
-import ProgressSpinner from './ProgressSpinner'
+import Page404 from '../Page404'
+import ProgressSpinner from '../ProgressSpinner'
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";

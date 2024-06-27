@@ -30,10 +30,10 @@ import { HomeIcon, CurrencyDollarIcon, UserIcon, WrenchScrewdriverIcon, CircleSt
 
 import LetterAvatars from "./LetterAvatars";
 import { CajaAhorro } from "./Reports/CajaAhorro";
-import { Index10 } from "./Index10";
+import { Index10 } from "./Reports/Index10";
 import { Utilidades } from "./Processes/Utilidades";
 import { TestQuery } from "./Processes/TestQuery";
-import { Chat } from "./Chat";
+import { Chat } from "./Processes/Chat";
 import { PhoneExtensions } from "./Reports/PhoneExtensions";
 import { ReEtiquetado } from "./Processes/ReEtiquetado";
 import { AdminPhoneExtensions } from "./Processes/AdminPhoneExtensions";

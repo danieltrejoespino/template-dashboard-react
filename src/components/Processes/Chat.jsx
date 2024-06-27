@@ -1,12 +1,11 @@
 import { useState, useEffect, useRef, useContext } from 'react';
 import socketIOClient from 'socket.io-client';
-import { UserContext } from '../context/UserContext';
+import { UserContext } from '../../context/UserContext';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import SvgIcon from '@mui/material/SvgIcon';
 import TextField from '@mui/material/TextField';
