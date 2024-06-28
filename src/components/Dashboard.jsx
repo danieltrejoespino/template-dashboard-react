@@ -1,4 +1,3 @@
-import * as React from "react";
 import { useState, useContext, useEffect } from "react";
 import { UserContext } from '../context/UserContext';
 import axios from "axios";

@@ -1,188 +1,120 @@
 import { useState, useEffect, useRef, useContext } from "react";
 import axios from "axios";
-import { AgGridReact } from "ag-grid-react";
-import { UserContext } from '../../context/UserContext';
+import { CSVLink } from 'react-csv';
+import DataTable from 'react-data-table-component';
+
 
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
-
-import { toast } from "react-toastify";
-import IconButton from "@mui/material/IconButton";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
+import Button from '@mui/material/Button';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import TextField from "@mui/material/TextField";
-import SendIcon from "@mui/icons-material/Send";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+
+const columns = [
+  {
+    name: 'NOMBRE_MOSTRAR',
+    selector: row => row.NOMBRE_MOSTRAR,
+    sortable: true,
+  },
+  {
+    name: 'EXTENSION',
+    selector: row => row.EXTENSION,
+    sortable: true,
+  },
+  {
+    name: 'ASIGNADO',
+    selector: row => row.ASIGNADO,
+    sortable: true,
+  },
+  {
+    name: 'WORK_EXT',
+    selector: row => row.WORK_EXT,
+    sortable: true,
+  },
+  {
+    name: 'IP',
+    selector: row => row.IP,
+    sortable: true,
+  },
+  {
+    name: 'UID_LDAP',
+    selector: row => row.UID_LDAP,
+    sortable: true,
+  },
+  {
+    name: 'NOMBRE_USUARIO',
+    selector: row => row.NOMBRE_USUARIO,
+    sortable: true,
+  },
+  {
+    name: 'TIPO',
+    selector: row => row.TIPO,
+    sortable: true,
+  },
+  {
+    name: 'AREA',
+    selector: row => row.AREA,
+    sortable: true,
+  }
+];
+
+const ExpandedComponent = ({ data }) => (
+  <div style={{ padding: '10px', backgroundColor: '#424242' }}>
+    <p>AREA: {data.AREA}</p>
+    <p>MARCA: {data.MARCA}</p>
+    <p>MODELO: {data.MODELO}</p>
+    <p>MAC: {data.MAC}</p>
+    <p>SERIE: {data.NOMBRE_MOSTRAR}</p>
+    <p>LDAP: {data.LDAP}</p>
+    <p>FIRMWARE: {data.FIRMWARE}</p>
+    <p>ESTATUS: {data.ESTATUS}</p>
+    <p>PASSWORD_EXT: {data.PASSWORD_EXT}</p>
+    <p>COMENTARIOS: {data.COMENTARIOS}</p>
+  </div>
+);
+
+const headers = [
+  { label: 'NOMBRE_MOSTRAR', key: 'NOMBRE_MOSTRAR' },
+  { label: 'EXTENSION', key: 'EXTENSION' },
+  { label: 'ASIGNADO', key: 'ASIGNADO' },
+  { label: 'WORK_EXT', key: 'WORK_EXT' },
+  { label: 'IP', key: 'IP' },
+  { label: 'UID_LDAP', key: 'UID_LDAP' },
+  { label: 'NOMBRE_USUARIO', key: 'NOMBRE_USUARIO' },
+  { label: 'TIPO', key: 'TIPO' },
+  { label: 'AREA', key: 'AREA' },
+  { label: 'MARCA', key: 'MARCA' },
+  { label: 'MODELO', key: 'MODELO' },
+  { label: 'MAC', key: 'MAC' },
+  { label: 'SERIE', key: 'SERIE' },
+  { label: 'LDAP', key: 'LDAP' },
+  { label: 'FIRMWARE', key: 'FIRMWARE' },
+  { label: 'ESTATUS', key: 'ESTATUS' },
+  { label: 'PASSWORD_EXT', key: 'PASSWORD_EXT' },
+  { label: 'COMENTARIOS', key: 'COMENTARIOS' }
+];
+
+const paginationOptions = {
+  rowsPerPageText: 'Filas por página:',
+  rangeSeparatorText: 'de',
+  selectAllRowsItem: true,
+  selectAllRowsItemText: 'Todos',
+};
+
 
 export const AdminPhoneExtensions = () => {
-  const [phoneExt, setPhoneExt] = useState([]);
-  const [showExt, setShowExt] = useState(false);
-  const [formValues, setFormValues] = useState({
-    owner: "",
-    area: "",
-    ext: "",
-  });
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searchText, setSearchText] = useState('');
 
-  const dmButton = (props) => {
-    return (
-      <>
-        <IconButton
-          color="error"
-          aria-label="delete"
-          onClick={() => handleDelete(props.value)}
-        >
-          <DeleteForeverIcon sx={{ fontSize: 30 }} />
-        </IconButton>
-      </>
-    );
-  };
+  const [open, setOpen] = useState(true);
 
-
-  const initialColumnDefs = [
-    {
-      headerName: "NOMBRE_MOSTRAR",
-      field: "NOMBRE_MOSTRAR",
-      flex: 1,
-
-    },
-    {
-      headerName: "EXTENSION",
-      field: "EXTENSION",
-      flex: 1,
-
-    },
-    {
-      headerName: "ASIGNADO",
-      field: "ASIGNADO",
-      flex: 1,
-
-    },
-    {
-      headerName: "WORK_EXT",
-      field: "WORK_EXT",
-      flex: 1,
-
-    },
-    {
-      headerName: "IP",
-      field: "IP",
-      flex: 1,
-
-    },
-    {
-      headerName: "UID_LDAP",
-      field: "UID_LDAP",
-      flex: 1,
-
-    },
-    {
-      headerName: "NOMBRE_USUARIO",
-      field: "NOMBRE_USUARIO",
-      flex: 1,
-
-    },
-    {
-      headerName: "TIPO",
-      field: "TIPO",
-      flex: 1,
-
-    },
-    {
-      headerName: "AREA",
-      field: "AREA",
-      flex: 1,
-
-    },
-    {
-      headerName: "MARCA",
-      field: "MARCA",
-      flex: 1,
-
-    },
-    {
-      headerName: "MODELO",
-      field: "MODELO",
-      flex: 1,
-
-    },
-    {
-      headerName: "MAC",
-      field: "MAC",
-      flex: 1,
-
-    },
-    {
-      headerName: "SERIE",
-      field: "SERIE",
-      flex: 1,
-
-    },
-    {
-      headerName: "LDAP",
-      field: "LDAP",
-      flex: 1,
-
-    },
-    {
-      headerName: "FIRMWARE",
-      field: "FIRMWARE",
-      flex: 1,
-
-    },
-    {
-      headerName: "ESTATUS",
-      field: "ESTATUS",
-      flex: 1,
-
-    },
-    {
-      headerName: "PASSWORD_EXT",
-      field: "PASSWORD_EXT",
-      flex: 1,
-
-    },
-    {
-      headerName: "COMENTARIOS",
-      field: "COMENTARIOS",
-      flex: 1,
-
-    },
-
-
-
-
-
-    // { headerName: "Acciones", field: "ID_EXT", cellRenderer: dmButton }
-  ];
-
-
-
-  const [refreshData, setRefreshData] = useState(false);
-
-  const [quickFilterText, setQuickFilterText] = useState("");
-  const gridRef = useRef(null);
-  const { user } = useContext(UserContext);
-
-  const [columnDefs, setColumnDefs] = useState([...initialColumnDefs]);
-
-
-
-
-
-  // useEffect(() => {
-  //   // Verifica el perfil del usuario y agrega la columna 'Acciones' si es necesario
-  //   if (user.profile === '1') {
-  //     const accionColumna = { headerName: "Acciones", field: "ID_EXT", cellRenderer: dmButton };
-  //     setColumnDefs(prevDefs => [...prevDefs, accionColumna]);
-  //   }else {
-  //     // const accionColumna = { headerName: "Acciones", field: "ID_EXT", cellRenderer: dmButton };
-  //     // setColumnDefs(prevDefs => [...prevDefs, accionColumna]);
-  //   }
-  // }, [user.profile]); 
 
   useEffect(() => {
-
     const getExt = async () => {
       try {
         const url = "https://localhost:4000/getPhoneExtensions";
@@ -191,175 +123,71 @@ export const AdminPhoneExtensions = () => {
             "Content-Type": "application/json",
           },
         });
-        setPhoneExt(rspta.data);
+        setData(rspta.data);
+        setLoading(false);
+        setOpen(false)
       } catch (error) {
         console.log(error);
+        setLoading(false);
       }
     };
     getExt();
-  }, [refreshData]);
+  }, []);
 
-  const handleOpenNewExt = () => {
-    setShowExt((prevShowFields) => !prevShowFields);
-    // setShowExt(true)
-  };
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = () => {
-    const addExt = async () => {
-      try {
-        const url = "https://localhost:4000/addPhoneExt";
-        const rspta = await axios.post(url, formValues, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        if (rspta.data.rspta == "success") {
-          setShowExt(false);
-          setFormValues({
-            owner: "",
-            area: "",
-            ext: "",
-          });
-          setRefreshData((prev) => !prev);
-          toast.success("Extension guardada exitosamente!");
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    addExt();
-  };
-
-  const handleDelete = (value) => {
-    const deleteExt = async () => {
-      try {
-        const params = {
-          idExt: value,
-        };
-        const url = "https://localhost:4000/deletePhoneExtensions";
-        const rspta = await axios.delete(url, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          data: params,
-        });
-
-        if (rspta.data.rspta == "success") {
-          toast.success("Extension eliminada con exito!");
-          setRefreshData((prev) => !prev);
-        } else {
-          toast.error("Error al eliminar la extension!");
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    deleteExt();
-  };
-
-  const handleQuickFilterChange = (event) => {
-    setQuickFilterText(event.target.value);
-  };
+  const filteredData = searchText.length === 0 ? data : data.filter(item =>
+    item.NOMBRE_MOSTRAR.toLowerCase().includes(searchText.toLowerCase()) ||
+    item.EXTENSION.toLowerCase().includes(searchText.toLowerCase()) ||
+    item.ASIGNADO.toLowerCase().includes(searchText.toLowerCase()) ||
+    item.WORK_EXT.toLowerCase().includes(searchText.toLowerCase()) ||
+    item.IP.toLowerCase().includes(searchText.toLowerCase()) ||
+    item.UID_LDAP.toLowerCase().includes(searchText.toLowerCase()) ||
+    item.NOMBRE_USUARIO.toLowerCase().includes(searchText.toLowerCase()) ||
+    item.TIPO.toLowerCase().includes(searchText.toLowerCase()) ||
+    item.AREA.toLowerCase().includes(searchText.toLowerCase())
+  );
 
   return (
     <>
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}        
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <Box component="section" sx={{ p: 2, width: "100%" }}>
-        <Grid container spacing={2}>
-          <Grid xs={4}>
-            <IconButton
-              color="success"
-              aria-label="add"
-              onClick={handleOpenNewExt}
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={6}>
+            <CSVLink
+              data={data}
+              headers={headers}
+              filename="usuarios.csv"
+              className="btn btn-primary"
+              target="_blank"
             >
-              <AddCircleIcon sx={{ fontSize: 30 }} /> Nueva extension
-            </IconButton>
+              <Button
+                variant="outlined"
+                color="info"
+              >Exportar CSV</Button>
+            </CSVLink>
           </Grid>
-          <Grid container xs={4}>
-            {showExt && (
-              <Grid container spacing={2}>
-                <Grid xs={3}>
-                  <TextField
-                    name="owner"
-                    value={formValues.owner}
-                    onChange={handleInputChange}
-                    label="Propietario"
-                    variant="standard"
-                    fullWidth
-                  />
-                </Grid>
-                <Grid xs={3}>
-                  <TextField
-                    name="area"
-                    value={formValues.area}
-                    onChange={handleInputChange}
-                    label="Area"
-                    variant="standard"
-                    fullWidth
-                  />
-                </Grid>
-                <Grid xs={3}>
-                  <TextField
-                    name="ext"
-                    value={formValues.ext}
-                    onChange={handleInputChange}
-                    label="Extension"
-                    variant="standard"
-                    fullWidth
-                  />
-                </Grid>
-                <Grid xs={3}>
-                  <IconButton
-                    type="submit"
-                    color="success"
-                    aria-label="add"
-                    onClick={handleSubmit}
-                  >
-                    Enviar
-                    <SendIcon sx={{ fontSize: 20 }} />
-                  </IconButton>
-                </Grid>
-              </Grid>
-            )}
-
-            <Grid xs={4}></Grid>
+          <Grid item xs={6} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <TextField label="Buscar" variant="outlined" value={searchText}
+              onChange={(e) => setSearchText(e.target.value)} />
           </Grid>
-        </Grid>
-      </Box>
-
-      <Box component="section" sx={{ p: 2, width: "100%" }}>
-        <Grid container spacing={2}>
-          <Grid xs={12}>
-            <TextField
-              sx={{ mb: 2, width: "20%" }}
-              type="text"
-              value={quickFilterText}
-              onChange={handleQuickFilterChange}
-              label="Filtro rapido"
-              variant="outlined"
+          <Grid item xs={12}>
+            <DataTable
+              theme="dark"
+              title="Extensiones"
+              columns={columns}
+              data={filteredData}
+              progressPending={loading}
+              pagination
+              paginationComponentOptions={paginationOptions}
+              sortIcon={<ArrowDownwardIcon />}
+              expandableRows
+              expandableRowsComponent={ExpandedComponent}
+              subHeader
             />
-
-            <div
-              className={"ag-theme-quartz-dark"}
-              style={{ width: "100%", height: "100%" }}
-            >
-              <AgGridReact
-                ref={gridRef}
-                rowData={phoneExt}
-                columnDefs={columnDefs}
-                pagination={true}
-                paginationPageSize={20}
-                domLayout="autoHeight"
-                quickFilterText={quickFilterText}
-              />
-            </div>
           </Grid>
         </Grid>
       </Box>
