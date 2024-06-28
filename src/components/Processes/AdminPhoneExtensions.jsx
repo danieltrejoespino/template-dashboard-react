@@ -117,7 +117,7 @@ export const AdminPhoneExtensions = () => {
   useEffect(() => {
     const getExt = async () => {
       try {
-        const url = "https://localhost:4000/getPhoneExtensions";
+        const url = "https://172.20.2.57:4000/getPhoneExtensions";
         const rspta = await axios.get(url, {
           headers: {
             "Content-Type": "application/json",

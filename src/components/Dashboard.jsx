@@ -24,7 +24,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import { HomeIcon, CurrencyDollarIcon, UserIcon, WrenchScrewdriverIcon, CircleStackIcon, ChatBubbleBottomCenterTextIcon, QueueListIcon, PhoneXMarkIcon, ClipboardDocumentListIcon, Cog6ToothIcon,CloudIcon } from "@heroicons/react/24/solid";
+import { HomeIcon, CurrencyDollarIcon, UserIcon, WrenchScrewdriverIcon, CircleStackIcon, ChatBubbleBottomCenterTextIcon, QueueListIcon, PhoneXMarkIcon, ClipboardDocumentListIcon, Cog6ToothIcon,CloudIcon,UsersIcon } from "@heroicons/react/24/solid";
 
 
 import LetterAvatars from "./LetterAvatars";
@@ -37,6 +37,7 @@ import { PhoneExtensions } from "./Reports/PhoneExtensions";
 import { ReEtiquetado } from "./Processes/ReEtiquetado";
 import { AdminPhoneExtensions } from "./Processes/AdminPhoneExtensions";
 import { Clima } from "./Reports/Clima";
+import { Index11 } from "./Reports/Index11";
 
 const drawerWidth = 250;
 
@@ -107,6 +108,7 @@ export default function Dashboard() {
     { name: "Re etiquetado", component: ReEtiquetado, icon: PhoneXMarkIcon },
     { name: "Adm Extensiones", component: AdminPhoneExtensions, icon: QueueListIcon },
     { name: "Clima", component: Clima, icon: CloudIcon },
+    { name: "Index11", component: Index11, icon: UsersIcon },
   ];
 
 
@@ -114,7 +116,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const url = 'https://localhost:4000/getMenu'
+        const url = 'https://172.20.2.57:4000/getMenu'
         const params = {
           id_user: user.id,
           id_perfil: user.profile
