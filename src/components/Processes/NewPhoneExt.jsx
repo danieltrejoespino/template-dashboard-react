@@ -85,6 +85,7 @@ export const NewPhoneExt = ({ open, handleClose, data }) => {
                       variant="standard"
                       value={formData[campo.key]}
                       onChange={handleChange}
+                      inputProps={{ maxLength: 10 }}
                       required
                     />
 
