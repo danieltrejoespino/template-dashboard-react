@@ -50,5 +50,5 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "proxy": "https://172.20.2.57t:3009"
+  "proxy": "https://localhostt:3009"
 }

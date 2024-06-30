@@ -48,7 +48,7 @@ export default function ModalUser({ open, handleClose }) {
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
   const handleSubmit = async  () => {
-    const url = "https://172.20.2.57:4000/updateUser";
+    const url = "https://localhost:4000/updateUser";
     const params = {
       ID_USER: user.id,
       NAME_USER: formValues.name,

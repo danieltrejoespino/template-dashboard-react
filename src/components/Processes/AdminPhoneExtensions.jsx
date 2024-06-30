@@ -3,6 +3,7 @@ import axios from "axios";
 import { CSVLink } from 'react-csv';
 import DataTable from 'react-data-table-component';
 
+import { NewPhoneExt  } from "./NewPhoneExt";
 
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
@@ -110,14 +111,16 @@ export const AdminPhoneExtensions = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
-
   const [open, setOpen] = useState(true);
+
+  const [openModal, setOpenModal] = useState(false);
+
 
 
   useEffect(() => {
     const getExt = async () => {
       try {
-        const url = "https://172.20.2.57:4000/getPhoneExtensions";
+        const url = "https://localhost:4000/getPhoneExtensions";
         const rspta = await axios.get(url, {
           headers: {
             "Content-Type": "application/json",
@@ -146,22 +149,46 @@ export const AdminPhoneExtensions = () => {
     item.AREA.toLowerCase().includes(searchText.toLowerCase())
   );
 
+  const handlePhone = () => {
+    setOpenModal(true);
+
+    return <> 
+
+    </>
+
+
+
+  }
+  const handleCloseModal = () => setOpenModal(false);
+
+
   return (
     <>
+
+    <NewPhoneExt open={openModal} handleClose={handleCloseModal} data={headers}/>
+
       <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={open}        
+        open={open}
       >
         <CircularProgress color="inherit" />
       </Backdrop>
       <Box component="section" sx={{ p: 2, width: "100%" }}>
         <Grid container spacing={2} alignItems="center">
-          <Grid item xs={6}>
+          <Grid item xs={2}>
+            <Button
+              variant="outlined"
+              color="success"
+              onClick={handlePhone}
+            >Nueva extension
+            </Button>
+          </Grid>
+          <Grid item xs={2}>
             <CSVLink
               data={data}
               headers={headers}
-              filename="usuarios.csv"
-              className="btn btn-primary"
+              filename="extensiones.csv"
+              // className="btn btn-primary"
               target="_blank"
             >
               <Button
@@ -170,6 +197,10 @@ export const AdminPhoneExtensions = () => {
               >Exportar CSV</Button>
             </CSVLink>
           </Grid>
+          <Grid item xs={2}>
+
+          </Grid>
+
           <Grid item xs={6} style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <TextField label="Buscar" variant="outlined" value={searchText}
               onChange={(e) => setSearchText(e.target.value)} />
@@ -194,3 +225,6 @@ export const AdminPhoneExtensions = () => {
     </>
   );
 };
+
+
+
