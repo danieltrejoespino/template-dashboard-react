@@ -157,7 +157,7 @@ export default function ModalUser({ open, handleClose }) {
               </IconButton>
 
             </Grid>
-              <Grid item xs={12}>
+              <Grid xs={12}>
             {showSuccessAlert && (
                 <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
                   Datos actualizados con exito!.

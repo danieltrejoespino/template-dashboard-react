@@ -4,13 +4,13 @@ import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import { blue } from "@mui/material/colors";
 import { Link } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
 
-import { UserContext } from "../context/UserContext";
+import { UserContext } from "../../context/UserContext";
 
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import ModalUser from "./Login/ModalUser";
+import ModalUser from "../Login/ModalUser";
 import {
   UserIcon,
   ArrowLeftEndOnRectangleIcon,
@@ -28,12 +28,12 @@ export default function LetterAvatars() {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
-    setOpenModal(true)
     setAnchorEl(null);
 
 
   };
 
+  const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
 
 
@@ -59,7 +59,7 @@ export default function LetterAvatars() {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleOpenModal}>
           <UserIcon className="size-4 mr-2" />
           Perfil
           

@@ -1,5 +1,5 @@
-import { useState, useContext, useEffect } from "react";
-import { UserContext } from '../context/UserContext';
+import { useState, useContext, useEffect, Fragment } from "react";
+import { UserContext } from '../../context/UserContext';
 import axios from "axios";
 
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
@@ -24,21 +24,11 @@ import ListItemText from "@mui/material/ListItemText";
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import { HomeIcon, CurrencyDollarIcon, UserIcon, WrenchScrewdriverIcon, CircleStackIcon, ChatBubbleBottomCenterTextIcon, QueueListIcon, PhoneXMarkIcon, ClipboardDocumentListIcon, Cog6ToothIcon,CloudIcon,UsersIcon } from "@heroicons/react/24/solid";
+import { HomeIcon, CurrencyDollarIcon, ClipboardDocumentListIcon, UsersIcon } from "@heroicons/react/24/solid";
 
 
 import LetterAvatars from "./LetterAvatars";
-import { CajaAhorro } from "./Reports/CajaAhorro";
-import { Index10 } from "./Reports/Index10";
-import { Utilidades } from "./Processes/Utilidades";
-import { TestQuery } from "./Processes/TestQuery";
-import { Chat } from "./Processes/Chat";
-import { PhoneExtensions } from "./Reports/PhoneExtensions";
-import { ReEtiquetado } from "./Processes/ReEtiquetado";
-import { AdminPhoneExtensions } from "./Processes/AdminPhoneExtensions";
-import { Clima } from "./Reports/Clima";
-import { Index11 } from "./Reports/Index11";
-
+import GetRegister from '../Processes/GetRegister'
 const drawerWidth = 250;
 
 const AppBar = styled(MuiAppBar, {
@@ -83,7 +73,8 @@ const Drawer = styled(MuiDrawer, {
       },
     }),
   },
-}));
+})
+);
 
 const defaultTheme = createTheme();
 
@@ -97,53 +88,44 @@ export default function Dashboard() {
 
   const navigation = [
     { name: "Reportes", icon: ClipboardDocumentListIcon },
-    { name: "Procesos", icon: Cog6ToothIcon },
-
-    { name: "Caja ahorro", component: CajaAhorro, icon: CurrencyDollarIcon },
-    { name: "Index10", component: Index10, icon: UserIcon },
-    { name: "Utilidades", component: Utilidades, icon: WrenchScrewdriverIcon },
-    { name: "TestQuery", component: TestQuery, icon: CircleStackIcon },
-    { name: "Chat", component: Chat, icon: ChatBubbleBottomCenterTextIcon },
-    { name: "Extensiones", component: PhoneExtensions, icon: QueueListIcon },
-    { name: "Re etiquetado", component: ReEtiquetado, icon: PhoneXMarkIcon },
-    { name: "Adm Extensiones", component: AdminPhoneExtensions, icon: QueueListIcon },
-    { name: "Clima", component: Clima, icon: CloudIcon },
-    { name: "Index11", component: Index11, icon: UsersIcon },
+    { name: "CRM", icon: UsersIcon },
+    { name: "Ventas", component: GetRegister, icon: CurrencyDollarIcon },
+    
+    { name: "Obtener registro", component: GetRegister, icon: CurrencyDollarIcon },
   ];
 
 
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const url = 'https://localhost:4000/getMenu'
-        const params = {
-          id_user: user.id,
-          id_perfil: user.profile
+    if (user) {
+      const fetchData = async () => {
+        try {
+          const url = 'https://localhost:4000/getMenu';
+          const params = {
+            id_user: user.id,
+            id_perfil: user.profile
+          };
+          const response = await axios.post(url, params, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          setMenu(response.data);
+        } catch (error) {
+          console.log(error);
         }
-        // console.log(params);
-        const response = await axios.post(url, params, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-        // console.log(response.data);
-        setMenu(response.data)
-      } catch (error) {
-        console.log(error);
-      }
+      };
+
+      fetchData();
     }
-
-    fetchData();
-
-  }, [])
+  }, [user]);
 
   const groupedMenuItems = menu.reduce((acc, item) => {
-    const { ID_TIPO_MENU, NAME_TIPO } = item;
-    if (!acc[ID_TIPO_MENU]) {
-      acc[ID_TIPO_MENU] = { NAME_TIPO, items: [] };
+    const { ID_TYPE_MENU, NAME_TYPE } = item;
+    if (!acc[ID_TYPE_MENU]) {
+      acc[ID_TYPE_MENU] = { NAME_TYPE, items: [] };
     }
-    acc[ID_TIPO_MENU].items.push(item);
+    acc[ID_TYPE_MENU].items.push(item);
     return acc;
   }, {});
 
@@ -242,45 +224,41 @@ export default function Dashboard() {
           </Toolbar>
           <Divider />
 
-          <List component="nav" >
-            <ListItemButton
-              key={9999}
-              onClick={() => handleElementClick('Inicio')}
-            >
+          <List component="nav">
+            <ListItemButton key={9999} onClick={() => handleElementClick('Inicio')}>
               <ListItemIcon>
                 <HomeIcon className="size-4 text-blue-500 mr-2" />
               </ListItemIcon>
               <ListItemText primary="Inicio" />
             </ListItemButton>
 
-            {Object.entries(groupedMenuItems).map(([ID_TIPO_MENU, { NAME_TIPO, items }]) => (
-              <>
-                <ListItemButton key={`${items}-${ID_TIPO_MENU}`} onClick={() => handleClick(ID_TIPO_MENU)}>
+            {Object.entries(groupedMenuItems).map(([ID_TYPE_MENU, { NAME_TYPE, items }]) => (
+              <Fragment key={ID_TYPE_MENU}>
+                <ListItemButton onClick={() => handleClick(ID_TYPE_MENU)}>
                   <ListItemIcon>
-                    {renderIconComponent(NAME_TIPO)}
+                    {renderIconComponent(NAME_TYPE)}
                   </ListItemIcon>
-                  <ListItemText primary={NAME_TIPO} />
-                  {openStates[ID_TIPO_MENU] ? <ExpandLess /> : <ExpandMore />}
+                  <ListItemText primary={NAME_TYPE} />
+                  {openStates[ID_TYPE_MENU] ? <ExpandLess /> : <ExpandMore />}
                 </ListItemButton>
-                <Collapse in={openStates[ID_TIPO_MENU]} timeout="auto" unmountOnExit>
+                <Collapse in={openStates[ID_TYPE_MENU]} timeout="auto" unmountOnExit>
                   <List component="div" disablePadding>
-                    {items.map(({ ID_MENU, NAME_MENU }) => {
-                      return (
-                        <ListItemButton key={`${ID_MENU}-${ID_TIPO_MENU}`} sx={{ pl: 4 }}
-                          onClick={() => handleElementClick(NAME_MENU)}
-                        >
-                          <ListItemIcon>
-                            {renderIconComponent(NAME_MENU)}
-                          </ListItemIcon>
-                          <ListItemText primary={NAME_MENU} />
-                        </ListItemButton>
-                      );
-                    })}
+                    {items.map(({ ID_MENU, NAME_MENU }) => (
+                      <ListItemButton
+                        key={ID_MENU}
+                        sx={{ pl: 4 }}
+                        onClick={() => handleElementClick(NAME_MENU)}
+                      >
+                        <ListItemIcon>
+                          {renderIconComponent(NAME_MENU)}
+                        </ListItemIcon>
+                        <ListItemText primary={NAME_MENU} />
+                      </ListItemButton>
+                    ))}
                   </List>
                 </Collapse>
-              </>
+              </Fragment>
             ))}
-
           </List>
 
 
