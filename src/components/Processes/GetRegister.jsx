@@ -401,7 +401,6 @@ const ValidationArticle22 = () => {
       >
         Validación artículo 22
       </Typography>
-
       <Typography variant="body2" gutterBottom sx={{ color: "red" }}>
         El cliente debe responder la siguiente pregunta.
       </Typography>
@@ -413,81 +412,128 @@ const ValidationArticle22 = () => {
         ME PERMITE REGRESARLE LA LLAMADA EN 2 MESES?
         <Switch {...label} />
       </Typography>
-
       <Typography variant="subtitle" gutterBottom sx={{ color: "red" }}>
         Formulario de validaciones.
       </Typography>
 
-      <FormControl  size="small">
-        <InputLabel id="sellProduct">Selecciona un plan</InputLabel>
-        <Select
-          labelId="sellProduct"
-          id="sellProduct"
-          label="Selecciona un producto"
-          required
-          sx={{ marginLeft: "10px" }}
-        >
-          <MenuItem value={1}>10000</MenuItem>
-          <MenuItem value={2}>25000</MenuItem>
-        </Select>
-      </FormControl>
- 
-        <TextField
-          name=" PRIMA_MENSUAL"
-          label=" PRIMA MENSUAL "
-          variant="standard"
-          sx={{ marginLeft: "10px" }}
-          defaultValue="Small"
-          size="small"
-        />
+      <Typography
+        variant="body2"
+        gutterBottom
+        sx={{ display: "flex", alignItems: "center", marginLeft: "10px" }}
+      >
+        Tipo de plan
+        <FormControl sx={{ m: 1, minWidth: 220 }} size="small">
+          <InputLabel id="sellProduct">Selecciona un plan</InputLabel>
+          <Select
+            labelId="sellProduct"
+            id="sellProduct"
+            label="Selecciona un producto"
+            required
+            sx={{ marginLeft: "10px" }}
+          >
+            <MenuItem value={1}>10000</MenuItem>
+            <MenuItem value={2}>25000</MenuItem>
+          </Select>
+        </FormControl>
+      </Typography>
+      <Typography
+        variant="body2"
+        gutterBottom
+        sx={{ display: "flex", alignItems: "center", marginLeft: "10px" }}
+      >
+        Prima mensual: 
         <TextField
           name="TOTAL_ANUAL"
-          label="TOTAL_ANUAL"
-          variant="standard"
-          defaultValue="Small"
-          size="small"
+          label="Prima mensual: "
+          variant="filled"
           sx={{ marginLeft: "10px" }}
+          size="small"
         />
- 
-
-      <FormControl  sx={{ marginLeft: "10px" }} size="small">
-        <InputLabel id="paymentMethod">Método de pago</InputLabel>
-        <Select
-          labelId="paymentMethod"
-          id="paymentMethod"
-          label="Selecciona un método de pago"
-          required
-        >
-          <MenuItem value={1}>2789-TDC</MenuItem>
-          <MenuItem value={2}>1234-TDC</MenuItem>
-        </Select>
-      </FormControl>
-
+      </Typography>
+      <Typography
+        variant="body2"
+        gutterBottom
+        sx={{ display: "flex", alignItems: "center", marginLeft: "10px" }}
+      >
+        Total anual
+        <TextField
+          name="TOTAL_ANUAL"
+          label="Total anual: "
+          variant="filled"
+          sx={{ marginLeft: "10px" }}
+          size="small"
+        />
+      </Typography>
+      <Typography
+        variant="body2"
+        gutterBottom
+        sx={{ display: "flex", alignItems: "center", marginLeft: "10px" }}
+      >
+        Metodo de pago
+        <FormControl sx={{ m: 1, minWidth: 220 }} size="small">
+          <InputLabel id="sellProduct">Metodo de pago</InputLabel>
+          <Select
+            labelId="sellProduct"
+            id="sellProduct"
+            label="Selecciona un producto"
+            required
+            sx={{ marginLeft: "10px" }}
+          >
+            <MenuItem value={1}>10000</MenuItem>
+            <MenuItem value={2}>25000</MenuItem>
+          </Select>
+        </FormControl>
+      </Typography>
       <Typography variant="subtitle" gutterBottom sx={{ color: "red" }}>
         El cliente debe autenticarse con cualquiera de las siguientes preguntas
         antes de poder continuar.
       </Typography>
-
+      <Typography
+        variant="body2"
+        gutterBottom
+        sx={{ display: "flex", alignItems: "center", marginLeft: "10px" }}
+      >
+        Fecha nacimiento (YYYY MM DD)
         <TextField
           name="TOTAL_ANUAL"
-          label="Fecha Nacimiento? (yyyymmdd)"
-          variant="standard"
+          label="Fecha Nacimiento"
+          variant="filled"
           sx={{ marginLeft: "10px" }}
+          size="small"
         />
+      </Typography>
+      
 
+      <Typography
+        variant="body2"
+        gutterBottom
+        sx={{ display: "flex", alignItems: "center", marginLeft: "10px" }}
+      >
+        Codigo postal
         <TextField
           name="TOTAL_ANUAL"
-          label="Codigo Postal?"
-          variant="standard"
+          label="CP"
+          variant="filled"
           sx={{ marginLeft: "10px" }}
+          size="small"
         />
+      </Typography>
 
+
+      <Typography
+        variant="body2"
+        gutterBottom
+        sx={{ display: "flex", alignItems: "center", marginLeft: "10px" }}
+      >
+        Colonia
         <TextField
           name="TOTAL_ANUAL"
-          label="Colonia?"
-          variant="standard"
+          label="Colonia"
+          variant="filled"
           sx={{ marginLeft: "10px" }}
+          size="small"
         />
+      </Typography>
 
     </>
   );
