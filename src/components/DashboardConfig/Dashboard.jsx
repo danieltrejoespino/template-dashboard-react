@@ -100,7 +100,7 @@ export default function Dashboard() {
     if (user) {
       const fetchData = async () => {
         try {
-          const url = 'https://localhost:4000/apiCiti/getMenu';
+          const url = 'https://localhost:4001/apiCiti/getMenu';
           const params = {
             id_user: user.id,
             id_perfil: user.profile
