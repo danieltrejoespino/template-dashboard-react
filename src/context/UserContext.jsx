@@ -9,14 +9,16 @@ const UserProvider = ({ children }) => {
     id: localStorage.getItem('userId') || '',
     profile: localStorage.getItem('profile') || '',
     apodo: localStorage.getItem('apodo') || '',
+    modality: localStorage.getItem('modality') || '',
   });
 
-  const setUserInfo = (name, id, profile,apodo) => {
+  const setUserInfo = (name, id, profile,apodo,modality) => {
     localStorage.setItem('userName', name);
     localStorage.setItem('userId', id);
     localStorage.setItem('profile', profile);
     localStorage.setItem('apodo', apodo);
-    setUser({ name, id,profile,apodo });
+    localStorage.setItem('modality', modality);
+    setUser({ name, id,profile,apodo,modality });
   };
 
   const clearUserInfo = () => {
@@ -24,7 +26,8 @@ const UserProvider = ({ children }) => {
     localStorage.removeItem('userId');
     localStorage.removeItem('profile');
     localStorage.removeItem('apodo');
-    setUser({ name: '', id: '', profile: '',apodo: '' });
+    localStorage.removeItem('modality');
+    setUser({ name: '', id: '', profile: '',apodo: '',modality:"" });
 };
 
   useEffect(() => {
@@ -32,8 +35,9 @@ const UserProvider = ({ children }) => {
     const storedId = localStorage.getItem('userId');
     const storedProfile = localStorage.getItem('profile');
     const storedApodo = localStorage.getItem('apodo');
+    const storedModality = localStorage.getItem('modality');
     if (storedName && storedId && storedProfile) {
-      setUser({ name: storedName, id: storedId,profile: storedProfile,apodo:storedApodo });
+      setUser({ name: storedName, id: storedId,profile: storedProfile,apodo:storedApodo,modality: storedModality });
     }
   }, []);
 

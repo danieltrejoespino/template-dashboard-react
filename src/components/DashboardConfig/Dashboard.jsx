@@ -195,6 +195,16 @@ export default function Dashboard() {
             >
               Hola {user.apodo}
             </Typography>
+            
+            <Typography
+              component="h1"
+              variant="h6"
+              color="inherit"
+              noWrap
+              sx={{ flexGrow: 1 }}
+            >
+              Firmado en {user.modality == 1 ? "Asistido" : "Predictivo" }
+            </Typography>
 
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
