@@ -48,7 +48,7 @@ export default function ModalUser({ open, handleClose }) {
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
   const handleSubmit = async  () => {
-    const url = "https://localhost:4000/updateUser";
+    const url = "https://localhost:4000/apiCiti/updateUser";
     const params = {
       ID_USER: user.id,
       NAME_USER: formValues.name,

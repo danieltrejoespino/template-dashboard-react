@@ -20,7 +20,7 @@ export const ResetUser = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const url = "https://localhost:4000/resetlogin";
+    const url = "https://localhost:4000/apiCiti/resetlogin";
     const params = {
       name: credentials.email,
       pass: credentials.password,
@@ -56,7 +56,7 @@ export const ResetUser = () => {
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <a href="https://localhost:4000/" target="_blank">
+          <a href="https://localhost:4000/apiCiti/testApi" target="_blank">
             <img
               className="mx-auto h-10 w-auto"
               src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"

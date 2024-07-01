@@ -46,7 +46,7 @@ export default function GetRegister() {
 
   useEffect(() => {
     const getRegister = async () => {
-      const url = "https://localhost:4000/getRegister";
+      const url = "https://localhost:4000/apiCiti/getRegister";
       try {
         const rsp = await axios.post(url, {
           headers: {
