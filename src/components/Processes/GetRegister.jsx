@@ -6,15 +6,9 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
-import Alert from "@mui/material/Alert";
 import TextField from "@mui/material/TextField";
+import { toast } from 'react-toastify';
 
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -34,16 +28,26 @@ const style = {
   // overflow: 'auto'
 };
 
+import Ivr from "./Ivr";
+import CustomerInformation from "./CustomerInformation";
+import CustomerPhones from "./CustomerPhones";
+import ContactCalifications from "./ContactCalifications";
+import QuizProduct1 from "./QuizProduct1";
+
 export default function GetRegister() {
-  const [openBackdrop, setOpenBackdrop] = useState(true); //Loading
-  const [showAlert, setShowAlert] = useState(false); //Validate form
-  const [missingData, setMissingData] = useState(""); //validate form
+  const [openBackdrop, setOpenBackdrop] = useState(true); //Loading  
+  const [formContact, setFormContact] = useState(true); // show or hide contact form
 
   const [customerData, setCustomerData] = useState([]); //Customer information
   const [contactCal, setContactCal] = useState([]);
-  const [product, setProduct] = useState(""); // Product to sell
 
-  const [formContact, setFormContact] = useState(true); // show or hide contact form
+
+  const [product, setProduct] = useState(0); // Product to sell
+  const [phoneSell, setPhoneSell] = useState(""); // Product to sell
+
+
+  const [formComplete, setFormComplete] = useState(false);
+
 
   useEffect(() => {
     const getRegister = async () => {
@@ -68,16 +72,25 @@ export default function GetRegister() {
   }, []);
 
   const handleProduct = (event) => {
-    console.log(event.target.value);
     setProduct(event.target.value);
   };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setMissingData("Llena los campos faltantes");
-    setShowAlert(true);
-    setFormContact(false);
+  const handlePhoneCall = (phoneValue) => {
+    console.log(phoneValue);
+    setPhoneSell(phoneValue);
   };
+
+  const handleContact = () => {
+    console.clear()
+    if (product == 0) {      
+      toast.warning("Selecciona un producto para continuar");
+
+    } else {
+      setFormContact(false);
+      setFormComplete(true)
+    }
+  };
+
+
 
   const handleReturnContact = () => {
     setFormContact(true);
@@ -108,55 +121,83 @@ export default function GetRegister() {
         sx={style}
         style={{ display: formContact ? "block" : "none" }}
       >
-        <form onSubmit={handleSubmit}>
-          <Grid container spacing={2}>
-            {/* Aqui se cargan los datos del cliente como componente */}
-            <Grid xs={12} md={12}>
-              <CustomerData data={customerData} />
-            </Grid>
-            {/* Aqui se cargan los telefonos como componente */}
-            <Grid xs={12} md={12}>
-              <CustomerPhones data={customerData} />
-            </Grid>
 
-            {/* Tabla 3: Contacto*/}
-            <Grid xs={12} md={12}>
-              {/* fullWidth */}
-              <FormControl fullWidth>
-                <InputLabel id="sellProduct">Selecciona un producto</InputLabel>
-                <Select
-                  labelId="sellProduct"
-                  id="sellProduct"
-                  value={product}
-                  label="Selecciona un producto"
-                  onChange={handleProduct}
-                  required
-                >
-                  <MenuItem value={1}>Producto 1</MenuItem>
-                  <MenuItem value={2}>Producto 2</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid xs={12} md={12}>
-              <Stack direction="row" spacing={2}>
-                <Button color="success" variant="outlined" type="submit">
-                  Continuar
-                </Button>
-                <Button color="error" variant="outlined">
-                  Abandonar
-                </Button>
-                {showAlert && (
-                  <Alert
-                    // icon={<CheckIcon fontSize="inherit" />}
-                    severity="warning"
-                  >
-                    {missingData}
-                  </Alert>
-                )}
-              </Stack>
-            </Grid>
+        <Grid container spacing={2}>
+          <Grid xs={6} md={6}>
+            <CustomerInformation data={customerData} /> {/* Aqui se cargan los datos del cliente como componente */}
           </Grid>
-        </form>
+          <Grid xs={6} md={6}>
+            <CustomerPhones data={customerData} handlePhoneCall={handlePhoneCall} />  {/* Aqui se cargan los telefonos como componente */}
+          </Grid>
+        </Grid>
+
+        <Grid container spacing={2}>
+          <Grid xs={6} md={6} >
+            <Typography
+              variant="body2"
+              gutterBottom
+              sx={{ display: "flex", alignItems: "center", m: 1 }}
+            >
+              Selecciona un producto
+            </Typography>
+            <FormControl sx={{ m: 1 }} size="small" fullWidth>
+              <InputLabel id="sellProduct">Producto</InputLabel>
+              <Select
+                labelId="sellProduct"
+                id="sellProduct"
+                label="Selecciona un producto"
+                required
+                onChange={handleProduct}
+                value={product}
+              >
+                <MenuItem disabled value={0}>
+                  Selecciona un producto
+                </MenuItem>
+                <MenuItem value={1}>Accidentes</MenuItem>
+                <MenuItem value={2}>Hospital</MenuItem>
+              </Select>
+            </FormControl>
+
+            <Stack direction="row" spacing={2}
+              sx={{ display: "flex", alignItems: "center", marginLeft: "10px" }}
+            >
+              <Button color="success" variant="outlined" onClick={handleContact}>
+                Continuar
+              </Button>
+              <Button color="error" variant="outlined">
+                Abandonar
+              </Button>
+            </Stack>
+          </Grid>
+          <Grid xs={6} md={6}>
+          </Grid>
+        </Grid>
+
+      </Box>
+
+      {/* Esta caja es para el producto 1 */}
+      <Box
+        component="section"
+        sx={style}
+        style={{ display: formContact ? "none" : "block" }}
+      >
+        <Grid container spacing={2}>
+          <Grid xs={12} md={12}>
+            <ContactCalifications
+              data={contactCal}
+              handleReturnContact={handleReturnContact}
+            />
+          </Grid>
+          <Grid xs={12} md={6}>
+            <CustomerInformation data={customerData} />  {/* Componente para cargar informacion del cliente */}
+          </Grid>
+          <Grid xs={12} md={6}>
+            <Ivr phone={phoneSell} /> {/* Componente para enviar a ivr */}
+          </Grid>
+          <Grid xs={12} md={12}>
+            {/* <ValidationArticle22 /> */}
+          </Grid>
+        </Grid>
       </Box>
 
       <Box
@@ -164,224 +205,19 @@ export default function GetRegister() {
         sx={style}
         style={{ display: formContact ? "none" : "block" }}
       >
-        <form onSubmit={handleSubmit}>
-          <Grid container spacing={2}>
-            <Grid xs={12} md={12}>
-              <QualificationsContact
-                product={product}
-                handleProduct={handleProduct}
-                data={contactCal}
-                handleReturnContact={handleReturnContact}
-              />
-            </Grid>
-            <Grid xs={12} md={6}>
-              <CustomerData data={customerData} />
-            </Grid>
-            <Grid xs={12} md={6}>
-              <PhoneContact />
-            </Grid>
-            <Grid xs={12} md={12}>
-              <ValidationArticle22 />
-            </Grid>
-          </Grid>
-        </form>
+
+        {formComplete && <QuizProduct1 product={product} />}
+
+
       </Box>
     </>
   );
 }
 
-const CustomerData = ({ data }) => {
-  return (
-    <>
-      <Typography
-        variant="h6"
-        component="h6"
-        sx={{
-          mb: 2,
-          textAlign: "center",
-          backgroundColor: "#3498db",
-          color: "white",
-          borderRadius: "5px",
-        }}
-      >
-        Datos de la solicitud
-      </Typography>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableBody>
-            <TableRow>
-              <TableCell component="th" scope="row">
-                Nombre:
-              </TableCell>
-              <TableCell>{data.NAME}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell component="th" scope="row">
-                Registro:
-              </TableCell>
-              <TableCell>{data.REGISTER}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell component="th" scope="row">
-                Producto ofertado:
-              </TableCell>
-              <TableCell>{data.PRODUCT_OFFERING}</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </>
-  );
-};
 
-const CustomerPhones = ({ data }) => {
-  return (
-    <>
-      <Typography
-        variant="h6"
-        component="h6"
-        sx={{
-          mb: 2,
-          textAlign: "center",
-          backgroundColor: "#3498db",
-          color: "white",
-          borderRadius: "5px",
-        }}
-      >
-        Telefonos
-      </Typography>
 
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableBody>
-            {data.PHONES &&
-              data.PHONES.map((phone, index) => (
-                <TableRow key={index}>
-                  <TableCell>{`***${phone.toString().substring(6)}`}</TableCell>
-                  <TableCell align="center">
-                    <Button color="info" variant="outlined">
-                      Marcar tel {index + 1}
-                    </Button>
-                  </TableCell>
-                  <TableCell align="center">Aqui va el select</TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </>
-  );
-};
 
-const QualificationsContact = ({
-  data,
-  product,
-  handleProduct,
-  handleReturnContact,
-}) => {
-  return (
-    <>
-      <Grid container spacing={2}>
-        <Grid xs={12} md={12}>
-          <Typography
-            variant="h6"
-            component="h6"
-            sx={{
-              mb: 2,
-              textAlign: "center",
-              backgroundColor: "#3498db",
-              color: "white",
-              borderRadius: "5px",
-            }}
-          >
-            Calificaciones del registro
-          </Typography>
-        </Grid>
-        <Grid xs={12} md={6}>
-          <FormControl fullWidth>
-            <InputLabel id="sellProduct">
-              Selecciona el motivo por el cual no finalizo la venta
-            </InputLabel>
-            <Select
-              labelId="sellProduct"
-              id="sellProduct"
-              value={product}
-              label="Selecciona un producto"
-              onChange={handleProduct}
-              required
-            >
-              {data &&
-                data.map((cal, index) => (
-                  <MenuItem value={index}> {cal.ESTATUS}</MenuItem>
-                ))}
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid xs={12} md={3}>
-          <Button
-            fullWidth
-            color="error"
-            variant="outlined"
-            onClick={handleReturnContact}
-          >
-            Regresar
-          </Button>
-        </Grid>
-        <Grid xs={12} md={3}>
-          <Button
-            fullWidth
-            color="info"
-            variant="outlined"
-            // onClick={handleReturnContact}
-          >
-            Calificar
-          </Button>
-        </Grid>
-      </Grid>
-    </>
-  );
-};
 
-const PhoneContact = () => {
-  return (
-    <>
-      <Typography
-        variant="h6"
-        component="h6"
-        sx={{
-          mb: 2,
-          textAlign: "center",
-          backgroundColor: "#3498db",
-          color: "white",
-          borderRadius: "5px",
-        }}
-      >
-        IVR
-      </Typography>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableBody>
-            <TableRow key={1}>
-              <TableCell key={2}>
-                <p>{`***`}</p>
-              </TableCell>
-              <TableCell key={3} align="center">
-                <Button color="info" variant="outlined" fullWidth>
-                  Marcar tel
-                </Button>
-              </TableCell>
-              <TableCell key={4} align="center">
-                <Button color="error" variant="outlined" fullWidth>
-                  Enviar a IVR
-                </Button>
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </>
-  );
-};
 
 const ValidationArticle22 = () => {
   const label = { inputProps: { placeholder: "Enter text" } };
@@ -441,7 +277,7 @@ const ValidationArticle22 = () => {
         gutterBottom
         sx={{ display: "flex", alignItems: "center", marginLeft: "10px" }}
       >
-        Prima mensual: 
+        Prima mensual:
         <TextField
           name="TOTAL_ANUAL"
           label="Prima mensual: "
@@ -502,7 +338,7 @@ const ValidationArticle22 = () => {
           size="small"
         />
       </Typography>
-      
+
 
       <Typography
         variant="body2"
