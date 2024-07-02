@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-
 import Grid from "@mui/material/Unstable_Grid2";
 import Typography from "@mui/material/Typography";
 import TableContainer from "@mui/material/TableContainer";
@@ -11,11 +10,16 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
-import Skeleton from '@mui/material/Skeleton';
+import Skeleton from "@mui/material/Skeleton";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 const QuizProduct1 = ({ product }) => {
-
   const [survey, setSurvey] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -23,34 +27,31 @@ const QuizProduct1 = ({ product }) => {
     const getSurvey = async () => {
       const url = "https://localhost:4001/apiCiti/getSurvey";
       const params = {
-        product
-      }
+        product,
+      };
       try {
         const rsp = await axios.post(url, params, {
           headers: {
             "Content-Type": "application/json",
           },
         });
-        setSurvey(rsp.data)
+        setSurvey(rsp.data);
         setIsLoading(false);
-
-
       } catch (error) {
         console.log(error);
-
       }
     };
     getSurvey();
   }, []);
 
-
-  // if (isLoading) {
-  //   return <div>Cargando...</div>; // O cualquier componente de cargando que prefieras
-  // }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // console.log(formData);    
+  }
 
   return (
     <>
-
+    <form onSubmit={handleSubmit}>
       <Grid container spacing={2}>
         <Grid xs={12} md={12}>
           <Typography
@@ -84,13 +85,36 @@ const QuizProduct1 = ({ product }) => {
                       <TableRow key={index}>
                         <TableCell>{data.LABEL}</TableCell>
                         <TableCell align="center">
-                          <TextField
-                            name={data.NAME}
-                            label={data.LABEL}
-                            variant="standard"
-                            inputProps={{ maxLength: 10 }}
-                            required={data.REQUIRED === 1}
-                          />
+                          {data.TYPE == 5 ? (
+                            <TextField
+                              fullWidth
+                              name={data.NAME}
+                              label={data.LABEL}
+                              variant="standard"
+                              inputProps={{ maxLength: data.LENGTH}}
+                              required={data.REQUIRED === 1}
+                            />
+                          ) : (
+                            <FormControl  size="small" fullWidth>
+                              <InputLabel id="sellProduct">
+                                {data.LABEL}
+                              </InputLabel>
+                              <Select
+                                labelId="sellProduct"
+                                id="sellProduct"
+                                label="Selecciona un producto"
+                                required={data.REQUIRED === 1}
+                                // onChange={handleProduct}
+                                // value={product}
+                              >
+                                <MenuItem disabled value={0}>
+                                  Selecciona un producto
+                                </MenuItem>
+                                <MenuItem value={1}>Accidentes</MenuItem>
+                                <MenuItem value={2}>Hospital</MenuItem>
+                              </Select>
+                            </FormControl>
+                          )}
                         </TableCell>
                       </TableRow>
                     ))}
@@ -98,18 +122,23 @@ const QuizProduct1 = ({ product }) => {
               </Table>
             )}
           </TableContainer>
-
-
-
-
-
         </Grid>
       </Grid>
-
-
+      
+        <Grid item xs={12} md={12} sx={{m:2}}>
+          <Box display="flex" justifyContent="center">
+            {" "}
+            {/* Centrar el Stack dentro de un Box */}
+            <Stack spacing={2} direction="row">
+              <Button  variant="contained">Guardar Solicitud</Button>
+              <Button type="submit" variant="contained">Procesar Solicitud</Button>
+            </Stack>
+          </Box>
+        </Grid>
+      
+      </form>
     </>
+  );
+};
 
-  )
-}
-
-export default QuizProduct1
+export default QuizProduct1;
