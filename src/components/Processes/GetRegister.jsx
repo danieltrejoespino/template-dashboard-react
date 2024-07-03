@@ -14,6 +14,7 @@ import CustomerPhones from "./CustomerPhones";
 import ContactCalifications from "./ContactCalifications";
 import SurveyProduct1 from "./SurveyProduct1";
 import SelectProduct from "./SelectProduct";
+import PhoneContact from "./PhoneContact";
 
 export default function GetRegister() {
   const [openBackdrop, setOpenBackdrop] = useState(true); //Loading component 
@@ -24,7 +25,7 @@ export default function GetRegister() {
 
   const [product, setProduct] = useState(0); // Product to sell
 
-  const [phoneContact, setPhoneContact] = useState(""); // Product to sell
+  const [phoneSelected, setPhoneSelected] = useState(""); // Product to sell
 
 
   const [formComplete, setFormComplete] = useState(false);
@@ -55,7 +56,7 @@ export default function GetRegister() {
     setProduct(event.target.value);
   };
   const handlePhoneCall = (phoneValue) => {
-    setPhoneContact(phoneValue);
+    setPhoneSelected(phoneValue);
   };
 
   const handleContact = () => {
@@ -117,6 +118,8 @@ export default function GetRegister() {
             <CustomerInformation data={customerData} />  {/* Componente para cargar informacion del cliente */}
           </Grid>
           <Grid xs={12} md={6}>
+              <PhoneContact phone={phoneSelected}/>
+
           </Grid>
           <Grid xs={12} md={12}>
             {formComplete && <SurveyProduct1 product={product} />}

@@ -1,23 +1,18 @@
+import Grid from "@mui/material/Unstable_Grid2";
 import Typography from "@mui/material/Typography";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Grid from "@mui/material/Unstable_Grid2";
+import Paper from "@mui/material/Paper";
 
-const CustomerPhones = ({ data, handlePhoneCall }) => {
-  const handleClick = (event) => {
-    const phoneValue = event.currentTarget.getAttribute("data-phone");
-    handlePhoneCall(phoneValue);
-  };
-
+const PhoneContact = ({ phone }) => {
   return (
     <>
       <Accordion defaultExpanded>
@@ -50,7 +45,7 @@ const CustomerPhones = ({ data, handlePhoneCall }) => {
               fontSize: "1rem", // Reducir el tamaño de fuente
             }}
           >
-            Telefonos disponibles
+            Telefono
           </Typography>
         </AccordionSummary>
         <AccordionDetails
@@ -61,25 +56,21 @@ const CustomerPhones = ({ data, handlePhoneCall }) => {
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableBody>
-                {data.PHONES &&
-                  data.PHONES.map((phone, index) => (
-                    <TableRow key={index}>
-                      <TableCell>{`***${phone
-                        .toString()
-                        .substring(6)}`}</TableCell>
-                      <TableCell align="center">
-                        <Button
-                          color="info"
-                          variant="outlined"
-                          data-phone={phone}
-                          onClick={handleClick}
-                        >
-                          Marcar tel {index + 1}
-                        </Button>
-                      </TableCell>
-                      <TableCell align="center">Aqui va el select</TableCell>
-                    </TableRow>
-                  ))}
+                <TableRow key={1}>
+                  <TableCell key={2}>
+                    {`***${phone.toString().substring(5)}`}
+                  </TableCell>
+                  <TableCell key={3} align="center">
+                    <Button color="info" variant="outlined" fullWidth>
+                      Marcar tel
+                    </Button>
+                  </TableCell>
+                  {/* <TableCell key={4} align="center">
+                    <Button color="error" variant="outlined" fullWidth>
+                      Enviar a IVR
+                    </Button>
+                  </TableCell> */}
+                </TableRow>
               </TableBody>
             </Table>
           </TableContainer>
@@ -89,4 +80,4 @@ const CustomerPhones = ({ data, handlePhoneCall }) => {
   );
 };
 
-export default CustomerPhones;
+export default PhoneContact;
