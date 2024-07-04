@@ -25,11 +25,13 @@ export default function GetRegister() {
 
   const [product, setProduct] = useState(0); // Product to sell
 
-  const [phoneSelected, setPhoneSelected] = useState(""); // Product to sell
+  const [phone, setPhone] = useState(""); // phone select to contact
+
+  const [phoneSelected, setPhoneSelected] = useState(0); 
+
 
 
   const [formComplete, setFormComplete] = useState(false);
-
 
   useEffect(() => {
     const getRegister = async () => {
@@ -56,7 +58,7 @@ export default function GetRegister() {
     setProduct(event.target.value);
   };
   const handlePhoneCall = (phoneValue) => {
-    setPhoneSelected(phoneValue);
+    setPhone(phoneValue);
   };
 
   const handleContact = () => {
@@ -84,24 +86,24 @@ export default function GetRegister() {
         style={{ display: formContact ? "block" : "none" }}
       >
         <Grid container spacing={2}>
-          <Grid xs={12} md={6}>
+          <Grid lg={6} md={12} xs={12} >
             <CustomerInformation data={customerData} />             {/* Aqui se cargan los datos del cliente como componente */}
            </Grid>
-          <Grid xs={12} md={6}>
-            <CustomerPhones data={customerData} handlePhoneCall={handlePhoneCall} />  {/* Aqui se cargan los telefonos como componente */}
+          <Grid lg={6} md={12} xs={12}>
+            <CustomerPhones data={customerData} handlePhoneCall={handlePhoneCall} setPhoneSelected={setPhoneSelected} />  {/* Aqui se cargan los telefonos como componente */}
           </Grid>
         </Grid>
 
         <Grid container spacing={2}>
-          <Grid xs={12} md={6} >
-            <SelectProduct product={product} handleContact={handleContact} handleProduct={handleProduct} /> {/* Este componente es para cargar los productos a vender */}
+          <Grid lg={6} md={12} xs={12} >
+            <SelectProduct product={product} handleContact={handleContact} handleProduct={handleProduct} phoneSelected={phoneSelected} /> {/* Este componente es para cargar los productos a vender */}
           </Grid>
           <Grid xs={12} md={6}>
           </Grid>
         </Grid>
 
       </Box>
-
+{/* --------------------------------------------------------------------------------------------------------------------------------------------------- */}
       {/* Esta caja es para cargar el producto */}
       <Box
         component="section"
@@ -109,19 +111,19 @@ export default function GetRegister() {
         style={{ display: formContact ? "none" : "block" }}
       >
         <Grid container spacing={2}>
-          <Grid xs={12} md={12}>
+          <Grid lg={12} md={12} xs={12}>
             <ContactCalifications
               handleReturnContact={handleReturnContact}
             />
           </Grid>
-          <Grid xs={12} md={6}>
+          <Grid lg={6} md={12} xs={12}>
             <CustomerInformation data={customerData} />  {/* Componente para cargar informacion del cliente */}
           </Grid>
-          <Grid xs={12} md={6}>
-              <PhoneContact phone={phoneSelected}/>
+          <Grid lg={6} md={12} xs={12}>
+              <PhoneContact phone={phone}/>
 
           </Grid>
-          <Grid xs={12} md={12}>
+          <Grid lg={12} md={12} xs={12}>
             {formComplete && <SurveyProduct1 product={product} />}
           </Grid>
         </Grid>

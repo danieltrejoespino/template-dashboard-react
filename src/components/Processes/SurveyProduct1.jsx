@@ -28,6 +28,19 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 const SurveyProduct1 = ({ product }) => {
   const [survey, setSurvey] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [surveyData, setSurveyData] = useState({
+    txtQId11CId1: '',
+    txtQId11CId2: '',
+    txtQId11CId3: '',
+    txtQId11CId4: '',
+    txtQId11CId5: '',
+    txtQId11CId6: '',
+    txtQId11CId7: '',
+    txtQId11CId8: '',
+    txtQId11CId9: '',
+    txtQId11CId10: ''
+  })
+
 
   useEffect(() => {
     const getSurvey = async () => {
@@ -50,9 +63,17 @@ const SurveyProduct1 = ({ product }) => {
     getSurvey();
   }, []);
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setSurveyData({
+      ...surveyData,
+      [name]: value
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(formData);    
+    console.log(surveyData);
   }
 
   return (
@@ -124,6 +145,8 @@ const SurveyProduct1 = ({ product }) => {
                                         fullWidth
                                         name={data.NAME}
                                         label={data.LABEL}
+                                        value={surveyData[data.NAME]}
+                                        onChange={handleChange}
                                         variant="standard"
                                         inputProps={{ maxLength: data.LENGTH }}
                                         required={data.REQUIRED === 1}
@@ -136,13 +159,13 @@ const SurveyProduct1 = ({ product }) => {
                                         <Select
                                           labelId="sellProduct"
                                           id="sellProduct"
-                                          label="Selecciona un producto"
+                                          name={data.NAME}
                                           required={data.REQUIRED === 1}
-                                        // onChange={handleProduct}
-                                        // value={product}
+                                          onChange={handleChange}
+                                          value={surveyData[data.NAME]}
                                         >
                                           <MenuItem disabled value={0}>
-                                            Selecciona un producto
+                                            Selecciona {data.LABEL}
                                           </MenuItem>
                                           <MenuItem value={1}>Accidentes</MenuItem>
                                           <MenuItem value={2}>Hospital</MenuItem>

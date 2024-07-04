@@ -11,8 +11,13 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Grid from "@mui/material/Unstable_Grid2";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
 
-const CustomerPhones = ({ data, handlePhoneCall }) => {
+
+const CustomerPhones = ({ data, handlePhoneCall,setPhoneSelected,phoneSelected }) => {
   const handleClick = (event) => {
     const phoneValue = event.currentTarget.getAttribute("data-phone");
     handlePhoneCall(phoneValue);
@@ -77,7 +82,29 @@ const CustomerPhones = ({ data, handlePhoneCall }) => {
                           Marcar tel {index + 1}
                         </Button>
                       </TableCell>
-                      <TableCell align="center">Aqui va el select</TableCell>
+                      <TableCell align="center">
+
+                        <FormControl size="small">
+                          <InputLabel id="sellProduct">Calificacion</InputLabel>
+                          <Select
+                            labelId="sellProduct"
+                            id="sellProduct"
+                            // label="Selecciona un producto"
+                            required
+                            onChange={setPhoneSelected}
+                            value={phoneSelected}
+                            sx={{ minWidth: 200 }}
+                          >
+                            <MenuItem disabled value={0}>
+                              Selecciona una calificacion
+                            </MenuItem>
+                            <MenuItem value={1}>Accidentes</MenuItem>
+                            <MenuItem value={2}>Hospital</MenuItem>
+                          </Select>
+                        </FormControl>
+
+
+                      </TableCell>
                     </TableRow>
                   ))}
               </TableBody>
