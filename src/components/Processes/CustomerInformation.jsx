@@ -12,6 +12,7 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { color } from "highcharts";
 
 
 const CustomerInformation = ({ data }) => {
@@ -75,9 +76,20 @@ const CustomerInformation = ({ data }) => {
                 </TableRow>
                 <TableRow>
                   <TableCell component="th" scope="row">
-                    Producto ofertado:
+                    Rfc:
                   </TableCell>
-                  <TableCell>{data.PRODUCT_OFFERING}</TableCell>
+                  <TableCell>{data.RFC}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    Oferta:
+                  </TableCell>
+                  <TableCell>
+                    <p className="text-red-400">
+                    {data.PRODUCT_OFFERING}
+                    </p>
+
+                  </TableCell>
                 </TableRow>
               </TableBody>
             </Table>

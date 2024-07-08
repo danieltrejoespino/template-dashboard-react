@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+
 import Grid from "@mui/material/Unstable_Grid2";
 import Typography from "@mui/material/Typography";
 import Accordion from "@mui/material/Accordion";
@@ -12,9 +14,52 @@ import TableRow from "@mui/material/TableRow";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 
+import CustomSweetAlert from "./CustomSweetAlert";
+
 const PhoneContact = ({ phone }) => {
+
+  const [alertProps, setAlertProps] = useState({
+    show: false,
+    title: '',
+    text: '',
+    icon: "",
+    showConfirmButton: true,
+    timer: 0,
+
+  });
+
+  const handleAlertClose = () => {
+    setAlertProps({ ...alertProps, show: false });
+  };
+
+
+  const handleClick = (event) => {
+    // const phoneValue = event.currentTarget.getAttribute("data-phone");
+    // handlePhoneCall(phoneValue);
+
+    setAlertProps({
+      show: true,
+      title: 'Marcando telefono',
+      icon: "success",
+      text: `***${phone.toString().substring(6)}`,
+      timer: 1500,
+      showConfirmButton: false,
+    });
+
+  };
+
+
   return (
     <>
+      <CustomSweetAlert
+        show={alertProps.show}
+        title={alertProps.title}
+        text={alertProps.text}
+        icon={alertProps.icon}
+        showConfirmButton={alertProps.showConfirmButton}
+        timer={alertProps.timer}
+        onClose={handleAlertClose}
+      />
       <Accordion defaultExpanded>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -61,7 +106,13 @@ const PhoneContact = ({ phone }) => {
                     {`***${phone.toString().substring(5)}`}
                   </TableCell>
                   <TableCell key={3} align="center">
-                    <Button color="info" variant="outlined" fullWidth>
+                    <Button
+                      color="info"
+                      variant="outlined"
+                      fullWidth
+                      data-phone={phone}
+                      onClick={handleClick}
+                    >
                       Marcar tel
                     </Button>
                   </TableCell>

@@ -19,18 +19,10 @@ import PhoneContact from "./PhoneContact";
 export default function GetRegister() {
   const [openBackdrop, setOpenBackdrop] = useState(true); //Loading component 
   const [formContact, setFormContact] = useState(true); // show or hide contact form
-
   const [customerData, setCustomerData] = useState([]); //Customer information
-
-
-  const [product, setProduct] = useState(0); // Product to sell
-
-  const [phone, setPhone] = useState(""); // phone select to contact
-
+  const [product, setProduct] = useState(0); // Product to sell  
   const [phoneSelected, setPhoneSelected] = useState(0); 
-
-
-
+  const [phone, setPhone] = useState(""); // phone select to contact
   const [formComplete, setFormComplete] = useState(false);
 
   useEffect(() => {
@@ -61,13 +53,28 @@ export default function GetRegister() {
     setPhone(phoneValue);
   };
 
+  const validateFields = () => {
+    const validations = [
+      { condition: product === 0, message: "Selecciona un producto para continuar" },
+      { condition: phoneSelected === 0, message: "Califica un teléfono para continuar" },
+    ];
+
+    for (let validation of validations) {
+      if (validation.condition) {
+        toast.warning(validation.message);
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+  
   const handleContact = () => {
-    console.clear()
-    if (product == 0) {
-      toast.warning("Selecciona un producto para continuar");
-    } else {
+    console.clear();
+    if (validateFields()) {
       setFormContact(false);
-      setFormComplete(true)
+      setFormComplete(true);
     }
   };
 
@@ -79,7 +86,7 @@ export default function GetRegister() {
 
   return (
     <>
-      <CustomBackdrop open={openBackdrop} />
+      <CustomBackdrop open={openBackdrop} text={'Obteniendo registro, espera un poco...'} />
       <Box
         component="section"
         sx={style}
@@ -87,7 +94,7 @@ export default function GetRegister() {
       >
         <Grid container spacing={2}>
           <Grid lg={6} md={12} xs={12} >
-            <CustomerInformation data={customerData} />             {/* Aqui se cargan los datos del cliente como componente */}
+            <CustomerInformation data={customerData} /> {/* Aqui se cargan los datos del cliente como componente */}
            </Grid>
           <Grid lg={6} md={12} xs={12}>
             <CustomerPhones data={customerData} handlePhoneCall={handlePhoneCall} setPhoneSelected={setPhoneSelected} />  {/* Aqui se cargan los telefonos como componente */}

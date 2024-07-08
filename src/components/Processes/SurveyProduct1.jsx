@@ -23,11 +23,16 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
+import CustomSweetAlert from "./CustomSweetAlert";
+import CustomBackdrop from "./CustomBackdrop";
+
 
 
 const SurveyProduct1 = ({ product }) => {
   const [survey, setSurvey] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [openBackdrop, setOpenBackdrop] = useState(false); //Loading component 
+
   const [surveyData, setSurveyData] = useState({
     txtQId11CId1: '',
     txtQId11CId2: '',
@@ -40,6 +45,21 @@ const SurveyProduct1 = ({ product }) => {
     txtQId11CId9: '',
     txtQId11CId10: ''
   })
+
+  const [alertProps, setAlertProps] = useState({
+    show: false,
+    title: '',
+    text: '',
+    icon: "",
+    showConfirmButton: true,
+    timer: 0,
+
+  });
+
+  const handleAlertClose = () => {
+    setAlertProps({ ...alertProps, show: false });
+  };
+
 
 
   useEffect(() => {
@@ -74,10 +94,33 @@ const SurveyProduct1 = ({ product }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(surveyData);
+
+    // setOpenBackdrop(true);
+
+    // setOpenBackdrop(false);
+    setAlertProps({
+      show: true,
+      title: 'Procesando solicitud...',
+      icon: "success",
+      // text: 'Hello World',
+      timer: 1500,
+      showConfirmButton: false,
+    });
+
   }
 
   return (
     <>
+    <CustomBackdrop open={openBackdrop} text={'Procesando solicitud...'} />
+      <CustomSweetAlert
+        show={alertProps.show}
+        title={alertProps.title}
+        text={alertProps.text}
+        icon={alertProps.icon}
+        showConfirmButton={alertProps.showConfirmButton}
+        timer={alertProps.timer}
+        onClose={handleAlertClose}
+      />
       <Grid container spacing={2}>
         <Grid xs={12}>
           <Accordion defaultExpanded sx={{ width: '100%' }}>
@@ -145,6 +188,7 @@ const SurveyProduct1 = ({ product }) => {
                                         fullWidth
                                         name={data.NAME}
                                         label={data.LABEL}
+                                        // type="date"
                                         value={surveyData[data.NAME]}
                                         onChange={handleChange}
                                         variant="standard"
@@ -182,7 +226,7 @@ const SurveyProduct1 = ({ product }) => {
                   </Grid>
                 </Grid>
 
-                <Grid item xs={12} md={12} sx={{ m: 2 }}>
+                <Grid xs={12} md={12} sx={{ m: 2 }}>
                   <Box display="flex" justifyContent="center">
                     <Stack spacing={2} direction="row">
                       <Button variant="contained"

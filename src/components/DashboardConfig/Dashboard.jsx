@@ -24,11 +24,12 @@ import ListItemText from "@mui/material/ListItemText";
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import { HomeIcon, CurrencyDollarIcon, ClipboardDocumentListIcon, UsersIcon } from "@heroicons/react/24/solid";
+import { HomeIcon, CurrencyDollarIcon, ClipboardDocumentListIcon, UsersIcon,CalendarDaysIcon} from "@heroicons/react/24/solid";
 
 
 import LetterAvatars from "./LetterAvatars";
 import GetRegister from '../Processes/GetRegister'
+import Schedule from '../Processes/Schedule'
 const drawerWidth = 250;
 
 const AppBar = styled(MuiAppBar, {
@@ -89,9 +90,10 @@ export default function Dashboard() {
   const navigation = [
     { name: "Reportes", icon: ClipboardDocumentListIcon },
     { name: "CRM", icon: UsersIcon },
-    { name: "Ventas", component: GetRegister, icon: CurrencyDollarIcon },
+    { name: "Ventas", component: Schedule, icon: CurrencyDollarIcon },
     
     { name: "Obtener registro", component: GetRegister, icon: CurrencyDollarIcon },
+    { name: "Agenda", component: Schedule, icon: CalendarDaysIcon },
   ];
 
 

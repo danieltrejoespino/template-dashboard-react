@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+
 import Typography from "@mui/material/Typography";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
@@ -10,21 +12,59 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Grid from "@mui/material/Unstable_Grid2";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 
+import CustomSweetAlert from "./CustomSweetAlert";
 
-const CustomerPhones = ({ data, handlePhoneCall,setPhoneSelected,phoneSelected }) => {
+
+const CustomerPhones = ({ data, handlePhoneCall, setPhoneSelected, phoneSelected }) => {
+
+
+  const [alertProps, setAlertProps] = useState({
+    show: false,
+    title: '',
+    text: '',
+    icon: "",
+    showConfirmButton: true,
+    timer: 0,
+    
+  });
+
+
+  const handleAlertClose = () => {
+    setAlertProps({ ...alertProps, show: false });
+  };
+
   const handleClick = (event) => {
     const phoneValue = event.currentTarget.getAttribute("data-phone");
     handlePhoneCall(phoneValue);
+
+    setAlertProps({
+      show: true,
+      title: 'Marcando telefono',
+      icon: "success",
+      // text: 'Hello World',
+      timer: 1500,
+      showConfirmButton: false,
+    });
+
   };
 
   return (
     <>
+      <CustomSweetAlert
+        show={alertProps.show}
+        title={alertProps.title}
+        text={alertProps.text}
+        icon={alertProps.icon}
+        showConfirmButton={alertProps.showConfirmButton}
+        timer={alertProps.timer}
+        onClose={handleAlertClose}
+      />
+
       <Accordion defaultExpanded>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -98,8 +138,8 @@ const CustomerPhones = ({ data, handlePhoneCall,setPhoneSelected,phoneSelected }
                             <MenuItem disabled value={0}>
                               Selecciona una calificacion
                             </MenuItem>
-                            <MenuItem value={1}>Accidentes</MenuItem>
-                            <MenuItem value={2}>Hospital</MenuItem>
+                            <MenuItem value={1}>Contacto</MenuItem>
+                            <MenuItem value={2}>No contestan</MenuItem>
                           </Select>
                         </FormControl>
 
@@ -115,5 +155,9 @@ const CustomerPhones = ({ data, handlePhoneCall,setPhoneSelected,phoneSelected }
     </>
   );
 };
+
+
+
+
 
 export default CustomerPhones;
