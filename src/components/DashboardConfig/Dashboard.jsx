@@ -96,7 +96,7 @@ export default function Dashboard() {
     { name: "Agenda", component: Schedule, icon: CalendarDaysIcon },
   ];
 
-
+  const {surveyAct,setSurveyAct} = useState('123456789')
 
   useEffect(() => {
     if (user) {
@@ -132,13 +132,12 @@ export default function Dashboard() {
   }, {});
 
 
-
-
-
   const renderSelectedComponent = () => {
     const selectedItem = navigation.find((item) => item.name === selectedElement);
-    return selectedItem ? <selectedItem.component /> : null;
+    return selectedItem ? <selectedItem.component surveyAct={surveyAct} setSurveyAct={setSurveyAct} /> : null;
   };
+
+
   const renderIconComponent = (iconName) => {
     const selectedItem = navigation.find((item) => item.name == iconName);
     return selectedItem ? <selectedItem.icon className="size-4 text-blue-500 mr-2" /> : null;

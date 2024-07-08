@@ -16,6 +16,18 @@ import SurveyProduct1 from "./SurveyProduct1";
 import SelectProduct from "./SelectProduct";
 import PhoneContact from "./PhoneContact";
 
+
+const style = {
+  width: "100%",
+  borderRadius: "20px",
+  bgcolor: "background.paper",
+  border: "1px ",
+  boxShadow: 1,
+  p: 2,
+  m: 1,
+};
+
+
 export default function GetRegister() {
   const [openBackdrop, setOpenBackdrop] = useState(true); //Loading component 
   const [formContact, setFormContact] = useState(true); // show or hide contact form
@@ -145,12 +157,3 @@ export default function GetRegister() {
 
 
 
-const style = {
-  width: "100%",
-  borderRadius: "20px",
-  bgcolor: "background.paper",
-  border: "1px ",
-  boxShadow: 1,
-  p: 2,
-  m: 1,
-};
