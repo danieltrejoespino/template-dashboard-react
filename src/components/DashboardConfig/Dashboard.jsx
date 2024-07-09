@@ -80,6 +80,8 @@ const Drawer = styled(MuiDrawer, {
 const defaultTheme = createTheme();
 
 export default function Dashboard() {
+  const [surveyAct, setSurveyAct] = useState(0);
+
   const [open, setOpen] = useState(true);
   const [selectedElement, setSelectedElement] = useState(null);
   const { user } = useContext(UserContext);
@@ -95,8 +97,8 @@ export default function Dashboard() {
     { name: "Obtener registro", component: GetRegister, icon: CurrencyDollarIcon },
     { name: "Agenda", component: Schedule, icon: CalendarDaysIcon },
   ];
-
-  const {surveyAct,setSurveyAct} = useState('123456789')
+  
+  
 
   useEffect(() => {
     if (user) {
@@ -133,8 +135,13 @@ export default function Dashboard() {
 
 
   const renderSelectedComponent = () => {
-    const selectedItem = navigation.find((item) => item.name === selectedElement);
-    return selectedItem ? <selectedItem.component surveyAct={surveyAct} setSurveyAct={setSurveyAct} /> : null;
+    if(surveyAct == 0){
+      const selectedItem = navigation.find((item) => item.name === selectedElement);
+      return selectedItem ? <selectedItem.component surveyAct={surveyAct} setSurveyAct={setSurveyAct} setSelectedElement ={setSelectedElement}/> : null;
+    }
+    else{
+      return <GetRegister surveyAct={surveyAct} setSurveyAct={setSurveyAct} setSelectedElement ={setSelectedElement} />;
+    }
   };
 
 
@@ -194,7 +201,7 @@ export default function Dashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Hola {user.apodo}
+              Hola {user.apodo} ---- {surveyAct}
             </Typography>
             
             <Typography
@@ -270,10 +277,29 @@ export default function Dashboard() {
                 </Collapse>
               </Fragment>
             ))}
+
+            <Divider />
           </List>
 
+          <Box sx={{ flexGrow: 1}} />
+          <Divider />
+          <List>
+          <Typography
+              component="h1"
+              variant="h6"
+              color="inherit"
+              noWrap
+              sx={{ flexGrow: 1 }}
+            >
+              Firmado en {user.modality == 1 ? "Asistido" : "Predictivo" }
+            </Typography>
+          </List>
+        </Drawer>      
+          
+          
 
-        </Drawer>
+
+        
         <Box
           component="main"
           sx={{

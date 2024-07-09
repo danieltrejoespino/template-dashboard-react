@@ -44,8 +44,7 @@ const Schedule = ({ surveyAct, setSurveyAct }) => {
   const [dateSchedule, setDateSchedule] = useState(dayjs());
 
   const handleDateSchedule = (newDate) => {
-    setDateSchedule(newDate);
-    console.log(surveyAct);
+    setDateSchedule(newDate);    
     if (dateSchedule == "") {
       toast.warning("Selecciona un dia a buscar");
     }
@@ -103,7 +102,7 @@ const Schedule = ({ surveyAct, setSurveyAct }) => {
                   </LocalizationProvider>
                 </Grid>
                 <Grid xs={12} md={6} lx={10}>
-                  <TblSchedule date={dateSchedule} surveyAct={surveyAct} />
+                  <TblSchedule date={dateSchedule} surveyAct={setSurveyAct} />
                 </Grid>
               </Grid>
             </AccordionDetails>
@@ -159,6 +158,7 @@ const TblSchedule = ({ date,surveyAct }) => {
   const handleClick = (event) => {
     const surveySchedule = event.currentTarget.getAttribute("data-phone");
     console.log(surveySchedule)
+    surveyAct(1)
 
   };
 
@@ -192,7 +192,7 @@ const TblSchedule = ({ date,surveyAct }) => {
                     <Button
                       color="success"
                       variant="outlined"
-                      data-phone={surveyAct}
+                      data-phone={data.hour}
                       onClick={handleClick}
                     >
                       Continuar

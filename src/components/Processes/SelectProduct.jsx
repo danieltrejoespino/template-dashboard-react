@@ -10,7 +10,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-const SelectProduct = ({ handleProduct, product, handleContact }) => {
+const SelectProduct = ({ handleProduct, product, handleContact,handleLeaveContact }) => {
   return (
     <>
       <Accordion defaultExpanded>
@@ -81,7 +81,7 @@ const SelectProduct = ({ handleProduct, product, handleContact }) => {
             <Button color="success" variant="outlined" onClick={handleContact}>
               Continuar
             </Button>
-            <Button color="error" variant="outlined">
+            <Button color="error" variant="outlined" onClick={handleLeaveContact}>
               Abandonar
             </Button>
           </Stack>

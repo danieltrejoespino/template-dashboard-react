@@ -28,15 +28,18 @@ const style = {
 };
 
 
-export default function GetRegister() {
+export default function GetRegister({ surveyAct, setSurveyAct,setSelectedElement }) {
   const [openBackdrop, setOpenBackdrop] = useState(true); //Loading component 
   const [formContact, setFormContact] = useState(true); // show or hide contact form
+  
   const [customerData, setCustomerData] = useState([]); //Customer information
   const [product, setProduct] = useState(0); // Product to sell  
-  const [phoneSelected, setPhoneSelected] = useState(0); 
-  const [phone, setPhone] = useState(""); // phone select to contact
-  const [formComplete, setFormComplete] = useState(false);
+  const [phoneSelected, setPhoneSelected] = useState(0); //Phone contact selected
+  const [phone, setPhone] = useState(""); // phone to contact
+  const [formComplete, setFormComplete] = useState(false); // when selected a product to sell this change to true and shor contact form
+  const [newSurvey, setNewSurvey] = useState(false); //this call a new survey 
 
+  
   useEffect(() => {
     const getRegister = async () => {
       const url = "https://localhost:4001/apiCiti/getRegister";
@@ -46,23 +49,51 @@ export default function GetRegister() {
             "Content-Type": "application/json",
           },
         });
-        console.log(rsp.data[1].contactQual);
+        // console.log(rsp.data[0].Customer.REGISTER);
         setCustomerData(rsp.data[0].Customer);
-
+        setSurveyAct(1)
         setOpenBackdrop(false);
       } catch (error) {
         console.log(error);
         setOpenBackdrop(false);
       }
     };
-    getRegister();
-  }, []);
+
+
+    const getSpecificRegister = async () => {
+      const url = "https://localhost:4001/apiCiti/getRegister";
+      const params = {
+        survey: surveyAct        
+      }
+      try {
+        const rsp = await axios.post(url,params, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        // console.log(rsp.data[1].contactQual);
+        setCustomerData(rsp.data[0].Customer);
+        setSurveyAct(1)
+        setOpenBackdrop(false);
+      } catch (error) {
+        console.log(error);
+        setOpenBackdrop(false);
+      }
+
+    }
+
+
+
+    surveyAct == '' ? getRegister() : getSpecificRegister()
+
+  }, [newSurvey]);
 
   const handleProduct = (event) => {
     setProduct(event.target.value);
   };
   const handlePhoneCall = (phoneValue) => {
     setPhone(phoneValue);
+    
   };
 
   const validateFields = () => {
@@ -81,16 +112,22 @@ export default function GetRegister() {
     return true;
   };
 
-  
+
   const handleContact = () => {
     console.clear();
     if (validateFields()) {
       setFormContact(false);
       setFormComplete(true);
     }
+  };  
+
+  const handleLeaveContact = () => {
+    console.clear();
+    setSurveyAct(0)
+    setSelectedElement(null)
+    // setNewSurvey(prev => !prev);
+    
   };
-
-
 
   const handleReturnContact = () => {
     setFormContact(true);
@@ -107,7 +144,7 @@ export default function GetRegister() {
         <Grid container spacing={2}>
           <Grid lg={6} md={12} xs={12} >
             <CustomerInformation data={customerData} /> {/* Aqui se cargan los datos del cliente como componente */}
-           </Grid>
+          </Grid>
           <Grid lg={6} md={12} xs={12}>
             <CustomerPhones data={customerData} handlePhoneCall={handlePhoneCall} setPhoneSelected={setPhoneSelected} />  {/* Aqui se cargan los telefonos como componente */}
           </Grid>
@@ -115,14 +152,14 @@ export default function GetRegister() {
 
         <Grid container spacing={2}>
           <Grid lg={6} md={12} xs={12} >
-            <SelectProduct product={product} handleContact={handleContact} handleProduct={handleProduct} phoneSelected={phoneSelected} /> {/* Este componente es para cargar los productos a vender */}
+            <SelectProduct product={product} handleContact={handleContact} handleProduct={handleProduct} phoneSelected={phoneSelected} handleLeaveContact={handleLeaveContact} /> {/* Este componente es para cargar los productos a vender */}
           </Grid>
           <Grid xs={12} md={6}>
           </Grid>
         </Grid>
 
       </Box>
-{/* --------------------------------------------------------------------------------------------------------------------------------------------------- */}
+      {/* --------------------------------------------------------------------------------------------------------------------------------------------------- */}
       {/* Esta caja es para cargar el producto */}
       <Box
         component="section"
@@ -139,7 +176,7 @@ export default function GetRegister() {
             <CustomerInformation data={customerData} />  {/* Componente para cargar informacion del cliente */}
           </Grid>
           <Grid lg={6} md={12} xs={12}>
-              <PhoneContact phone={phone}/>
+            <PhoneContact phone={phone} />
 
           </Grid>
           <Grid lg={12} md={12} xs={12}>
