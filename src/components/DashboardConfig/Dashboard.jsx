@@ -26,6 +26,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { HomeIcon, CurrencyDollarIcon, ClipboardDocumentListIcon, UsersIcon,CalendarDaysIcon} from "@heroicons/react/24/solid";
 
+import Swal from 'sweetalert2';
 
 import LetterAvatars from "./LetterAvatars";
 import GetRegister from '../Processes/GetRegister'
@@ -98,7 +99,34 @@ export default function Dashboard() {
     { name: "Agenda", component: Schedule, icon: CalendarDaysIcon },
   ];
   
-  
+  // useEffect(() => {
+  //   const handleBeforeUnload = (event) => {
+  //     event.preventDefault();
+  //     event.returnValue = '';
+
+  //     Swal.fire({
+  //       title: '¿Estás seguro?',
+  //       text: "¡Los cambios no guardados se perderan!",
+  //       icon: 'warning',
+  //       showCancelButton: true,
+  //       confirmButtonText: 'Sí, salir',
+  //       cancelButtonText: 'No, quedarse'
+  //     }).then((result) => {
+  //       if (result.isConfirmed) {
+  //         window.removeEventListener('beforeunload', handleBeforeUnload);
+  //         window.location.href = "http://localhost:5171/";
+  //       }
+  //     });
+
+  //     return false;
+  //   };
+
+  //   window.addEventListener('beforeunload', handleBeforeUnload);
+
+  //   return () => {
+  //     window.removeEventListener('beforeunload', handleBeforeUnload);
+  //   };
+  // }, []);
 
   useEffect(() => {
     if (user) {
