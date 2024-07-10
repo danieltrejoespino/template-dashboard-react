@@ -99,35 +99,6 @@ export default function Dashboard() {
     { name: "Agenda", component: Schedule, icon: CalendarDaysIcon },
   ];
   
-  // useEffect(() => {
-  //   const handleBeforeUnload = (event) => {
-  //     event.preventDefault();
-  //     event.returnValue = '';
-
-  //     Swal.fire({
-  //       title: '¿Estás seguro?',
-  //       text: "¡Los cambios no guardados se perderan!",
-  //       icon: 'warning',
-  //       showCancelButton: true,
-  //       confirmButtonText: 'Sí, salir',
-  //       cancelButtonText: 'No, quedarse'
-  //     }).then((result) => {
-  //       if (result.isConfirmed) {
-  //         window.removeEventListener('beforeunload', handleBeforeUnload);
-  //         window.location.href = "http://localhost:5171/";
-  //       }
-  //     });
-
-  //     return false;
-  //   };
-
-  //   window.addEventListener('beforeunload', handleBeforeUnload);
-
-  //   return () => {
-  //     window.removeEventListener('beforeunload', handleBeforeUnload);
-  //   };
-  // }, []);
-
   useEffect(() => {
     if (user) {
       const fetchData = async () => {
@@ -163,12 +134,23 @@ export default function Dashboard() {
 
 
   const renderSelectedComponent = () => {
-    if(surveyAct == 0){
+    if (surveyAct === 0) {
       const selectedItem = navigation.find((item) => item.name === selectedElement);
-      return selectedItem ? <selectedItem.component surveyAct={surveyAct} setSurveyAct={setSurveyAct} setSelectedElement ={setSelectedElement}/> : null;
-    }
-    else{
-      return <GetRegister surveyAct={surveyAct} setSurveyAct={setSurveyAct} setSelectedElement ={setSelectedElement} />;
+      return selectedItem ? (
+        <selectedItem.component
+          surveyAct={surveyAct}
+          setSurveyAct={setSurveyAct}
+          setSelectedElement={setSelectedElement}
+        />
+      ) : null;
+    } else {
+      return (
+        <GetRegister
+          surveyAct={surveyAct}
+          setSurveyAct={setSurveyAct}
+          setSelectedElement={setSelectedElement}
+        />
+      );
     }
   };
 
@@ -189,13 +171,33 @@ export default function Dashboard() {
 
 
   const handleElementClick = (element) => {
-    if (element == "Inicio") {
-      setSelectedElement(null);
+    if (selectedElement) {
+      Swal.fire({
+        title: 'Estas seguro de salir?',
+        text: "Perderas los datos no guardados!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si',
+        cancelButtonText: 'NO'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          if (element === "Inicio" || element === selectedElement) {
+            setSelectedElement(null);
+          } else {
+            setSelectedElement(element);
+          }
+        }
+      });
     } else {
-      setSelectedElement((prev) => (prev === element ? null : element));
+      if (element === "Inicio") {
+        setSelectedElement(null);
+      } else {
+        setSelectedElement((prev) => (prev === element ? null : element));
+      }
     }
-  };
-
+  }
 
 
 
@@ -292,7 +294,7 @@ export default function Dashboard() {
                     {items.map(({ ID_MENU, NAME_MENU }) => (
                       <ListItemButton
                         key={ID_MENU}
-                        sx={{ pl: 4 }}
+                        sx={{ pl: 3 }}
                         onClick={() => handleElementClick(NAME_MENU)}
                       >
                         <ListItemIcon>

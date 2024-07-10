@@ -142,20 +142,19 @@ export default function GetRegister({ surveyAct, setSurveyAct,setSelectedElement
         style={{ display: formContact ? "block" : "none" }}
       >
         <Grid container spacing={2}>
-          <Grid lg={6} md={12} xs={12} >
+          <Grid lg={12} md={12} xs={12} >
             <CustomerInformation data={customerData} /> {/* Aqui se cargan los datos del cliente como componente */}
           </Grid>
-          <Grid lg={6} md={12} xs={12}>
+          <Grid lg={12} md={12} xs={12}>
             <CustomerPhones data={customerData} handlePhoneCall={handlePhoneCall} setPhoneSelected={setPhoneSelected} />  {/* Aqui se cargan los telefonos como componente */}
           </Grid>
         </Grid>
 
         <Grid container spacing={2}>
-          <Grid lg={6} md={12} xs={12} >
+          <Grid lg={12} md={12} xs={12} >
             <SelectProduct product={product} handleContact={handleContact} handleProduct={handleProduct} phoneSelected={phoneSelected} handleLeaveContact={handleLeaveContact} /> {/* Este componente es para cargar los productos a vender */}
           </Grid>
-          <Grid xs={12} md={6}>
-          </Grid>
+
         </Grid>
 
       </Box>
