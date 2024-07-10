@@ -8,6 +8,7 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import MenuItem from "@mui/material/MenuItem";
 
 const ContactCalifications = ({ handleReturnContact }) => {
   return (
@@ -67,6 +68,7 @@ const ContactCalifications = ({ handleReturnContact }) => {
                       data.map((cal, index) => (
                         <MenuItem key={index} value={cal.U_ESTATUSLLAMADA}> {cal.ESTATUS}</MenuItem>
                       ))} */}
+                      <MenuItem key={1} value={99}> Agenda</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
