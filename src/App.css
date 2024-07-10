@@ -2,5 +2,6 @@
   transform: scale(1.2); 
 }
 
-
-
+ body{
+  background-color: #f3f7fc;
+ }
