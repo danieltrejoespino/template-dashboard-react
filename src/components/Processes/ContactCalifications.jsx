@@ -1,3 +1,6 @@
+import { useState, useEffect } from "react";
+
+
 import Grid from "@mui/material/Unstable_Grid2";
 import Typography from "@mui/material/Typography";
 import FormControl from "@mui/material/FormControl";
@@ -10,8 +13,33 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MenuItem from "@mui/material/MenuItem";
 
+import ModalSchedule from "./ModalSchedule";
+
 const ContactCalifications = ({ handleReturnContact }) => {
+  const [openModal, setOpenModal] = useState(false);
+  const [selectContact, setSelectContact] = useState(0);
+
+  const handleSelectContact = (event) => {
+    console.log(event.target.value)
+    setSelectContact(event.target.value);
+  };
+
+
+  const handleCloseModal = () => setOpenModal(false);
+
+  const handleQualify = () => {
+    if (selectContact == '99') {
+      setOpenModal(true);
+    } else {
+      
+    }
+
+  }
+
+
   return (
+    <>
+    <ModalSchedule open={openModal} handleClose={handleCloseModal}/>
     <Grid container spacing={2}>
       <Grid xs={12}>
         <Accordion defaultExpanded sx={{ width: '100%' }}>
@@ -61,14 +89,16 @@ const ContactCalifications = ({ handleReturnContact }) => {
                   <Select
                     labelId="sellProduct"
                     id="sellProduct"
-                    label="Selecciona un producto"
-                    required
+                    label="Selecciona un producto"    
+                    onChange={handleSelectContact}
+                    value={selectContact}                
                   >
                     {/* {data &&
                       data.map((cal, index) => (
                         <MenuItem key={index} value={cal.U_ESTATUSLLAMADA}> {cal.ESTATUS}</MenuItem>
                       ))} */}
                       <MenuItem key={1} value={99}> Agenda</MenuItem>
+                      <MenuItem key={12} value={1}> 123</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -87,6 +117,7 @@ const ContactCalifications = ({ handleReturnContact }) => {
                   fullWidth
                   color="info"
                   variant="outlined"
+                  onClick={handleQualify}
                 >
                   Calificar
                 </Button>
@@ -98,6 +129,7 @@ const ContactCalifications = ({ handleReturnContact }) => {
         </Accordion>
       </Grid>
     </Grid>
+    </>
   );
 };
 
