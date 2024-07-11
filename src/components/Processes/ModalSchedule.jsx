@@ -36,17 +36,14 @@ const style = {
 
 const ModalSchedule = ({ open, handleClose }) => {
   const [dateSchedule, setDateSchedule] = useState(dayjs());
-  const [hours, setHours] = useState(12);
-  const [minutes, setMinutes] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const hora = [8, 9, 13, 14, 18, 19];
+  const minuto = [10, 30, 50, 45, 49, 55];
 
   useEffect(() => {
     const updateTime = () => {
-      const newTime = {
-        hours: 15,
-        minutes: 30,
-      };
-      setHours(newTime.hours);
-      setMinutes(newTime.minutes);
+      setSelectedIndex(2); // Establecer el índice deseado (por ejemplo, 2)
     };
 
     updateTime();
@@ -79,16 +76,10 @@ const ModalSchedule = ({ open, handleClose }) => {
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DemoContainer
                   components={["DigitalClock", "MultiSectionDigitalClock"]}
-                >
-                  <DemoItem>
-                    <DigitalClock
-                      defaultValue={dayjs("2022-04-17T15:30")}
-                      ampm={false}
-                    />
-                  </DemoItem>
+                >                  
                   <DemoItem>
                     <MultiSectionDigitalClock
-                      defaultValue={dayjs("2022-04-17T15:30")}
+                      defaultValue={dayjs().hour(hora[selectedIndex]).minute(minuto[selectedIndex])}
                       ampm={false}
                     />
                   </DemoItem>
@@ -101,5 +92,4 @@ const ModalSchedule = ({ open, handleClose }) => {
     </>
   );
 };
-
 export default ModalSchedule;
