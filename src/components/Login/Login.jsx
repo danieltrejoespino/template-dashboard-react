@@ -3,10 +3,10 @@ import axios from "axios";
 
 import { useNavigate } from 'react-router-dom';
 // import { useAuth } from '../context/AuthContext'
-import { UserContext } from '../../context/UserContext';
 
 import { toast } from 'react-toastify';
 
+import { UserContext } from '../../context/UserContext';
 import useAuth from '../../hooks/useAuth';
 
 import { Link } from 'react-router-dom';
@@ -33,7 +33,7 @@ export const Login = () => {
     e.preventDefault()
     console.log(credentials);
 
-    const url = 'https://localhost:4001/apiCiti/login'
+    const url = 'https://localhost:4001/apiCrm/login'
     const params = {
       name: credentials.email,
       pass: credentials.password
@@ -48,14 +48,15 @@ export const Login = () => {
       if (response.status == 200) {
         toast.success("Inicio de sesion exitoso!");
 
-        const { ID_USER, ID_PERFIL, NAME_USER, TOKEN, APODO } = response.data;
-        setUserInfo(NAME_USER, ID_USER, ID_PERFIL, APODO,credentials.modality);
+        const { ID_USER, NOMINA, NAME_USER,EMPRESA,PERFIL, TOKEN } = response.data;
+        
+        setUserInfo(ID_USER, NOMINA, NAME_USER,EMPRESA,PERFIL,credentials.modality);
 
         login(TOKEN);
         navigate('/')
 
       } else {
-        toast.error("Inicio de sesion fallido!");
+        toast.error(response.data.TEXT_MSG);
       }
 
     } catch (error) {

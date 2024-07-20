@@ -42,7 +42,7 @@ export default function GetRegister({ surveyAct, setSurveyAct,setSelectedElement
   
   useEffect(() => {
     const getRegister = async () => {
-      const url = "https://localhost:4001/apiCiti/getRegister";
+      const url = "https://localhost:4001/apiCrm/getRegister";
       try {
         const rsp = await axios.post(url, {
           headers: {
@@ -61,7 +61,7 @@ export default function GetRegister({ surveyAct, setSurveyAct,setSelectedElement
 
 
     const getSpecificRegister = async () => {
-      const url = "https://localhost:4001/apiCiti/getRegister";
+      const url = "https://localhost:4001/apiCrm/getRegister";
       const params = {
         survey: surveyAct        
       }

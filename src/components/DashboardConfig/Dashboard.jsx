@@ -103,10 +103,10 @@ export default function Dashboard() {
     if (user) {
       const fetchData = async () => {
         try {
-          const url = 'https://localhost:4001/apiCiti/getMenu';
+          const url = 'https://localhost:4001/apiCrm/getMenu';
           const params = {
-            id_user: user.id,
-            id_perfil: user.profile
+            id_user: user.ID_USER,
+            id_perfil: user.PERFIL
           };
           const response = await axios.post(url, params, {
             headers: {
@@ -231,7 +231,16 @@ export default function Dashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Hola {user.apodo} ---- {surveyAct}
+              Hola {user.NAME_USER} ---- {surveyAct}
+            </Typography>
+            <Typography
+              component="h1"
+              variant="h6"
+              color="inherit"
+              noWrap
+              sx={{ flexGrow: 1 }}
+            >
+              Centro {user.EMPRESA} 
             </Typography>
             
             <Typography

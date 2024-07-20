@@ -64,7 +64,7 @@ const SurveyProduct1 = ({ product }) => {
 
   useEffect(() => {
     const getSurvey = async () => {
-      const url = "https://localhost:4001/apiCiti/getSurvey";
+      const url = "https://localhost:4001/apiCrm/getSurvey";
       const params = {
         product,
       };
