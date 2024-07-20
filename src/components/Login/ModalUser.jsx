@@ -33,8 +33,7 @@ export default function ModalUser({ open, handleClose }) {
 
   const [formValues, setFormValues] = useState({
     name: user.name,
-    pass: '',
-    nickname: user.apodo,
+    pass: '',    
   });
 
   const handleInputChange = (e) => {
@@ -108,11 +107,11 @@ export default function ModalUser({ open, handleClose }) {
           <Grid container spacing={2}>
             <Grid xs={12}>
               <Typography id="modal-modal-title" variant="h6" component="h2">
-                Hola {user.apodo} aqui puedes modificar tu usuario
+                Hola {user.NAME_USER} aqui puedes modificar los sig datos:
               </Typography>
             </Grid>
 
-            <Grid xs={4}>
+            {/* <Grid xs={4}>
               <TextField
                 fullWidth
                 value={formValues.name}
@@ -122,14 +121,14 @@ export default function ModalUser({ open, handleClose }) {
                 variant="standard"
 
               />
-            </Grid>
+            </Grid> */}
             <Grid xs={4}>
               <TextField
                 fullWidth
                 value={formValues.nickname}
                 onChange={handleInputChange}
-                name="nickname"
-                label="Apodo"
+                name="secretQues"
+                label="Pregunta secreta"
                 variant="standard"
 
               />
@@ -150,7 +149,7 @@ export default function ModalUser({ open, handleClose }) {
                 type="submit"
                 color="success"
                 aria-label="add"
-                onClick={handleSubmit}
+                // onClick={handleSubmit}
               >
                 Actualizar
                 <SaveIcon sx={{ fontSize: 20 }} />

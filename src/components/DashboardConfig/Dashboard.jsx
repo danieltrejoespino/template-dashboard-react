@@ -224,25 +224,7 @@ export default function Dashboard() {
             >
               <MenuIcon />
             </IconButton>
-            <Typography
-              component="h1"
-              variant="h6"
-              color="inherit"
-              noWrap
-              sx={{ flexGrow: 1 }}
-            >
-              Hola {user.NAME_USER} ---- {surveyAct}
-            </Typography>
-            <Typography
-              component="h1"
-              variant="h6"
-              color="inherit"
-              noWrap
-              sx={{ flexGrow: 1 }}
-            >
-              Centro {user.EMPRESA} 
-            </Typography>
-            
+
             <Typography
               component="h1"
               variant="h6"
@@ -330,7 +312,7 @@ export default function Dashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Firmado en {user.modality == 1 ? "Asistido" : "Predictivo" }
+              Usuario: {user.NAME_USER} 
             </Typography>
           </List>
         </Drawer>      
