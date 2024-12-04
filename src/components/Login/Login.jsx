@@ -3,10 +3,10 @@ import axios from "axios";
 
 import { useNavigate } from 'react-router-dom';
 // import { useAuth } from '../context/AuthContext'
-import { UserContext } from '../../context/UserContext';
 
 import { toast } from 'react-toastify';
 
+import { UserContext } from '../../context/UserContext';
 import useAuth from '../../hooks/useAuth';
 
 import { Link } from 'react-router-dom';
@@ -17,11 +17,11 @@ export const Login = () => {
   const { login } = useAuth();
   const { setUserInfo } = useContext(UserContext);
 
-
   const navigate = useNavigate()
   const [credentials, setCredentials] = useState({
     email: "",
-    password: ""
+    password: "",
+    modality: ""
   })
 
   const handleCredentials = (e) => {
@@ -31,8 +31,9 @@ export const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    console.log(credentials);
 
-    const url = 'https://localhost:4000/login'
+    const url = 'https://localhost:4001/apiCrm/login'
     const params = {
       name: credentials.email,
       pass: credentials.password
@@ -47,14 +48,15 @@ export const Login = () => {
       if (response.status == 200) {
         toast.success("Inicio de sesion exitoso!");
 
-        const { ID_USER, ID_PERFIL, NAME_USER, TOKEN, APODO} = response.data;
-        setUserInfo(NAME_USER, ID_USER, ID_PERFIL,APODO);
+        const { ID_USER, NOMINA, NAME_USER,EMPRESA,PERFIL, TOKEN } = response.data;
+        
+        setUserInfo(ID_USER, NOMINA, NAME_USER,EMPRESA,PERFIL,credentials.modality);
 
         login(TOKEN);
         navigate('/')
 
       } else {
-        toast.error("Inicio de sesion fallido!");
+        toast.error(response.data.TEXT_MSG);
       }
 
     } catch (error) {
@@ -109,11 +111,12 @@ export const Login = () => {
                   Contraseña
                 </label>
                 <div className="text-sm">
-                   
+
                   <Link to="/resetUser" className="font-semibold text-indigo-600 hover:text-indigo-500">Olvidaste tu contraseña?</Link>
- 
+
                 </div>
               </div>
+
               <div className="mt-2">
                 <input
                   onChange={handleCredentials}
@@ -128,6 +131,29 @@ export const Login = () => {
                 />
               </div>
             </div>
+
+
+
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+                Modalidad
+              </label>
+              <div className="mt-2">
+                <select
+                  required
+                  onChange={handleCredentials}
+                  value={credentials.modality}
+                  name="modality"
+                  className="block w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
+                >
+                  <option value="">Seleccione una opción</option>                  
+                  <option value="1">Asistido</option>
+                  <option value="2">Predictivo</option>
+                </select>
+
+              </div>
+            </div>
+
 
             <div>
               <button

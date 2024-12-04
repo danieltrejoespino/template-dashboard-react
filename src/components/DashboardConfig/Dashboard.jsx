@@ -24,11 +24,13 @@ import ListItemText from "@mui/material/ListItemText";
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import { HomeIcon, CurrencyDollarIcon, ClipboardDocumentListIcon, UsersIcon } from "@heroicons/react/24/solid";
+import { HomeIcon, CurrencyDollarIcon, ClipboardDocumentListIcon, UsersIcon,CalendarDaysIcon} from "@heroicons/react/24/solid";
 
+import Swal from 'sweetalert2';
 
 import LetterAvatars from "./LetterAvatars";
 import GetRegister from '../Processes/GetRegister'
+import Schedule from '../Processes/Schedule'
 const drawerWidth = 250;
 
 const AppBar = styled(MuiAppBar, {
@@ -79,6 +81,8 @@ const Drawer = styled(MuiDrawer, {
 const defaultTheme = createTheme();
 
 export default function Dashboard() {
+  const [surveyAct, setSurveyAct] = useState(0);
+
   const [open, setOpen] = useState(true);
   const [selectedElement, setSelectedElement] = useState(null);
   const { user } = useContext(UserContext);
@@ -89,21 +93,20 @@ export default function Dashboard() {
   const navigation = [
     { name: "Reportes", icon: ClipboardDocumentListIcon },
     { name: "CRM", icon: UsersIcon },
-    { name: "Ventas", component: GetRegister, icon: CurrencyDollarIcon },
+    { name: "Ventas", component: Schedule, icon: CurrencyDollarIcon },
     
     { name: "Obtener registro", component: GetRegister, icon: CurrencyDollarIcon },
+    { name: "Agenda", component: Schedule, icon: CalendarDaysIcon },
   ];
-
-
-
+  
   useEffect(() => {
     if (user) {
       const fetchData = async () => {
         try {
-          const url = 'https://localhost:4000/getMenu';
+          const url = 'https://localhost:4001/apiCrm/getMenu';
           const params = {
-            id_user: user.id,
-            id_perfil: user.profile
+            id_user: user.ID_USER,
+            id_perfil: user.PERFIL
           };
           const response = await axios.post(url, params, {
             headers: {
@@ -130,13 +133,28 @@ export default function Dashboard() {
   }, {});
 
 
-
-
-
   const renderSelectedComponent = () => {
-    const selectedItem = navigation.find((item) => item.name === selectedElement);
-    return selectedItem ? <selectedItem.component /> : null;
+    if (surveyAct === 0) {
+      const selectedItem = navigation.find((item) => item.name === selectedElement);
+      return selectedItem ? (
+        <selectedItem.component
+          surveyAct={surveyAct}
+          setSurveyAct={setSurveyAct}
+          setSelectedElement={setSelectedElement}
+        />
+      ) : null;
+    } else {
+      return (
+        <GetRegister
+          surveyAct={surveyAct}
+          setSurveyAct={setSurveyAct}
+          setSelectedElement={setSelectedElement}
+        />
+      );
+    }
   };
+
+
   const renderIconComponent = (iconName) => {
     const selectedItem = navigation.find((item) => item.name == iconName);
     return selectedItem ? <selectedItem.icon className="size-4 text-blue-500 mr-2" /> : null;
@@ -153,13 +171,33 @@ export default function Dashboard() {
 
 
   const handleElementClick = (element) => {
-    if (element == "Inicio") {
-      setSelectedElement(null);
+    if (selectedElement) {
+      Swal.fire({
+        title: 'Estas seguro de salir?',
+        text: "Perderas los datos no guardados!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si',
+        cancelButtonText: 'NO'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          if (element === "Inicio" || element === selectedElement) {
+            setSelectedElement(null);
+          } else {
+            setSelectedElement(element);
+          }
+        }
+      });
     } else {
-      setSelectedElement((prev) => (prev === element ? null : element));
+      if (element === "Inicio") {
+        setSelectedElement(null);
+      } else {
+        setSelectedElement((prev) => (prev === element ? null : element));
+      }
     }
-  };
-
+  }
 
 
 
@@ -186,6 +224,7 @@ export default function Dashboard() {
             >
               <MenuIcon />
             </IconButton>
+
             <Typography
               component="h1"
               variant="h6"
@@ -193,7 +232,7 @@ export default function Dashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Hola {user.apodo}
+              Firmado en {user.modality == 1 ? "Asistido" : "Predictivo" }
             </Typography>
 
             <IconButton color="inherit">
@@ -246,7 +285,7 @@ export default function Dashboard() {
                     {items.map(({ ID_MENU, NAME_MENU }) => (
                       <ListItemButton
                         key={ID_MENU}
-                        sx={{ pl: 4 }}
+                        sx={{ pl: 3 }}
                         onClick={() => handleElementClick(NAME_MENU)}
                       >
                         <ListItemIcon>
@@ -259,10 +298,29 @@ export default function Dashboard() {
                 </Collapse>
               </Fragment>
             ))}
+
+            <Divider />
           </List>
 
+          <Box sx={{ flexGrow: 1}} />
+          <Divider />
+          <List>
+          <Typography
+              component="h1"
+              variant="h6"
+              color="inherit"
+              noWrap
+              sx={{ flexGrow: 1 }}
+            >
+              Usuario: {user.NAME_USER} 
+            </Typography>
+          </List>
+        </Drawer>      
+          
+          
 
-        </Drawer>
+
+        
         <Box
           component="main"
           sx={{
